@@ -1,0 +1,14 @@
+{
+  "generator-videojs-plugin": {
+    "scope": "",
+    "name": "sprite-thumbnails",
+    "description": "Plugin to display thumbnails from a sprite image when hovering over the progress bar.",
+    "author": "Christian Ebert <blacktrash@gmx.net>",
+    "license": "mit",
+    "sass": false,
+    "ie8": true,
+    "docs": false,
+    "lang": false,
+    "husky": "lint"
+  }
+}
