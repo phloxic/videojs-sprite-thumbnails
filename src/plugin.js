@@ -1,47 +1,42 @@
 import videojs from 'video.js';
+import spriteThumbs from './sprite-thumbnails.js';
 import {version as VERSION} from '../package.json';
 
-// Default options for the plugin.
-const defaults = {};
+/**
+ * Default plugin options
+ *
+ * @param {String} url
+ *        Sprite location. Must be set by user.
+ * @param {Integer} width
+ *        Width in pixels of a thumbnail. Must be set by user.
+ * @param {Integer} height
+ *        Height in pixels of a thumbnail. Must be set by user.
+ * @param {Number} interval
+ *        Interval between thumbnail frames in seconds. Default: 1.
+ */
+const defaults = {
+  url: '',
+  width: 0,
+  height: 0,
+  interval: 1
+};
 
 // Cross-compatibility for Video.js 5 and 6.
 const registerPlugin = videojs.registerPlugin || videojs.plugin;
-// const dom = videojs.dom || videojs;
 
 /**
- * Function to invoke when the player is ready.
+ * The video.js sprite thumbnails plugin.
  *
- * This is a great place for your plugin to initialize itself. When this
- * function is called, the player will have its DOM and child components
- * in place.
- *
- * @function onPlayerReady
- * @param    {Player} player
- *           A Video.js player object.
- *
- * @param    {Object} [options={}]
- *           A plain object containing options for the plugin.
- */
-const onPlayerReady = (player, options) => {
-  player.addClass('vjs-sprite-thumbnails');
-};
-
-/**
- * A video.js plugin.
- *
- * In the plugin function, the value of `this` is a video.js `Player`
- * instance. You cannot rely on the player being in a "ready" state here,
- * depending on how the plugin is invoked. This may or may not be important
- * to you; if not, remove the wait for "ready"!
+ * Invokes spriteThumbs to set up and display thumbnails from a sprite image
+ * when the user hovers over the progress bar.
  *
  * @function spriteThumbnails
- * @param    {Object} [options={}]
- *           An object of options left to the plugin author to define.
+ * @param    {Object} options
+ *           Object accepting 4 plugin configuration parameters.
  */
 const spriteThumbnails = function(options) {
-  this.ready(() => {
-    onPlayerReady(this, videojs.mergeOptions(defaults, options));
-  });
+  spriteThumbs(this, videojs.mergeOptions(defaults, options));
+  this.addClass('vjs-sprite-thumbnails');
 };
 
 // Register the plugin with video.js.
