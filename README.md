@@ -2,6 +2,12 @@
 
 Plugin to display thumbnails from a sprite image when hovering over the progress bar.
 
+## Features
+
+- easy to [configure](#configuration)
+- uses existing hover position display element
+- focuses on use case of thumbnails combined in a sprite image only
+
 ## Installation
 
 ```sh
@@ -22,7 +28,12 @@ This is the simplest case. Get the script in whatever way you prefer and include
 <script>
   var player = videojs('my-video');
 
-  player.spriteThumbnails();
+  // setup 160x90 thumbnails in sprite.jpg, 1 per second
+  player.spriteThumbnails({
+    url: 'https://example.com/sprite.jpg',
+    width: 160,
+    height: 90
+  });
 </script>
 ```
 
@@ -38,9 +49,14 @@ var videojs = require('video.js');
 // to a variable.
 require('videojs-sprite-thumbnails');
 
-var player = videojs('my-video');
+var player = videojs('my-other-video');
 
-player.spriteThumbnails();
+player.spriteThumbnails({
+  interval: 3,
+  url: 'https://example.com/another-sprite.jpg',
+  width: 120,
+  height: 90
+});
 ```
 
 ### RequireJS/AMD
@@ -51,9 +67,22 @@ When using with RequireJS (or another AMD library), get the script in whatever w
 require(['video.js', 'videojs-sprite-thumbnails'], function(videojs) {
   var player = videojs('my-video');
 
-  player.spriteThumbnails();
+  player.spriteThumbnails({
+    url: 'https://example.com/sprite.jpg',
+    width: 160,
+    height: 90
+  });
 });
 ```
+
+### Configuration
+
+option | type | mandatory | description
+------ | ---- | --------- | -----------
+`url`  | String | &#10004; | Sprite image location. Mandatory.
+`width` | Integer | &#10004; | Width of a thumbnail in pixels. Mandatory.
+`height` | Integer | &#10004; | Height of a thumbnail in pixels. Mandatory.
+`interval` | Number |  | Interval between thumbnail frames in seconds. Default: `1`.
 
 ## License
 
