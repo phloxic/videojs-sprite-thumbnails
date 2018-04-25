@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>videojs-sprite-thumbnails Demo</title>
   <link href="node_modules/video.js/dist/video-js.css" rel="stylesheet">
-  
+
 </head>
 <body>
   <video id="videojs-sprite-thumbnails-player" class="video-js vjs-default-skin" controls>
@@ -13,7 +13,7 @@
   </video>
   <ul>
     <li><a href="test/">Run unit tests in browser.</a></li>
-    
+
   </ul>
   <script src="node_modules/es5-shim/es5-shim.js"></script>
   <script src="node_modules/video.js/dist/video.js"></script>
@@ -21,7 +21,12 @@
   <script>
     (function(window, videojs) {
       var player = window.player = videojs('videojs-sprite-thumbnails-player');
-      player.spriteThumbnails();
+      player.spriteThumbnails({
+        // interval: 1 // (default)
+        url: 'img/oceans-thumbs.jpg',
+        width: 240,
+        height: 100
+      });
     }(window, window.videojs));
   </script>
 </body>
