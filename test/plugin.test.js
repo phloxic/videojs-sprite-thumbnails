@@ -46,7 +46,11 @@ QUnit.test('registers itself with video.js', function(assert) {
     'videojs-sprite-thumbnails plugin was registered'
   );
 
-  this.player.spriteThumbnails();
+  this.player.spriteThumbnails({
+    url: 'https://raw.githubusercontent.com/blacktrash/videojs-sprite-thumbnails/master/img/oceans-thumbs.jpg',
+    width: 240,
+    height: 100
+  });
 
   // Tick the clock forward enough to trigger the player to be "ready".
   this.clock.tick(1);

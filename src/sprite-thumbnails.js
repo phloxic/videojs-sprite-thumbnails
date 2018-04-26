@@ -120,4 +120,5 @@ export default function spriteThumbs(player, options) {
     progress.on('mousemove', hijackMouseTooltip);
     progress.on('touchmove', hijackMouseTooltip);
   });
+  player.addClass('vjs-sprite-thumbnails');
 }

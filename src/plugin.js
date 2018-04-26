@@ -39,7 +39,6 @@ const registerPlugin = videojs.registerPlugin || videojs.plugin;
  */
 const spriteThumbnails = function(options) {
   spriteThumbs(this, videojs.mergeOptions(defaults, options));
-  this.addClass('vjs-sprite-thumbnails');
 };
 
 // Register the plugin with video.js.
