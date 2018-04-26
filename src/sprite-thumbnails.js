@@ -39,12 +39,18 @@ export default function spriteThumbs(player, options) {
   };
 
   let columns = 0;
+  let imgWidth = 0;
+  let imgHeight = 0;
 
   // load sprite early
   dom.createEl('img', {
     src: url
   }).onload = (ev) => {
-    columns = ev.target.naturalWidth / width;
+    const target = ev.target;
+
+    imgWidth = target.naturalWidth;
+    imgHeight = target.naturalHeight;
+    columns = imgWidth / width;
   };
 
   tooltipStyle({
@@ -53,6 +59,7 @@ export default function spriteThumbs(player, options) {
     'background-image': '',
     'background-repeat': '',
     'background-position': '',
+    'background-size': '',
     'top': '',
     'color': '',
     'text-shadow': '',
@@ -75,19 +82,33 @@ export default function spriteThumbs(player, options) {
 
     hoverPosition = hoverPosition / options.interval;
 
-    const cleft = Math.floor(hoverPosition % columns) * -width;
-    const ctop = Math.floor(hoverPosition / columns) * -height;
+    let scaleFactor = 1;
+
+    if (options.responsive) {
+      const playerWidth = player.el().clientWidth;
+
+      if (playerWidth < 400) {
+        scaleFactor = 0.6;
+      } else if (playerWidth < 600) {
+        scaleFactor = 0.7;
+      }
+    }
+
+    const cleft = Math.floor(hoverPosition % columns) * -(width * scaleFactor);
+    const ctop = Math.floor(hoverPosition / columns) * -(height * scaleFactor);
+    const bgSize = (imgWidth * scaleFactor) + 'px ' + (imgHeight * scaleFactor) + 'px';
     let verticalOffset = videojs.computedStyle(controls.el(), 'height');
 
     verticalOffset = parseInt(verticalOffset, 10) / 2;
 
     tooltipStyle({
-      'width': width + 'px',
-      'height': height + 'px',
+      'width': (width * scaleFactor) + 'px',
+      'height': (height * scaleFactor) + 'px',
       'background-image': 'url(' + url + ')',
       'background-repeat': 'no-repeat',
       'background-position': cleft + 'px ' + ctop + 'px',
-      'top': -(height + verticalOffset) + 'px',
+      'background-size': bgSize,
+      'top': -(height * scaleFactor + verticalOffset) + 'px',
       'color': '#fff',
       'text-shadow': '1px 1px #000',
       'border': '1px solid rgba(255,255,255,.8)',
