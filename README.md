@@ -83,6 +83,7 @@ option | type | mandatory | description
 `width` | Integer | &#10004; | Width of a thumbnail in pixels.
 `height` | Integer | &#10004; | Height of a thumbnail in pixels.
 `interval` | Number |  | Interval between thumbnail frames in seconds. Default: `1`.
+`responsive` | Boolean |  | Scale thumbnails down when player is small. Default: `true`.
 
 ## License
 

@@ -1,13 +1,13 @@
 import videojs from 'video.js';
 
 /**
- * doc placeholder
+ * Set up sprite thumbnails for a player.
  *
  * @function spriteThumbs
  * @param {Player} player
  *        The current player instance.
- * @param {Object} [options={}]
- *        4 mandatory configuration options.
+ * @param {Object} options
+ *        Configuration options.
  */
 export default function spriteThumbs(player, options) {
   const url = options.url;
