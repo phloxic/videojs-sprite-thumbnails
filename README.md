@@ -79,9 +79,9 @@ require(['video.js', 'videojs-sprite-thumbnails'], function(videojs) {
 
 option | type | mandatory | description
 ------ | ---- | --------- | -----------
-`url`  | String | &#10004; | Sprite image location. Mandatory.
-`width` | Integer | &#10004; | Width of a thumbnail in pixels. Mandatory.
-`height` | Integer | &#10004; | Height of a thumbnail in pixels. Mandatory.
+`url`  | String | &#10004; | Sprite image location.
+`width` | Integer | &#10004; | Width of a thumbnail in pixels.
+`height` | Integer | &#10004; | Height of a thumbnail in pixels.
 `interval` | Number |  | Interval between thumbnail frames in seconds. Default: `1`.
 
 ## License
