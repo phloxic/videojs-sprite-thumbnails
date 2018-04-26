@@ -94,21 +94,22 @@ export default function spriteThumbs(player, options) {
       }
     }
 
-    const cleft = Math.floor(hoverPosition % columns) * -(width * scaleFactor);
-    const ctop = Math.floor(hoverPosition / columns) * -(height * scaleFactor);
-    const bgSize = (imgWidth * scaleFactor) + 'px ' + (imgHeight * scaleFactor) + 'px';
+    const cleft = Math.floor(hoverPosition % columns) * -Math.round(width * scaleFactor);
+    const ctop = Math.floor(hoverPosition / columns) * -Math.round(height * scaleFactor);
+    const bgSize = Math.round(imgWidth * scaleFactor) + 'px ' +
+                   Math.round(imgHeight * scaleFactor) + 'px';
     let verticalOffset = videojs.computedStyle(controls.el(), 'height');
 
     verticalOffset = parseInt(verticalOffset, 10) / 2;
 
     tooltipStyle({
-      'width': (width * scaleFactor) + 'px',
-      'height': (height * scaleFactor) + 'px',
+      'width': Math.round(width * scaleFactor) + 'px',
+      'height': Math.round(height * scaleFactor) + 'px',
       'background-image': 'url(' + url + ')',
       'background-repeat': 'no-repeat',
       'background-position': cleft + 'px ' + ctop + 'px',
       'background-size': bgSize,
-      'top': -(height * scaleFactor + verticalOffset) + 'px',
+      'top': -Math.round(height * scaleFactor + verticalOffset) + 'px',
       'color': '#fff',
       'text-shadow': '1px 1px #000',
       'border': '1px solid rgba(255,255,255,.8)',
