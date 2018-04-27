@@ -64,7 +64,7 @@ export default function spriteThumbs(player, options) {
     'color': '',
     'text-shadow': '',
     'border': '',
-    'box-shadow': ''
+    'margin': ''
   });
 
   const hijackMouseTooltip = () => {
@@ -101,8 +101,8 @@ export default function spriteThumbs(player, options) {
       'top': -(scaledHeight + controls.el_.clientHeight / 2) + 'px',
       'color': '#fff',
       'text-shadow': '1px 1px #000',
-      'border': '1px solid rgba(255,255,255,.8)',
-      'box-shadow': '0 0 1px 1px rgba(0,0,0,.8)'
+      'border': '1px solid #000',
+      'margin': '0 1px'
     });
   };
 
