@@ -13,15 +13,15 @@ import {version as VERSION} from '../package.json';
  *        Height in pixels of a thumbnail. Must be set by user.
  * @param {Number} interval
  *        Interval between thumbnail frames in seconds. Default: 1.
- * @param {Boolean} responsive
- *        Scale thumbnails down when player is small.
+ * @param {Integer} responsive
+ *        Width of player below which thumbnails are reponsive. Default: 600.
  */
 const defaults = {
   url: '',
   width: 0,
   height: 0,
   interval: 1,
-  responsive: true
+  responsive: 600
 };
 
 // Cross-compatibility for Video.js 5 and 6.

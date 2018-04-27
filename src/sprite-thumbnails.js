@@ -13,6 +13,7 @@ export default function spriteThumbs(player, options) {
   const url = options.url;
   const height = options.height;
   const width = options.width;
+  const responsive = options.responsive;
 
   if (!url || !height || !width) {
     return;
@@ -80,24 +81,15 @@ export default function spriteThumbs(player, options) {
 
     hoverPosition = hoverPosition / options.interval;
 
-    let scaleFactor = 1;
-
-    if (options.responsive) {
-      const playerWidth = player.el_.clientWidth;
-
-      if (playerWidth < 400) {
-        scaleFactor = 0.6;
-      } else if (playerWidth < 600) {
-        scaleFactor = 0.7;
-      }
-    }
-
-    const scaledWidth = Math.round(width * scaleFactor);
-    const scaledHeight = Math.round(height * scaleFactor);
+    const playerWidth = player.el_.clientWidth;
+    const scaleFactor = responsive && playerWidth < responsive ?
+                        playerWidth / responsive : 1;
+    const scaledWidth = width * scaleFactor;
+    const scaledHeight = height * scaleFactor;
     const cleft = Math.floor(hoverPosition % columns) * -scaledWidth;
     const ctop = Math.floor(hoverPosition / columns) * -scaledHeight;
-    const bgSize = Math.round(imgWidth * scaleFactor) + 'px ' +
-                   Math.round(imgHeight * scaleFactor) + 'px';
+    const bgSize = (imgWidth * scaleFactor) + 'px ' +
+                   (imgHeight * scaleFactor) + 'px';
 
     tooltipStyle({
       'width': scaledWidth + 'px',
@@ -106,7 +98,7 @@ export default function spriteThumbs(player, options) {
       'background-repeat': 'no-repeat',
       'background-position': cleft + 'px ' + ctop + 'px',
       'background-size': bgSize,
-      'top': -Math.round(scaledHeight + controls.el_.clientHeight / 2) + 'px',
+      'top': -(scaledHeight + controls.el_.clientHeight / 2) + 'px',
       'color': '#fff',
       'text-shadow': '1px 1px #000',
       'border': '1px solid rgba(255,255,255,.8)',
