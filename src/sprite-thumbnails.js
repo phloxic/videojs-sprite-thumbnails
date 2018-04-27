@@ -21,14 +21,13 @@ export default function spriteThumbs(player, options) {
   const dom = videojs.dom || videojs;
   const controls = player.controlBar;
   const progress = controls.progressControl;
-  const mouseDisplay = dom.$('.vjs-mouse-display', progress.el());
-  const tooltip = dom.$('.vjs-time-tooltip', mouseDisplay);
-  const progressSlider = dom.$('.vjs-progress-holder', progress.el());
+  const seekBar = progress.seekBar;
+  const mouseTimeDisplay = seekBar.mouseTimeDisplay;
 
   const tooltipStyle = (obj) => {
     Object.keys(obj).forEach((key) => {
       const val = obj[key];
-      const ttstyle = tooltip.style;
+      const ttstyle = mouseTimeDisplay.timeTooltip.el_.style;
 
       if (val !== '') {
         ttstyle.setProperty(key, val);
@@ -72,10 +71,9 @@ export default function spriteThumbs(player, options) {
       return;
     }
 
-    const sliderWidth = parseFloat(videojs.computedStyle(progressSlider, 'width'));
-    let hoverPosition = parseFloat(mouseDisplay.style.left);
+    let hoverPosition = parseFloat(mouseTimeDisplay.el_.style.left);
 
-    hoverPosition = player.duration() * (hoverPosition / sliderWidth);
+    hoverPosition = player.duration() * (hoverPosition / seekBar.el_.clientWidth);
     if (isNaN(hoverPosition)) {
       return;
     }
@@ -85,7 +83,7 @@ export default function spriteThumbs(player, options) {
     let scaleFactor = 1;
 
     if (options.responsive) {
-      const playerWidth = player.el().clientWidth;
+      const playerWidth = player.el_.clientWidth;
 
       if (playerWidth < 400) {
         scaleFactor = 0.6;
@@ -98,9 +96,6 @@ export default function spriteThumbs(player, options) {
     const ctop = Math.floor(hoverPosition / columns) * -Math.round(height * scaleFactor);
     const bgSize = Math.round(imgWidth * scaleFactor) + 'px ' +
                    Math.round(imgHeight * scaleFactor) + 'px';
-    let verticalOffset = videojs.computedStyle(controls.el(), 'height');
-
-    verticalOffset = parseInt(verticalOffset, 10) / 2;
 
     tooltipStyle({
       'width': Math.round(width * scaleFactor) + 'px',
@@ -109,7 +104,7 @@ export default function spriteThumbs(player, options) {
       'background-repeat': 'no-repeat',
       'background-position': cleft + 'px ' + ctop + 'px',
       'background-size': bgSize,
-      'top': -Math.round(height * scaleFactor + verticalOffset) + 'px',
+      'top': -Math.round(height * scaleFactor + controls.el_.clientHeight / 2) + 'px',
       'color': '#fff',
       'text-shadow': '1px 1px #000',
       'border': '1px solid rgba(255,255,255,.8)',
