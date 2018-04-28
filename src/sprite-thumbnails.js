@@ -90,6 +90,14 @@ export default function spriteThumbs(player, options) {
     const ctop = Math.floor(hoverPosition / columns) * -scaledHeight;
     const bgSize = (imgWidth * scaleFactor) + 'px ' +
                    (imgHeight * scaleFactor) + 'px';
+    const controlsTop = dom.getBoundingClientRect(controls.el_).top;
+    const seekBarTop = dom.getBoundingClientRect(seekBar.el_).top;
+    // top of seekBar is 0 position
+    let topOffset = -scaledHeight;
+
+    if (controlsTop < seekBarTop) {
+      topOffset -= (seekBarTop - controlsTop);
+    }
 
     tooltipStyle({
       'width': scaledWidth + 'px',
@@ -98,7 +106,7 @@ export default function spriteThumbs(player, options) {
       'background-repeat': 'no-repeat',
       'background-position': cleft + 'px ' + ctop + 'px',
       'background-size': bgSize,
-      'top': -(scaledHeight + controls.el_.clientHeight / 2) + 'px',
+      'top': topOffset + 'px',
       'color': '#fff',
       'text-shadow': '1px 1px #000',
       'border': '1px solid #000',
