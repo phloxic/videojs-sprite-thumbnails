@@ -24,9 +24,6 @@ const defaults = {
   responsive: 600
 };
 
-// Cross-compatibility for Video.js 5 and 6.
-const registerPlugin = videojs.registerPlugin || videojs.plugin;
-
 /**
  * The video.js sprite thumbnails plugin.
  *
@@ -42,7 +39,7 @@ const spriteThumbnails = function(options) {
 };
 
 // Register the plugin with video.js.
-registerPlugin('spriteThumbnails', spriteThumbnails);
+videojs.registerPlugin('spriteThumbnails', spriteThumbnails);
 
 // Include the version number.
 spriteThumbnails.VERSION = VERSION;
