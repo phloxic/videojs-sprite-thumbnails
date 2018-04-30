@@ -7,6 +7,10 @@
   "generator-videojs-plugin": {
     "version": "5.2.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blacktrash/videojs-sprite-thumbnails"
+  },
   "scripts": {
     "prebuild": "npm run clean",
     "build": "npm-run-all -p build:*",
