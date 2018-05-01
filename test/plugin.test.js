@@ -55,8 +55,15 @@ QUnit.test('registers itself with video.js', function(assert) {
   // Tick the clock forward enough to trigger the player to be "ready".
   this.clock.tick(1);
 
-  assert.ok(
-    this.player.hasClass('vjs-sprite-thumbnails'),
-    'the plugin adds a class to the player'
-  );
+  if (this.player.controlBar.progressControl.seekBar.mouseTimeDisplay !== undefined) {
+    assert.ok(
+      this.player.hasClass('vjs-sprite-thumbnails'),
+      'the plugin adds a class to the player'
+    );
+  } else {
+    assert.ok(
+      !this.player.hasClass('vjs-sprite-thumbnails'),
+      'no mouseTimeDisplay: no-op plugin does not advertise itself'
+    );
+  }
 });

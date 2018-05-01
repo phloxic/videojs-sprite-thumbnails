@@ -25,6 +25,10 @@ export default function spriteThumbs(player, options) {
   const seekBar = progress.seekBar;
   const mouseTimeDisplay = seekBar.mouseTimeDisplay;
 
+  if (!mouseTimeDisplay) {
+    return;
+  }
+
   const tooltipStyle = (obj) => {
     Object.keys(obj).forEach((key) => {
       const val = obj[key];
