@@ -75,6 +75,10 @@ require(['video.js', 'videojs-sprite-thumbnails'], function(videojs) {
 });
 ```
 
+### CDN
+
+Select a version of videojs-sprite-thumbnails from the [CDN](https://unpkg.com/videojs-sprite-thumbnails/dist/).
+
 ### Configuration
 
 option | type | mandatory | default | description
