@@ -40,7 +40,7 @@
     "videojs",
     "videojs-plugin"
   ],
-  "author": "Christian Ebert <blacktrash@gmx.net>",
+  "author": "Christian Ebert <blacktrash@gmx.net> (https://blacktrash.org)",
   "license": "MIT",
   "vjsstandard": {
     "ignore": [
