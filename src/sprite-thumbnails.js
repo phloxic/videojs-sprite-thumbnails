@@ -45,31 +45,44 @@ export default function spriteThumbs(player, options) {
     });
   };
 
-  const chunkTiles = (columns * rows);
-  const chunks = options.chunks ||
-                 (options.tiles ? Math.ceil(options.tiles / chunkTiles) : 1);
-  const images = new Array(chunks);
+  const images = {};
   const loader = (chunk) => {
-    const img = dom.createEl('img', {
-      src: typeof url === 'function' ? url(chunk + 1) : url
-    });
+    if (images[chunk]) {
+      return Promise.resolve(images[chunk]);
+    }
+    const src = typeof url === 'function' ? url(chunk + 1) : url;
 
-    img.onload = (ev) => {
-      if (!width && columns) {
-        width = img.naturalWidth / columns;
-      } else if (!columns && width) {
-        columns = img.naturalWidth / width;
-      }
-      if (!height && rows) {
-        height = img.naturalHeight / rows;
-      } else if (!rows && height) {
-        rows = img.naturalHeight / height;
-      }
-    };
-    return img;
+    return new Promise((resolve, reject) => {
+      const img = dom.createEl('img', {src});
+
+      img.onload = (ev) => resolve(img);
+      img.onerror = (ev) => reject(ev);
+    })
+    .then(img => {
+      images[chunk] = img;
+      return images[chunk];
+    })
+    .catch(() => {
+      return false;
+    });
   };
 
-  images[0] = loader(0);
+  let chunkTiles;
+
+  loader(0).then(img => {
+    if (!width && columns) {
+      width = img.naturalWidth / columns;
+    } else if (!columns && width) {
+      columns = img.naturalWidth / width;
+    }
+    if (!height && rows) {
+      height = img.naturalHeight / rows;
+    } else if (!rows && height) {
+      rows = img.naturalHeight / height;
+    }
+
+    chunkTiles = columns * rows;
+  });
 
   tooltipStyle({
     'width': '',
@@ -86,7 +99,7 @@ export default function spriteThumbs(player, options) {
   });
 
   const hijackMouseTooltip = () => {
-    if (!columns) {
+    if (!columns || !chunkTiles) {
       return;
     }
 
@@ -103,8 +116,12 @@ export default function spriteThumbs(player, options) {
       return;
     }
 
-    if (!options.interval && options.tiles) {
-      options.interval = duration / options.tiles;
+    if (!options.interval) {
+      if (options.tiles) {
+        options.interval = duration / options.tiles;
+      } else {
+        options.interval = 1;
+      }
     }
 
     hoverPosition = Math.floor(hoverPosition / options.interval);
@@ -113,7 +130,7 @@ export default function spriteThumbs(player, options) {
     const img = images[chunkNumber];
 
     if (!img) {
-      images[chunkNumber] = loader(chunkNumber);
+      loader(chunkNumber);
       return;
     }
 
