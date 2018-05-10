@@ -46,13 +46,16 @@ export default function spriteThumbs(player, options) {
   };
 
   const images = {};
+  const loading = {};
   const loader = (chunk) => {
-    if (images[chunk]) {
+    if (loading[chunk]) {
+      return loading[chunk];
+    } else if (images[chunk]) {
       return Promise.resolve(images[chunk]);
     }
     const src = typeof url === 'function' ? url(chunk + 1) : url;
 
-    return new Promise((resolve, reject) => {
+    loading[chunk] = new Promise((resolve, reject) => {
       const img = dom.createEl('img', {src});
 
       img.onload = (ev) => resolve(img);
@@ -60,11 +63,13 @@ export default function spriteThumbs(player, options) {
     })
     .then(img => {
       images[chunk] = img;
+      delete loading[chunk];
       return images[chunk];
     })
     .catch(() => {
       return false;
     });
+    return loading[chunk];
   };
 
   let chunkTiles;
