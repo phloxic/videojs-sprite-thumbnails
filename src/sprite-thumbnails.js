@@ -13,10 +13,10 @@ export default function spriteThumbs(player, options) {
   const url = options.url;
   const responsive = options.responsive;
 
-  let height = options.height || (options.resolution && options.resolution[0]);
-  let width = options.width || (options.resolution && options.resolution[1]);
-  let columns = options.columns || (options.grid && options.grid[0]);
-  let rows = options.rows || (options.grid && options.grid[1]);
+  let height = options.height;
+  let width = options.width;
+  let columns = options.columns;
+  let rows = options.rows;
 
   if (!url || (!height && !rows) || (!width && !columns)) {
     return;
