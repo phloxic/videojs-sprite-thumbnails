@@ -11,11 +11,14 @@ import videojs from 'video.js';
  */
 export default function spriteThumbs(player, options) {
   const url = options.url;
-  const height = options.height;
-  const width = options.width;
   const responsive = options.responsive;
 
-  if (!url || !height || !width) {
+  let height = options.height || (options.resolution && options.resolution[0]);
+  let width = options.width || (options.resolution && options.resolution[1]);
+  let columns = options.columns || (options.grid && options.grid[0]);
+  let rows = options.rows || (options.grid && options.grid[1]);
+
+  if (!url || (!height && !rows) || (!width && !columns)) {
     return;
   }
 
@@ -42,20 +45,31 @@ export default function spriteThumbs(player, options) {
     });
   };
 
-  let columns = 0;
-  let imgWidth = 0;
-  let imgHeight = 0;
+  const chunkTiles = (columns * rows);
+  const chunks = options.chunks ||
+                 (options.tiles ? Math.ceil(options.tiles / chunkTiles) : 1);
+  const images = new Array(chunks);
+  const loader = (chunk) => {
+    const img = dom.createEl('img', {
+      src: typeof url === 'function' ? url(chunk + 1) : url
+    });
 
-  // load sprite early
-  dom.createEl('img', {
-    src: url
-  }).onload = (ev) => {
-    const target = ev.target;
-
-    imgWidth = target.naturalWidth;
-    imgHeight = target.naturalHeight;
-    columns = imgWidth / width;
+    img.onload = (ev) => {
+      if (!width && columns) {
+        width = img.naturalWidth / columns;
+      } else if (!columns && width) {
+        columns = img.naturalWidth / width;
+      }
+      if (!height && rows) {
+        height = img.naturalHeight / rows;
+      } else if (!rows && height) {
+        rows = img.naturalHeight / height;
+      }
+    };
+    return img;
   };
+
+  images[0] = loader(0);
 
   tooltipStyle({
     'width': '',
@@ -76,24 +90,44 @@ export default function spriteThumbs(player, options) {
       return;
     }
 
+    const duration = player.duration();
+
+    if (isNaN(duration)) {
+      return;
+    }
+
     let hoverPosition = parseFloat(mouseTimeDisplay.el_.style.left);
 
-    hoverPosition = player.duration() * (hoverPosition / seekBar.el_.clientWidth);
+    hoverPosition = duration * (hoverPosition / seekBar.el_.clientWidth);
     if (isNaN(hoverPosition)) {
       return;
     }
 
-    hoverPosition = hoverPosition / options.interval;
+    if (!options.interval && options.tiles) {
+      options.interval = duration / options.tiles;
+    }
+
+    hoverPosition = Math.floor(hoverPosition / options.interval);
+    const chunkNumber = Math.floor(hoverPosition / chunkTiles);
+    const tileNumber = hoverPosition % chunkTiles;
+    const img = images[chunkNumber];
+
+    if (!img) {
+      images[chunkNumber] = loader(chunkNumber);
+      return;
+    }
 
     const playerWidth = player.el_.clientWidth;
     const scaleFactor = responsive && playerWidth < responsive ?
                         playerWidth / responsive : 1;
     const scaledWidth = width * scaleFactor;
     const scaledHeight = height * scaleFactor;
-    const cleft = Math.floor(hoverPosition % columns) * -scaledWidth;
-    const ctop = Math.floor(hoverPosition / columns) * -scaledHeight;
-    const bgSize = (imgWidth * scaleFactor) + 'px ' +
-                   (imgHeight * scaleFactor) + 'px';
+    const columnNumber = Math.floor(tileNumber % columns);
+    const rowNumber = Math.floor(tileNumber / columns);
+    const cleft = columnNumber * -scaledWidth;
+    const ctop = rowNumber * -scaledHeight;
+    const bgSize = (img.naturalWidth * scaleFactor) + 'px ' +
+                   (img.naturalHeight * scaleFactor) + 'px';
     const controlsTop = dom.getBoundingClientRect(controls.el_).top;
     const seekBarTop = dom.getBoundingClientRect(seekBar.el_).top;
     // top of seekBar is 0 position
@@ -106,7 +140,7 @@ export default function spriteThumbs(player, options) {
     tooltipStyle({
       'width': scaledWidth + 'px',
       'height': scaledHeight + 'px',
-      'background-image': 'url(' + url + ')',
+      'background-image': 'url(' + img.src + ')',
       'background-repeat': 'no-repeat',
       'background-position': cleft + 'px ' + ctop + 'px',
       'background-size': bgSize,

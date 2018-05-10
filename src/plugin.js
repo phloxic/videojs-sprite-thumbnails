@@ -7,20 +7,33 @@ import {version as VERSION} from '../package.json';
  *
  * @param {String} url
  *        Sprite location. Must be set by user.
- * @param {Integer} width
- *        Width in pixels of a thumbnail. Must be set by user.
- * @param {Integer} height
- *        Height in pixels of a thumbnail. Must be set by user.
- * @param {Number} interval
- *        Interval between thumbnail frames in seconds. Default: 1.
+ *        Can be a function for chunked url generation.
+ * @param {Integer} width [optional]
+ *        Width in pixels of a thumbnail.
+ *        Optional if columns or resolution is set.
+ * @param {Number} columns [optional]
+ *        Number of tile columns in the picture.
+ *        Optional if width or grid is set.
+ * @param {Integer} height [optional]
+ *        Height in pixels of a thumbnail.
+ *        Optional if rows or resolution is set.
+ * @param {Number} rows [optional]
+ *        Number of tile rows in the picture.
+ *        Optional if height or grid is set.
+ * @param {Number} tiles [optional]
+ *        Total number of tiles on the timeline.
+ *        Optional if interval is set.
+ * @param {Number} chunks [optional]
+ *        Total number of tile chunks on the timeline.
+ *        Optional if tiles is set.
+ * @param {Number} interval [optional]
+ *        Interval between thumbnail frames in seconds.
+ *        Optional if tiles is set.
  * @param {Integer} responsive
  *        Width of player below which thumbnails are reponsive. Default: 600.
  */
 const defaults = {
   url: '',
-  width: 0,
-  height: 0,
-  interval: 1,
   responsive: 600
 };
 
