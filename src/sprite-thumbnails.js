@@ -87,7 +87,7 @@ export default function spriteThumbs(player, options) {
 
     const playerWidth = player.el_.clientWidth;
     const scaleFactor = responsive && playerWidth < responsive ?
-                        playerWidth / responsive : 1;
+      playerWidth / responsive : 1;
     const scaledWidth = width * scaleFactor;
     const scaledHeight = height * scaleFactor;
     const cleft = Math.floor(hoverPosition % columns) * -scaledWidth;

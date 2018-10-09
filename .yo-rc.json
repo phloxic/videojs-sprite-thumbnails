@@ -3,12 +3,16 @@
     "scope": "",
     "name": "sprite-thumbnails",
     "description": "Plugin to display thumbnails from a sprite image when hovering over the progress bar.",
-    "author": "Christian Ebert <blacktrash@gmx.net>",
+    "author": "Christian Ebert <blacktrash@gmx.net> (https://blacktrash.org)",
     "license": "mit",
     "sass": false,
     "ie8": true,
     "docs": false,
     "lang": false,
-    "husky": "lint"
+    "husky": "lint",
+    "pluginType": "basic",
+    "css": false,
+    "precommit": true,
+    "prepush": false
   }
 }
