@@ -35,7 +35,9 @@ const defaults = {
  *           Object accepting 4 plugin configuration parameters.
  */
 const spriteThumbnails = function(options) {
-  spriteThumbs(this, videojs.mergeOptions(defaults, options));
+  this.ready(() => {
+    spriteThumbs(this, videojs.mergeOptions(defaults, options));
+  });
 };
 
 // Register the plugin with video.js.

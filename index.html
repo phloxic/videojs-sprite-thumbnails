@@ -21,12 +21,15 @@
   <script src="dist/videojs-sprite-thumbnails.js"></script>
   <script>
     (function(window, videojs) {
-      var player = window.player = videojs('videojs-sprite-thumbnails-player');
-      player.spriteThumbnails({
-        // interval: 1 // (default)
-        url: 'img/oceans-thumbs.jpg',
-        width: 240,
-        height: 100
+      var player = window.player = videojs('videojs-sprite-thumbnails-player', {
+        plugins: {
+          spriteThumbnails: {
+            // interval: 1 // (default)
+            url: 'img/oceans-thumbs.jpg',
+            width: 240,
+            height: 100
+          }
+        }
       });
     }(window, window.videojs));
   </script>
