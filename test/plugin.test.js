@@ -55,15 +55,30 @@ QUnit.test('registers itself with video.js', function(assert) {
   // Tick the clock forward enough to trigger the player to be "ready".
   this.clock.tick(1);
 
-  if (this.player.controlBar.progressControl.seekBar.mouseTimeDisplay !== undefined) {
-    assert.ok(
-      this.player.hasClass('vjs-sprite-thumbnails'),
-      'the plugin adds a class to the player'
-    );
-  } else {
-    assert.ok(
-      !this.player.hasClass('vjs-sprite-thumbnails'),
-      'no mouseTimeDisplay: no-op plugin does not advertise itself'
-    );
-  }
+  assert.ok(
+    this.player.hasClass('vjs-sprite-thumbnails'),
+    'the plugin adds a class to the player'
+  );
+});
+
+QUnit.test('does not initialize itself when mandatory parameter is not given', function(assert) {
+  assert.expect(2);
+
+  assert.strictEqual(
+    typeof Player.prototype.spriteThumbnails,
+    'function',
+    'videojs-sprite-thumbnails does not initialize without url configuration'
+  );
+  this.player.spriteThumbnails({
+    width: 240,
+    height: 100
+  });
+
+  // Tick the clock forward enough to trigger the player to be "ready".
+  this.clock.tick(1);
+
+  assert.ok(
+    !this.player.hasClass('vjs-sprite-thumbnails'),
+    'no plugin class added to the player'
+  );
 });
