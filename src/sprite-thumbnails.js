@@ -97,11 +97,7 @@ export default function spriteThumbs(player, options) {
     const controlsTop = dom.getBoundingClientRect(controls.el_).top;
     const seekBarTop = dom.getBoundingClientRect(seekBar.el_).top;
     // top of seekBar is 0 position
-    let topOffset = -scaledHeight;
-
-    if (controlsTop < seekBarTop) {
-      topOffset -= (seekBarTop - controlsTop);
-    }
+    const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
 
     tooltipStyle({
       'width': scaledWidth + 'px',
