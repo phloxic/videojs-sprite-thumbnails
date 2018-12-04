@@ -2,6 +2,8 @@ import videojs from 'video.js';
 import spriteThumbs from './sprite-thumbnails.js';
 import {version as VERSION} from '../package.json';
 
+const Plugin = videojs.getPlugin('plugin');
+
 /**
  * Default plugin options
  *
@@ -25,25 +27,40 @@ const defaults = {
 };
 
 /**
- * The video.js sprite thumbnails plugin.
+ * An advanced Video.js plugin. For more information on the API
  *
- * Invokes spriteThumbs to set up and display thumbnails from a sprite image
- * when the user hovers over the progress bar.
- *
- * @function spriteThumbnails
- * @param    {Object} options
- *           Object accepting 4 plugin configuration parameters.
+ * See: https://blog.videojs.com/feature-spotlight-advanced-plugins/
  */
-const spriteThumbnails = function(options) {
-  this.ready(() => {
-    spriteThumbs(this, videojs.mergeOptions(defaults, options));
-  });
-};
+class SpriteThumbnails extends Plugin {
 
-// Register the plugin with video.js.
-videojs.registerPlugin('spriteThumbnails', spriteThumbnails);
+  /**
+   * Create a SpriteThumbnails plugin instance.
+   *
+   * @param  {Player} player
+   *         A Video.js Player instance.
+   *
+   * @param  {Object} [options]
+   *         An optional options object.
+   */
+  constructor(player, options) {
+    // the parent class will add player under this.player
+    super(player);
+
+    this.options = videojs.mergeOptions(defaults, options);
+
+    this.player.ready(() => {
+      spriteThumbs(this.player, this.options);
+    });
+  }
+}
+
+// Define default values for the plugin's `state` object here.
+SpriteThumbnails.defaultState = {};
 
 // Include the version number.
-spriteThumbnails.VERSION = VERSION;
+SpriteThumbnails.VERSION = VERSION;
 
-export default spriteThumbnails;
+// Register the plugin with video.js.
+videojs.registerPlugin('spriteThumbnails', SpriteThumbnails);
+
+export default SpriteThumbnails;

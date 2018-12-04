@@ -10,7 +10,7 @@
     "docs": false,
     "lang": false,
     "husky": "lint",
-    "pluginType": "basic",
+    "pluginType": "advanced",
     "css": false,
     "precommit": true,
     "prepush": false
