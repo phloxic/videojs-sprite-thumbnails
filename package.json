@@ -55,8 +55,10 @@
     "docs/",
     "index.html",
     "scripts/",
-    "src/",
-    "test/"
+    "src/plugin.js",
+    "src/sprite-thumbnails.js",
+    "test/dist/",
+    "test/plugin.test.js"
   ],
   "husky": {
     "hooks": {
