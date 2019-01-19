@@ -62,13 +62,8 @@ QUnit.test('registers itself with video.js', function(assert) {
 });
 
 QUnit.test('does not initialize itself when mandatory parameter is not given', function(assert) {
-  assert.expect(2);
+  assert.expect(1);
 
-  assert.strictEqual(
-    typeof Player.prototype.spriteThumbnails,
-    'function',
-    'videojs-sprite-thumbnails does not initialize without url configuration'
-  );
   this.player.spriteThumbnails({
     width: 240,
     height: 100
