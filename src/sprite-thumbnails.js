@@ -44,9 +44,10 @@ export default function spriteThumbs(player, options) {
       const imgHeight = img.naturalHeight;
 
       if (imgWidth && imgHeight) {
+        const seekBarEl = seekBar.el_;
         let hoverPosition = parseFloat(mouseTimeDisplay.el_.style.left);
 
-        hoverPosition = player.duration() * (hoverPosition / seekBar.el_.clientWidth);
+        hoverPosition = player.duration() * (hoverPosition / seekBarEl.clientWidth);
         if (!isNaN(hoverPosition)) {
           hoverPosition = hoverPosition / options.interval;
 
@@ -61,7 +62,7 @@ export default function spriteThumbs(player, options) {
           const bgSize = (imgWidth * scaleFactor) + 'px ' +
                          (imgHeight * scaleFactor) + 'px';
           const controlsTop = dom.getBoundingClientRect(controls.el_).top;
-          const seekBarTop = dom.getBoundingClientRect(seekBar.el_).top;
+          const seekBarTop = dom.getBoundingClientRect(seekBarEl).top;
           // top of seekBar is 0 position
           const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
 
