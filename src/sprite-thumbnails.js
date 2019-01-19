@@ -22,9 +22,9 @@ export default function spriteThumbs(player, options) {
   const mouseTimeDisplay = seekBar.mouseTimeDisplay;
 
   if (url && height && width && mouseTimeDisplay) {
-    let columns = 0;
-    let imgWidth = 0;
-    let imgHeight = 0;
+    const img = dom.createEl('img', {
+      src: url
+    });
 
     const tooltipStyle = (obj) => {
       Object.keys(obj).forEach((key) => {
@@ -40,7 +40,10 @@ export default function spriteThumbs(player, options) {
     };
 
     const hijackMouseTooltip = () => {
-      if (columns) {
+      const imgWidth = img.naturalWidth;
+      const imgHeight = img.naturalHeight;
+
+      if (imgWidth && imgHeight) {
         let hoverPosition = parseFloat(mouseTimeDisplay.el_.style.left);
 
         hoverPosition = player.duration() * (hoverPosition / seekBar.el_.clientWidth);
@@ -50,6 +53,7 @@ export default function spriteThumbs(player, options) {
           const playerWidth = player.el_.clientWidth;
           const scaleFactor = responsive && playerWidth < responsive ?
             playerWidth / responsive : 1;
+          const columns = imgWidth / width;
           const scaledWidth = width * scaleFactor;
           const scaledHeight = height * scaleFactor;
           const cleft = Math.floor(hoverPosition % columns) * -scaledWidth;
@@ -76,16 +80,6 @@ export default function spriteThumbs(player, options) {
           });
         }
       }
-    };
-
-    dom.createEl('img', {
-      src: url
-    }).onload = (ev) => {
-      const target = ev.target;
-
-      imgWidth = target.naturalWidth;
-      imgHeight = target.naturalHeight;
-      columns = imgWidth / width;
     };
 
     tooltipStyle({
