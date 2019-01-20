@@ -1,3 +1,19 @@
+<a name="0.5.2"></a>
+## [0.5.2](https://github.com/blacktrash/videojs-sprite-thumbnails/compare/v0.5.1...v0.5.2) (2019-01-20)
+
+### Chores
+
+* **package:** generator-videojs-plugin 7.6.1 ([9e798f5](https://github.com/blacktrash/videojs-sprite-thumbnails/commit/9e798f5))
+
+### Code Refactoring
+
+* simplify image dimensions availability check ([67e31ec](https://github.com/blacktrash/videojs-sprite-thumbnails/commit/67e31ec))
+* store seekBar element in var ([a4e149c](https://github.com/blacktrash/videojs-sprite-thumbnails/commit/a4e149c))
+
+### Tests
+
+* remove spurious assert ([d4e697c](https://github.com/blacktrash/videojs-sprite-thumbnails/commit/d4e697c))
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/blacktrash/videojs-sprite-thumbnails/compare/v0.4.0...v0.5.0) (2018-12-14)
 
