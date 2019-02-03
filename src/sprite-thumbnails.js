@@ -43,7 +43,7 @@ export default function spriteThumbs(player, options) {
       const imgWidth = img.naturalWidth;
       const imgHeight = img.naturalHeight;
 
-      if (imgWidth && imgHeight) {
+      if (player.controls_ && imgWidth && imgHeight) {
         const seekBarEl = seekBar.el_;
         let hoverPosition = parseFloat(mouseTimeDisplay.el_.style.left);
 

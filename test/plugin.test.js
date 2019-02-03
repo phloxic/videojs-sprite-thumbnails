@@ -29,6 +29,8 @@ QUnit.module('videojs-sprite-thumbnails', {
     this.video = document.createElement('video');
     this.fixture.appendChild(this.video);
     this.player = videojs(this.video);
+    // test this plugin with controls enabled
+    this.player.controls(true);
   },
 
   afterEach() {
