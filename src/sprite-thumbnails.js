@@ -29,7 +29,7 @@ export default function spriteThumbs(player, options) {
     const tooltipStyle = (obj) => {
       Object.keys(obj).forEach((key) => {
         const val = obj[key];
-        const ttstyle = mouseTimeDisplay.timeTooltip.el_.style;
+        const ttstyle = mouseTimeDisplay.timeTooltip.el().style;
 
         if (val !== '') {
           ttstyle.setProperty(key, val);
@@ -43,15 +43,14 @@ export default function spriteThumbs(player, options) {
       const imgWidth = img.naturalWidth;
       const imgHeight = img.naturalHeight;
 
-      if (player.controls_ && imgWidth && imgHeight) {
-        const seekBarEl = seekBar.el_;
-        let hoverPosition = parseFloat(mouseTimeDisplay.el_.style.left);
+      if (player.controls() && imgWidth && imgHeight) {
+        let hoverPosition = parseFloat(mouseTimeDisplay.el().style.left);
 
-        hoverPosition = player.duration() * (hoverPosition / seekBarEl.clientWidth);
+        hoverPosition = player.duration() * (hoverPosition / seekBar.currentWidth());
         if (!isNaN(hoverPosition)) {
           hoverPosition = hoverPosition / options.interval;
 
-          const playerWidth = player.el_.clientWidth;
+          const playerWidth = player.currentWidth();
           const scaleFactor = responsive && playerWidth < responsive ?
             playerWidth / responsive : 1;
           const columns = imgWidth / width;
@@ -61,8 +60,8 @@ export default function spriteThumbs(player, options) {
           const ctop = Math.floor(hoverPosition / columns) * -scaledHeight;
           const bgSize = (imgWidth * scaleFactor) + 'px ' +
                          (imgHeight * scaleFactor) + 'px';
-          const controlsTop = dom.getBoundingClientRect(controls.el_).top;
-          const seekBarTop = dom.getBoundingClientRect(seekBarEl).top;
+          const controlsTop = dom.getBoundingClientRect(controls.el()).top;
+          const seekBarTop = dom.getBoundingClientRect(seekBar.el()).top;
           // top of seekBar is 0 position
           const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
 
