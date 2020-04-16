@@ -5,7 +5,7 @@
   "main": "dist/videojs-sprite-thumbnails.cjs.js",
   "module": "dist/videojs-sprite-thumbnails.es.js",
   "generator-videojs-plugin": {
-    "version": "7.6.1"
+    "version": "7.6.3"
   },
   "browserslist": [
     "defaults",
@@ -81,12 +81,12 @@
   },
   "devDependencies": {
     "@videojs/generator-helpers": "~1.0.0",
-    "karma": "^3.0.0",
-    "rollup": "^1.1.0",
+    "karma": "^4.0.0",
+    "rollup": "^1.10.0",
     "sinon": "^7.2.2",
-    "videojs-generate-karma-config": "~5.0.2",
-    "videojs-generate-rollup-config": "~3.0.2",
+    "videojs-generate-karma-config": "~5.2.0",
+    "videojs-generate-rollup-config": "~3.1.0",
     "videojs-generator-verify": "~1.2.0",
-    "videojs-standard": "^8.0.1"
+    "videojs-standard": "^8.0.3"
   }
 }
