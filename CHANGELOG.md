@@ -1,3 +1,15 @@
+<a name="0.5.3"></a>
+## [0.5.3](https://github.com/blacktrash/videojs-sprite-thumbnails/compare/v0.5.2...v0.5.3) (2020-04-17)
+
+### Features
+
+* do nothing while controls are not enabled ([8630f8d](https://github.com/blacktrash/videojs-sprite-thumbnails/commit/8630f8d))
+
+### Chores
+
+* **package:** add repo field ([e259c58](https://github.com/blacktrash/videojs-sprite-thumbnails/commit/e259c58))
+* **package:** generator-videojs-plugin 7.6.3 ([a33bc00](https://github.com/blacktrash/videojs-sprite-thumbnails/commit/a33bc00))
+
 <a name="0.5.2"></a>
 ## [0.5.2](https://github.com/blacktrash/videojs-sprite-thumbnails/compare/v0.5.1...v0.5.2) (2019-01-20)
 
