@@ -60,8 +60,8 @@ export default function spriteThumbs(player, options) {
           const ctop = Math.floor(hoverPosition / columns) * -scaledHeight;
           const bgSize = (imgWidth * scaleFactor) + 'px ' +
                          (imgHeight * scaleFactor) + 'px';
-          const controlsTop = dom.getBoundingClientRect(controls.el()).top;
-          const seekBarTop = dom.getBoundingClientRect(seekBar.el()).top;
+          const controlsTop = dom.findPosition(controls.el()).top;
+          const seekBarTop = dom.findPosition(seekBar.el()).top;
           // top of seekBar is 0 position
           const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
 
