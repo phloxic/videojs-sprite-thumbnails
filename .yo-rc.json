@@ -13,6 +13,7 @@
     "pluginType": "advanced",
     "css": false,
     "precommit": true,
-    "prepush": false
+    "prepush": false,
+    "library": false
   }
 }
