@@ -62,20 +62,3 @@ QUnit.test('registers itself with video.js', function(assert) {
     'the plugin adds a class to the player'
   );
 });
-
-QUnit.test('does not initialize itself when mandatory parameter is not given', function(assert) {
-  assert.expect(1);
-
-  this.player.spriteThumbnails({
-    width: 240,
-    height: 100
-  });
-
-  // Tick the clock forward enough to trigger the player to be "ready".
-  this.clock.tick(1);
-
-  assert.ok(
-    !this.player.hasClass('vjs-sprite-thumbnails'),
-    'no plugin class added to the player'
-  );
-});
