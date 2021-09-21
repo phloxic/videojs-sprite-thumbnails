@@ -11,9 +11,9 @@ import window from 'global/window';
  *        Configuration options.
  */
 const spriteThumbs = (player, options) => {
-  const url = options.url;
-  const height = options.height;
-  const width = options.width;
+  let url = options.url;
+  let height = options.height;
+  let width = options.width;
 
   const sprite = new window.Image();
   const log = player.spriteThumbnails().log;
@@ -51,20 +51,6 @@ const spriteThumbs = (player, options) => {
       'border': '',
       'margin': ''
     });
-  };
-
-  const spriteready = () => {
-    const ready = url.length && height && width && mouseTimeDisplay;
-
-    resetMouseTooltip();
-    if (!ready) {
-      ['url', 'width', 'height'].forEach((key) => {
-        if (!options[key] || key === 'url' && !options[key].length) {
-          log('no spriteThumbnails ' + key + ' given');
-        }
-      });
-    }
-    return ready;
   };
 
   const hijackMouseTooltip = (evt) => {
@@ -111,16 +97,48 @@ const spriteThumbs = (player, options) => {
     }
   };
 
+  const spriteready = (info) => {
+    const ready = url.length && height && width && mouseTimeDisplay;
+
+    resetMouseTooltip();
+    if (ready) {
+      if (url !== sprite.src) {
+        sprite.src = url;
+      }
+      progress.on('mousemove', hijackMouseTooltip);
+      progress.on('touchmove', hijackMouseTooltip);
+    } else if (info) {
+      ['url', 'width', 'height'].forEach((key) => {
+        if (!options[key] || key === 'url' && !options[key].length) {
+          log('no spriteThumbnails ' + key + ' given');
+        }
+      });
+    }
+  };
+
   player.on('loadstart', () => {
     log.level(videojs.log.level());
   });
+  player.on('loadeddata', () => {
+    if (mouseTimeDisplay) {
+      // load sprite configured as source property
+      player.currentSources().forEach((src) => {
+        const spriteOpts = src.spriteThumbnails;
+
+        if (spriteOpts) {
+          sprite.src = '';
+          options = videojs.mergeOptions(options, spriteOpts);
+          url = options.url;
+          height = options.height;
+          width = options.width;
+        }
+      });
+      spriteready(true);
+    }
+  });
 
   // preload sprite if completely configured at plugin level
-  if (spriteready()) {
-    sprite.src = url;
-    progress.on('mousemove', hijackMouseTooltip);
-    progress.on('touchmove', hijackMouseTooltip);
-  }
+  spriteready();
   player.addClass('vjs-sprite-thumbnails');
 };
 
