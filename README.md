@@ -11,6 +11,8 @@
     - [RequireJS/AMD](#requirejsamd)
     - [CDN](#cdn)
     - [Configuration](#configuration)
+    - [Initialization](#initialization)
+    - [Playlist example](#playlist-example)
   - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -105,6 +107,59 @@ option | type | mandatory | default | description
 `height` | Integer | &#10004; |   | Height of a thumbnail in pixels.
 `interval` | Number |  | `1` | Interval between thumbnail frames in seconds.
 `responsive` | Integer |  | `600` | Width of player in pixels below which thumbnails are reponsive. Set to `0` to disable.
+
+### Initialization
+
+The plugin is initialized at player setup. This is sufficient when the player will play only one video and use its thumbnails.
+
+The plugin also monitors all video sources on
+[loadeddata](https://docs.videojs.com/player#event:loadeddata) for a `spriteThumbnails` property which configures the plugin for this specific video. A typical use case are [playlists](#playlist-example).
+
+### Playlist example
+
+```js
+var playlist = [
+  [{
+    type: 'video/webm',
+    src: 'https://example.com/video1.webm',
+
+    // only needed once, even if alternaive source is picked
+    spriteThumbnails: {
+      url: 'https://example.com/thumbnails1.jpg'
+    }
+  }, {
+    type: 'video/mp4',
+    src: 'https://example.com/video1.mp4'
+  }], [{
+    type: 'application/x-mpegurl',
+    src: 'https://example.com/video2.m3u8',
+    spriteThumbnails: {
+      url: 'https://example.com/thumbnails2.jpg'
+    }
+  }]
+];
+
+var player = videojs('myplayer', {
+  // player configuration
+  // [...]
+  // load first video in playlist
+  sources: playlist[0],
+
+  plugins: {
+    // default thumbnail settings for this player
+    spriteThumbnails: {
+      width: 160,
+      height: 90
+    }
+  }
+});
+
+// play 2nd video by clicking on button with id="secondvideo"
+videojs.on(videojs.dom.$('button#secondvideo'), 'click', function () {
+  player.src(playlist[1]);
+  player.play();
+});
+```
 
 ## License
 
