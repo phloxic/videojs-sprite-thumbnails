@@ -17,13 +17,17 @@ const Plugin = videojs.getPlugin('plugin');
  *        Interval between thumbnail frames in seconds. Default: 1.
  * @param {Integer} responsive
  *        Width of player below which thumbnails are reponsive. Default: 600.
+ * @param {Number} downlink
+ *        Minimum of NetworkInformation downlink where supported. Default: 2.
+ *        https://developer.mozilla.org/docs/Web/API/NetworkInformation/downlink
  */
 const defaults = {
   url: '',
   width: 0,
   height: 0,
   interval: 1,
-  responsive: 600
+  responsive: 600,
+  downlink: 2
 };
 
 /**
