@@ -101,6 +101,7 @@ const spriteThumbs = (player, options) => {
   };
 
   const spriteready = (info) => {
+    const spriteEvents = ['mousemove', 'touchmove'];
     const navigator = win.navigator;
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const dl = !connection || connection.downlink >= options.downlink;
@@ -112,11 +113,9 @@ const spriteThumbs = (player, options) => {
         sprites[url] = new win.Image();
         sprites[url].src = url;
       }
-      progress.on('mousemove', hijackMouseTooltip);
-      progress.on('touchmove', hijackMouseTooltip);
+      progress.on(spriteEvents, hijackMouseTooltip);
     } else if (info) {
-      progress.off('mousemove', hijackMouseTooltip);
-      progress.off('touchmove', hijackMouseTooltip);
+      progress.off(spriteEvents, hijackMouseTooltip);
       ['url', 'width', 'height'].forEach((key) => {
         if (!options[key] || key === 'url' && !options[key].length) {
           log('no spriteThumbnails ' + key + ' given');
