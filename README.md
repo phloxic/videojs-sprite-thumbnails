@@ -111,10 +111,10 @@ option | type | mandatory | default | description
 
 ### Initialization
 
-The plugin is initialized at player setup. This is sufficient when the player will play only one video and use its thumbnails.
+The plugin is initialized at player setup. This is sufficient when the player will play only one video and use its thumbnails. The single sprite image will be preloaded at player setup, usually on page load.
 
 The plugin also monitors all video sources on
-[loadeddata](https://docs.videojs.com/player#event:loadeddata) for a `spriteThumbnails` property which configures the plugin for this specific video. A typical use case are [playlists](#playlist-example).
+[loadstart](https://docs.videojs.com/player#event:loadstart) for a `spriteThumbnails` property which configures the plugin for this specific video. A typical use case are [playlists](#playlist-example). Each sprite image is loaded before playback of the video to which it pertains.
 
 ### Playlist example
 

@@ -100,24 +100,30 @@ const spriteThumbs = (player, options) => {
     }
   };
 
-  const spriteready = (info) => {
+  const spriteready = (preload) => {
     const spriteEvents = ['mousemove', 'touchmove'];
     const navigator = win.navigator;
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const dl = !connection || connection.downlink >= options.downlink;
-    const ready = url.length && height && width && mouseTimeDisplay && dl;
+    const ready = mouseTimeDisplay && dl && (width && height || preload);
     const cached = sprites[url];
 
-    if (ready || cached) {
+    resetMouseTooltip();
+
+    if (ready && (url || cached)) {
       if (!cached) {
         sprites[url] = new win.Image();
         sprites[url].src = url;
       }
-      progress.on(spriteEvents, hijackMouseTooltip);
-    } else if (info) {
+      if (preload) {
+        log.debug('preloading ' + url);
+      } else {
+        progress.on(spriteEvents, hijackMouseTooltip);
+      }
+    } else if (!preload) {
       progress.off(spriteEvents, hijackMouseTooltip);
       ['url', 'width', 'height'].forEach((key) => {
-        if (!options[key] || key === 'url' && !options[key].length) {
+        if (!options[key]) {
           log('no spriteThumbnails ' + key + ' given');
         }
       });
@@ -127,29 +133,28 @@ const spriteThumbs = (player, options) => {
     }
   };
 
+  log.level(player.log.level());
+
+  // preload sprite image if url configured at plugin level
+  // NOTE: must be called before loadstart, otherwise
+  // neither this call nor the first loadstart has any effect
+  spriteready(true);
+
   player.on('loadstart', () => {
-    log.level(videojs.log.level());
-    resetMouseTooltip();
-  });
-  player.on('loadeddata', () => {
-    if (mouseTimeDisplay) {
-      // load sprite configured as source property
-      player.currentSources().forEach((src) => {
-        const spriteOpts = src.spriteThumbnails;
+    // load sprite configured as source property
+    player.currentSources().forEach((src) => {
+      const spriteOpts = src.spriteThumbnails;
 
-        if (spriteOpts) {
-          options = videojs.mergeOptions(options, spriteOpts);
-          url = options.url;
-          height = options.height;
-          width = options.width;
-        }
-      });
-      spriteready(true);
-    }
+      if (spriteOpts) {
+        options = videojs.mergeOptions(options, spriteOpts);
+        url = options.url;
+        height = options.height;
+        width = options.width;
+      }
+    });
+    spriteready();
   });
 
-  // preload sprite if completely configured at plugin level
-  spriteready();
   player.addClass('vjs-sprite-thumbnails');
 };
 
