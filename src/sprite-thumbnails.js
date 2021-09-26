@@ -16,8 +16,6 @@ const spriteThumbs = (player, options) => {
   let width = options.width;
 
   const sprites = {};
-
-  const win = window;
   const log = player.spriteThumbnails().log;
 
   const dom = videojs.dom || videojs;
@@ -27,9 +25,10 @@ const spriteThumbs = (player, options) => {
   const mouseTimeDisplay = seekBar.mouseTimeDisplay;
 
   const tooltipStyle = (obj) => {
+    const ttstyle = mouseTimeDisplay.timeTooltip.el().style;
+
     Object.keys(obj).forEach((key) => {
       const val = obj[key];
-      const ttstyle = mouseTimeDisplay.timeTooltip.el().style;
 
       if (val !== '') {
         ttstyle.setProperty(key, val);
@@ -102,6 +101,7 @@ const spriteThumbs = (player, options) => {
 
   const spriteready = (preload) => {
     const spriteEvents = ['mousemove', 'touchmove'];
+    const win = window;
     const navigator = win.navigator;
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const dl = !connection || connection.downlink >= options.downlink;
