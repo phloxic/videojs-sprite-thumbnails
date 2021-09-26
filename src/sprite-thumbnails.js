@@ -128,7 +128,7 @@ const spriteThumbs = (player, options) => {
         }
       });
       if (!dl) {
-        log('connection to slow, not loading thumbnails');
+        log('connection too slow, not loading thumbnails');
       }
     }
   };
