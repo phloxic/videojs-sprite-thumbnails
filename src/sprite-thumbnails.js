@@ -117,9 +117,8 @@ const spriteThumbs = (player, options) => {
       }
       if (preload) {
         log.debug('preloading ' + url);
-      } else {
-        progress.on(spriteEvents, hijackMouseTooltip);
       }
+      progress.on(spriteEvents, hijackMouseTooltip);
     } else if (!preload) {
       progress.off(spriteEvents, hijackMouseTooltip);
       ['url', 'width', 'height'].forEach((key) => {
