@@ -105,12 +105,12 @@ const spriteThumbs = (player, options) => {
     const navigator = win.navigator;
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const dl = !connection || connection.downlink >= options.downlink;
-    const ready = mouseTimeDisplay && dl && (width && height || preload);
+    const ready = mouseTimeDisplay && (width && height || preload);
     const cached = sprites[url];
 
     resetMouseTooltip();
 
-    if (ready && (url || cached)) {
+    if (ready && (url && dl || cached)) {
       if (!cached) {
         sprites[url] = new win.Image();
         sprites[url].src = url;
