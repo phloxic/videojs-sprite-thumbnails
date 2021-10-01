@@ -103,36 +103,40 @@ const spriteThumbs = (player, options) => {
     const spriteEvents = ['mousemove', 'touchmove'];
     const win = window;
     const navigator = win.navigator;
+    const downlink = options.downlink;
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const dl = !connection || connection.downlink >= options.downlink;
+    const dl = !connection || connection.downlink >= downlink;
     const ready = mouseTimeDisplay && (width && height || preload);
     const cached = sprites[url];
 
     resetMouseTooltip();
 
     if (ready && (url && dl || cached)) {
+      let msg = 'loading ' + url;
+
       if (!cached) {
         sprites[url] = new win.Image();
         sprites[url].src = url;
+        if (preload) {
+          msg = 'pre' + msg;
+        }
+      } else {
+        msg = 're' + msg;
       }
-      if (preload) {
-        log.debug('preloading ' + url);
-      }
+      log.debug(msg);
       progress.on(spriteEvents, hijackMouseTooltip);
     } else if (!preload) {
       progress.off(spriteEvents, hijackMouseTooltip);
       ['url', 'width', 'height'].forEach((key) => {
         if (!options[key]) {
-          log('no spriteThumbnails ' + key + ' given');
+          log('no thumbnails ' + key + ' given');
         }
       });
       if (!dl) {
-        log('connection too slow, not loading thumbnails');
+        log.warn('connection.downlink < ' + downlink);
       }
     }
   };
-
-  log.level(player.log.level());
 
   // preload sprite image if url configured at plugin level
   // NOTE: must be called before loadstart, otherwise

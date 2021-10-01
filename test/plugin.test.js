@@ -29,8 +29,6 @@ QUnit.module('videojs-sprite-thumbnails', {
     this.video = document.createElement('video');
     this.fixture.appendChild(this.video);
     this.player = videojs(this.video);
-    // test this plugin with controls enabled
-    this.player.controls(true);
   },
 
   afterEach() {
@@ -52,7 +50,7 @@ QUnit.test('registers itself with video.js', function(assert) {
     url: 'https://raw.githubusercontent.com/phloxic/videojs-sprite-thumbnails/master/img/oceans-thumbs.jpg',
     width: 240,
     height: 100
-  });
+  }).log.level('debug');
 
   // Tick the clock forward enough to trigger the player to be "ready".
   this.clock.tick(1);
