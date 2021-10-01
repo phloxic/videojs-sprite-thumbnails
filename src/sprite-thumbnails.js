@@ -7,10 +7,12 @@ import window from 'global/window';
  * @function spriteThumbs
  * @param {Player} player
  *        The current player instance.
+ * @param {Plugin} plugin
+ *        The current spriteThumbnails plugin instance.
  * @param {Object} options
- *        Configuration options.
+ *        Plugin configuration options.
  */
-const spriteThumbs = (player, options) => {
+const spriteThumbs = (player, plugin, options) => {
   let url = options.url;
   let height = options.height;
   let width = options.width;
@@ -18,7 +20,6 @@ const spriteThumbs = (player, options) => {
   let isPreloading = false;
 
   const sprites = {};
-  const log = player.spriteThumbnails().log;
 
   const dom = videojs.dom || videojs;
   const controls = player.controlBar;
@@ -105,11 +106,16 @@ const spriteThumbs = (player, options) => {
     const spriteEvents = ['mousemove', 'touchmove'];
     const win = window;
     const navigator = win.navigator;
+    const log = plugin.log;
     const downlink = options.downlink;
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const dl = !connection || connection.downlink >= downlink;
     const ready = mouseTimeDisplay && (width && height || preload);
     const cached = sprites[url];
+
+    const setReady = (bool) => {
+      plugin.setState({ready: bool});
+    };
 
     resetMouseTooltip();
 
@@ -128,8 +134,10 @@ const spriteThumbs = (player, options) => {
       }
       log.debug(msg);
       progress.on(spriteEvents, hijackMouseTooltip);
+      setReady(true);
     } else if (!preload) {
       progress.off(spriteEvents, hijackMouseTooltip);
+      setReady();
       ['url', 'width', 'height'].forEach((key) => {
         if (!options[key]) {
           log('no thumbnails ' + key + ' given');

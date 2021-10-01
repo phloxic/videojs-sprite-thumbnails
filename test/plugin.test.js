@@ -38,7 +38,7 @@ QUnit.module('videojs-sprite-thumbnails', {
 });
 
 QUnit.test('registers itself with video.js', function(assert) {
-  assert.expect(2);
+  assert.expect(4);
 
   assert.strictEqual(
     typeof Player.prototype.spriteThumbnails,
@@ -52,11 +52,23 @@ QUnit.test('registers itself with video.js', function(assert) {
     height: 100
   }).log.level('debug');
 
+  assert.strictEqual(
+    this.player.spriteThumbnails().state.ready,
+    false,
+    'the plugin is not ready to show thumbnails'
+  );
+
   // Tick the clock forward enough to trigger the player to be "ready".
   this.clock.tick(1);
 
   assert.ok(
     this.player.hasClass('vjs-sprite-thumbnails'),
     'the plugin adds a class to the player'
+  );
+
+  assert.strictEqual(
+    this.player.spriteThumbnails().state.ready,
+    true,
+    'the plugin is now able to show thumbnails'
   );
 });
