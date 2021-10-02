@@ -15,6 +15,8 @@ const spriteThumbs = (player, options) => {
   let height = options.height;
   let width = options.width;
 
+  let isPreloading = false;
+
   const sprites = {};
   const log = player.spriteThumbnails().log;
 
@@ -118,6 +120,7 @@ const spriteThumbs = (player, options) => {
         sprites[url] = new win.Image();
         sprites[url].src = url;
         if (preload) {
+          isPreloading = true;
           msg = 'pre' + msg;
         }
       } else {
@@ -144,18 +147,22 @@ const spriteThumbs = (player, options) => {
   spriteready(true);
 
   player.on('loadstart', () => {
-    // load sprite configured as source property
-    player.currentSources().forEach((src) => {
-      const spriteOpts = src.spriteThumbnails;
+    if (isPreloading) {
+      isPreloading = false;
+    } else {
+      // load sprite configured as source property
+      player.currentSources().forEach((src) => {
+        const spriteOpts = src.spriteThumbnails;
 
-      if (spriteOpts) {
-        options = videojs.mergeOptions(options, spriteOpts);
-        url = options.url;
-        height = options.height;
-        width = options.width;
-      }
-    });
-    spriteready();
+        if (spriteOpts) {
+          options = videojs.mergeOptions(options, spriteOpts);
+          url = options.url;
+          height = options.height;
+          width = options.width;
+        }
+      });
+      spriteready();
+    }
   });
 
   player.addClass('vjs-sprite-thumbnails');
