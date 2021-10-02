@@ -13,6 +13,7 @@
     - [Configuration](#configuration)
     - [Initialization](#initialization)
     - [Playlist example](#playlist-example)
+    - [Debugging](#debugging)
   - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -160,6 +161,25 @@ videojs.on(videojs.dom.$('button#secondvideo'), 'click', function () {
   player.src(playlist[1]);
   player.play();
 });
+```
+
+### Debugging
+
+Each plugin instance has its own [log](https://docs.videojs.com/tutorial-plugins.html#logging) which can be used for targeted debugging. Its verbosity can be set by calling the player's [plugin name property](https://docs.videojs.com/tutorial-plugins.html#the-player-plugin-name-property):
+
+```js
+player.spriteThumbnails().log.level('debug');
+```
+
+The call can also be chained directly to the [manual plugin setup](https://docs.videojs.com/tutorial-plugins.html#setting-up-a-plugin):
+
+```js
+var player = videojs('example-player');
+player.spriteThumbnails({
+  url: 'https://example.com/thumbnails.jpg',
+  width: 240,
+  height: 100
+}).log.level('debug');
 ```
 
 ## License
