@@ -1,3 +1,41 @@
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v0.5.3...v0.6.0) (2021-10-03)
+
+### Features
+
+* ability to load thumbnails specific to video sources ([#14](https://github.com/phloxic/videojs-sprite-thumbnails/issues/14)) ([9a5a1a6](https://github.com/phloxic/videojs-sprite-thumbnails/commit/9a5a1a6))
+* introduce plugin ready state ([7b151b4](https://github.com/phloxic/videojs-sprite-thumbnails/commit/7b151b4))
+* start loading sprites before playback commences ([#17](https://github.com/phloxic/videojs-sprite-thumbnails/issues/17)) ([f8f462e](https://github.com/phloxic/videojs-sprite-thumbnails/commit/f8f462e))
+
+### Bug Fixes
+
+* actually enable plugin when preloading ([ae40e45](https://github.com/phloxic/videojs-sprite-thumbnails/commit/ae40e45))
+* clean up logging ([0d39e4b](https://github.com/phloxic/videojs-sprite-thumbnails/commit/0d39e4b))
+* do not try to load image while it is preloading ([356e325](https://github.com/phloxic/videojs-sprite-thumbnails/commit/356e325))
+* ensure default control bar component tree is present ([8e6e2ac](https://github.com/phloxic/videojs-sprite-thumbnails/commit/8e6e2ac))
+* load cached image even when slow connection detected ([2332aaa](https://github.com/phloxic/videojs-sprite-thumbnails/commit/2332aaa))
+* typo in log message ([67d4f37](https://github.com/phloxic/videojs-sprite-thumbnails/commit/67d4f37))
+
+### Chores
+
+* **deps:** bump http-proxy from 1.18.0 to 1.18.1 ([39ded31](https://github.com/phloxic/videojs-sprite-thumbnails/commit/39ded31))
+* **deps:** bump ini from 1.3.5 to 1.3.7 ([8ba3b38](https://github.com/phloxic/videojs-sprite-thumbnails/commit/8ba3b38))
+* **deps:** bump lodash from 4.17.15 to 4.17.19 ([cf3ec7f](https://github.com/phloxic/videojs-sprite-thumbnails/commit/cf3ec7f))
+* **package:** generator-videojs-plugin 8.0.0 ([7a39775](https://github.com/phloxic/videojs-sprite-thumbnails/commit/7a39775))
+* **package:** update author details ([009c31f](https://github.com/phloxic/videojs-sprite-thumbnails/commit/009c31f))
+
+### Code Refactoring
+
+* determine mouse position based on getPointerPosition ([bcdb8fc](https://github.com/phloxic/videojs-sprite-thumbnails/commit/bcdb8fc))
+* list sprite event types in array ([64d43b6](https://github.com/phloxic/videojs-sprite-thumbnails/commit/64d43b6))
+* make player level (only) configuration obvious ([b85f57d](https://github.com/phloxic/videojs-sprite-thumbnails/commit/b85f57d))
+* relocate 2 variable declarations ([0b6b683](https://github.com/phloxic/videojs-sprite-thumbnails/commit/0b6b683))
+* use findPosition to obtain seek and control bar top offsets ([d663eba](https://github.com/phloxic/videojs-sprite-thumbnails/commit/d663eba))
+
+### Tests
+
+* omit check absence of vjs-sprite-thumbnails class conditional ([44e6db4](https://github.com/phloxic/videojs-sprite-thumbnails/commit/44e6db4))
+
 <a name="0.5.3"></a>
 ## [0.5.3](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v0.5.2...v0.5.3) (2020-04-17)
 
