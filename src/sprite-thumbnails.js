@@ -23,12 +23,15 @@ const spriteThumbs = (player, plugin, options) => {
 
   const dom = videojs.dom || videojs;
   const controls = player.controlBar;
-  const progress = controls.progressControl;
-  const seekBar = progress.seekBar;
-  const mouseTimeDisplay = seekBar.mouseTimeDisplay;
+
+  // default control bar component tree is expected
+  // https://docs.videojs.com/tutorial-components.html#default-component-tree
+  const progress = controls && controls.progressControl;
+  const seekBar = progress && progress.seekBar;
+  const mouseTimeTooltip = seekBar && seekBar.mouseTimeDisplay && seekBar.mouseTimeDisplay.timeTooltip;
 
   const tooltipStyle = (obj) => {
-    const ttstyle = mouseTimeDisplay.timeTooltip.el().style;
+    const ttstyle = mouseTimeTooltip.el().style;
 
     Object.keys(obj).forEach((key) => {
       const val = obj[key];
@@ -110,14 +113,16 @@ const spriteThumbs = (player, plugin, options) => {
     const downlink = options.downlink;
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const dl = !connection || connection.downlink >= downlink;
-    const ready = mouseTimeDisplay && (width && height || preload);
+    const ready = mouseTimeTooltip && (width && height || preload);
     const cached = sprites[url];
 
     const setReady = (bool) => {
       plugin.setState({ready: bool});
     };
 
-    resetMouseTooltip();
+    if (mouseTimeTooltip) {
+      resetMouseTooltip();
+    }
 
     if (ready && (url && dl || cached)) {
       let msg = 'loading ' + url;
