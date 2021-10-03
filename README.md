@@ -14,6 +14,7 @@
     - [Initialization](#initialization)
     - [Playlist example](#playlist-example)
     - [Debugging](#debugging)
+  - [Constraints](#constraints)
   - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -25,7 +26,7 @@ Plugin to display thumbnails from a sprite image when hovering over the progress
 ## Features
 
 - easy to [configure](#configuration)
-- uses existing hover position display element
+- uses [existing mouse time tooltip](#constraints)
 - focuses on use case of thumbnails combined in a sprite image only
 
 ## Installation
@@ -181,6 +182,12 @@ player.spriteThumbnails({
   height: 100
 }).log.level('debug');
 ```
+
+## Constraints
+
+- To display thumbnails the plugin expects the control bar in its [default tree structure](https://docs.videojs.com/tutorial-components.html#default-component-tree) to be present.
+- On some devices the [mouse time display](https://docs.videojs.com/mousetimedisplay) its [time tooltip](https://docs.videojs.com/timetooltip) are disabled by default, and consequently thumbnails will not be shown.
+- Live streams are not supported.
 
 ## License
 
