@@ -186,7 +186,7 @@ player.spriteThumbnails({
 ## Constraints
 
 - To display thumbnails the plugin expects the control bar in its [default tree structure](https://docs.videojs.com/tutorial-components.html#default-component-tree) to be present.
-- On some devices the [mouse time display](https://docs.videojs.com/mousetimedisplay) its [time tooltip](https://docs.videojs.com/timetooltip) are disabled by default, and consequently thumbnails will not be shown.
+- On some devices the [mouse time display](https://docs.videojs.com/mousetimedisplay) and its [time tooltip](https://docs.videojs.com/timetooltip) are disabled by default, and consequently thumbnails will not be shown.
 - Live streams are not supported.
 
 ## License
