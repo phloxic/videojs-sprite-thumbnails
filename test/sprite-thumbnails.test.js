@@ -6,7 +6,7 @@ import videojs from 'video.js';
 
 import plugin from '../src/plugin';
 
-const Player = videojs.getComponent('Player');
+// const Player = videojs.getComponent('Player');
 
 QUnit.test('the environment is sane', function(assert) {
   assert.strictEqual(typeof Array.isArray, 'function', 'es5 exists');
@@ -37,14 +37,8 @@ QUnit.module('videojs-sprite-thumbnails', {
   }
 });
 
-QUnit.test('registers itself with video.js', function(assert) {
+QUnit.test('changes ready state', function(assert) {
   assert.expect(2);
-
-  assert.strictEqual(
-    typeof Player.prototype.spriteThumbnails,
-    'function',
-    'videojs-sprite-thumbnails plugin was registered'
-  );
 
   this.player.spriteThumbnails({
     url: 'https://raw.githubusercontent.com/phloxic/videojs-sprite-thumbnails/master/img/oceans-thumbs.jpg',
@@ -52,11 +46,18 @@ QUnit.test('registers itself with video.js', function(assert) {
     height: 100
   }).log.level('debug');
 
+  assert.strictEqual(
+    this.player.spriteThumbnails().state.ready,
+    false,
+    'the plugin is not ready to show thumbnails'
+  );
+
   // Tick the clock forward enough to trigger the player to be "ready".
   this.clock.tick(1);
 
-  assert.ok(
-    this.player.hasClass('vjs-sprite-thumbnails'),
-    'the plugin adds a class to the player'
+  assert.strictEqual(
+    this.player.spriteThumbnails().state.ready,
+    true,
+    'the plugin is now able to show thumbnails'
   );
 });
