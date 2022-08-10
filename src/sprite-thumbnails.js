@@ -16,10 +16,15 @@ const spriteThumbs = (player, plugin, options) => {
   let url = options.url;
   let height = options.height;
   let width = options.width;
+  let cached;
+  let dl;
 
-  let isPreloading = false;
+  const navigator = window.navigator;
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 
   const sprites = {};
+  const log = plugin.log;
+  const spriteEvents = ['mousemove', 'touchmove'];
 
   const dom = videojs.dom || videojs;
   const controls = player.controlBar;
@@ -86,77 +91,60 @@ const spriteThumbs = (player, plugin, options) => {
     }
   };
 
-  const spriteready = (preload) => {
-    const spriteEvents = ['mousemove', 'touchmove'];
-    const win = window;
-    const navigator = win.navigator;
-    const log = plugin.log;
-    const downlink = options.downlink;
-    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const dl = !connection || connection.downlink >= downlink;
-    const ready = mouseTimeTooltip && (width && height || preload);
-    const cached = sprites[url];
+  plugin.on('statechanged', () => {
+    const pstate = plugin.state;
 
-    const setReady = (bool) => {
-      plugin.setState({ready: bool});
-    };
-
-    if (mouseTimeTooltip) {
-      resetMouseTooltip();
-    }
-
-    if (ready && (url && dl || cached)) {
+    if (pstate.ready) {
       let msg = 'loading ' + url;
 
+      log.debug('ready to show thumbnails');
       if (!cached) {
-        sprites[url] = new win.Image();
-        sprites[url].src = url;
-        if (preload) {
-          isPreloading = true;
-          msg = 'pre' + msg;
-        }
+        sprites[url] = dom.createEl('img', {
+          src: url
+        });
       } else {
         msg = 're' + msg;
       }
       log.debug(msg);
       progress.on(spriteEvents, hijackMouseTooltip);
-      setReady(true);
-    } else if (!preload) {
+    } else {
       progress.off(spriteEvents, hijackMouseTooltip);
-      setReady();
-      ['url', 'width', 'height'].forEach((key) => {
-        if (!options[key]) {
-          log('no thumbnails ' + key + ' given');
+      resetMouseTooltip();
+      if (pstate.diagnostics) {
+        log.debug('resetting');
+        ['url', 'width', 'height'].forEach((key) => {
+          if (!options[key]) {
+            log('no thumbnails ' + key + ' given');
+          }
+        });
+        if (connection && !dl) {
+          log.warn('connection.downlink < ' + options.downlink);
         }
-      });
-      if (!dl) {
-        log.warn('connection.downlink < ' + downlink);
       }
     }
-  };
-
-  // preload sprite image if url configured at plugin level
-  // NOTE: must be called before loadstart, otherwise
-  // neither this call nor the first loadstart has any effect
-  spriteready(true);
+  });
 
   player.on('loadstart', () => {
-    if (isPreloading) {
-      isPreloading = false;
-    } else {
-      // load sprite configured as source property
-      player.currentSources().forEach((src) => {
-        const spriteOpts = src.spriteThumbnails;
+    plugin.setState({ready: false, diagnostics: false});
 
-        if (spriteOpts) {
-          options = videojs.mergeOptions(options, spriteOpts);
-          url = options.url;
-          height = options.height;
-          width = options.width;
-        }
-      });
-      spriteready();
-    }
+    player.currentSources().forEach((src) => {
+      const spriteOpts = src.spriteThumbnails;
+
+      if (spriteOpts) {
+        options = videojs.mergeOptions(options, spriteOpts);
+        url = options.url;
+        height = options.height;
+        width = options.width;
+      }
+    });
+
+    dl = !connection || connection.downlink >= options.downlink;
+    cached = sprites[url];
+
+    plugin.setState({
+      ready: mouseTimeTooltip && width && height && url && (dl || cached),
+      diagnostics: true
+    });
   });
 
   player.addClass('vjs-sprite-thumbnails');
