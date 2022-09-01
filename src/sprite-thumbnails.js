@@ -29,35 +29,13 @@ const spriteThumbs = (player, plugin, options) => {
   const progress = controls && controls.progressControl;
   const seekBar = progress && progress.seekBar;
   const mouseTimeTooltip = seekBar && seekBar.mouseTimeDisplay && seekBar.mouseTimeDisplay.timeTooltip;
-
-  const tooltipStyle = (obj) => {
-    const ttstyle = mouseTimeTooltip.el().style;
-
-    Object.keys(obj).forEach((key) => {
-      const val = obj[key];
-
-      if (val !== '') {
-        ttstyle.setProperty(key, val);
-      } else {
-        ttstyle.removeProperty(key);
-      }
-    });
-  };
+  const tooltipEl = mouseTimeTooltip && mouseTimeTooltip.el();
+  const tooltipStyleOrig = tooltipEl && tooltipEl.style;
 
   const resetMouseTooltip = () => {
-    tooltipStyle({
-      'width': '',
-      'height': '',
-      'background-image': '',
-      'background-repeat': '',
-      'background-position': '',
-      'background-size': '',
-      'top': '',
-      'color': '',
-      'text-shadow': '',
-      'border': '',
-      'margin': ''
-    });
+    if (tooltipEl && tooltipStyleOrig) {
+      tooltipEl.style = tooltipStyleOrig;
+    }
   };
 
   const hijackMouseTooltip = (evt) => {
@@ -86,8 +64,7 @@ const spriteThumbs = (player, plugin, options) => {
       const seekBarTop = dom.findPosition(seekBarEl).top;
       // top of seekBar is 0 position
       const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
-
-      tooltipStyle({
+      const tooltipStyle = {
         'width': scaledWidth + 'px',
         'height': scaledHeight + 'px',
         'background-image': 'url(' + url + ')',
@@ -99,6 +76,10 @@ const spriteThumbs = (player, plugin, options) => {
         'text-shadow': '1px 1px #000',
         'border': '1px solid #000',
         'margin': '0 1px'
+      };
+
+      Object.keys(tooltipStyle).forEach((key) => {
+        tooltipEl.style.setProperty(key, tooltipStyle[key]);
       });
     } else {
       resetMouseTooltip();
