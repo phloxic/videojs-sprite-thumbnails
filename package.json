@@ -86,6 +86,6 @@
     "videojs-generate-karma-config": "~8.0.0",
     "videojs-generate-rollup-config": "~6.2.0",
     "videojs-generator-verify": "~3.0.3",
-    "videojs-standard": "^8.0.4"
+    "videojs-standard": "^9.0.1"
   }
 }
