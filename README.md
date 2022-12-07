@@ -108,7 +108,7 @@ option | type | mandatory | default | description
 `width` | Integer | &#10004; |  | Width of a thumbnail in pixels.
 `height` | Integer | &#10004; |   | Height of a thumbnail in pixels.
 `interval` | Number |  | `1` | Interval between thumbnail frames in seconds.
-`responsive` | Integer |  | `600` | Width of player in pixels below which thumbnails are reponsive. Set to `0` to disable.
+`responsive` | Integer |  | `600` | Width of player in pixels below which thumbnails are responsive. Set to `0` to disable.
 `downlink` | Number |  | `2` | Minimum of required [NetworkInformation downlink][downlink] where supported. Set to `0` to disable.
 
 ### Initialization
