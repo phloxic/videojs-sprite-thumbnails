@@ -48,13 +48,12 @@ class SpriteThumbnails extends Plugin {
    */
   constructor(player, options) {
     // the parent class will add player under this.player
-    super(player);
-    const that = this;
+    super(player, options);
 
-    that.options = videojs.mergeOptions(defaults, options);
+    this.options = videojs.mergeOptions(defaults, options);
 
-    that.player.ready(() => {
-      spriteThumbs(that.player, that, that.options);
+    this.player.ready(() => {
+      spriteThumbs(this.player, this, this.options);
     });
   }
 }
