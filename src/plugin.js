@@ -50,7 +50,7 @@ class SpriteThumbnails extends Plugin {
     // the parent class will add player under this.player
     super(player, options);
 
-    this.options = videojs.mergeOptions(defaults, options);
+    this.options = videojs.obj.merge(defaults, options);
 
     this.player.ready(() => {
       this.setState(this.defaultState);

@@ -24,7 +24,7 @@ const spriteThumbs = (player, plugin, options) => {
 
   const sprites = {};
 
-  const dom = videojs.dom || videojs;
+  const dom = videojs.dom;
   const controls = player.controlBar;
 
   // default control bar component tree is expected
@@ -104,8 +104,8 @@ const spriteThumbs = (player, plugin, options) => {
   plugin.on('statechanged', () => {
     const pstate = plugin.state;
     const spriteEvents = ['mousemove', 'touchmove'];
-    const log = plugin.log || videojs.log;
-    const debug = log.debug || log;
+    const log = plugin.log;
+    const debug = log.debug;
 
     if (pstate.ready) {
       let msg = `loading ${url}`;
@@ -144,7 +144,7 @@ const spriteThumbs = (player, plugin, options) => {
 
       if (spriteOpts) {
         plugin.setState({ready: false, diagnostics: false});
-        options = videojs.mergeOptions(options, spriteOpts);
+        options = videojs.obj.merge(options, spriteOpts);
         url = spriteOpts.url;
         height = options.height;
         width = options.width;

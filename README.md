@@ -25,7 +25,7 @@ Plugin to display thumbnails from a sprite image when hovering over the progress
 
 ## Compatibility
 
-This plugin version is compatible with Video.js v7.x and v6.x.
+This plugin version is compatible with Video.js v8.x.
 
 ## Features
 
