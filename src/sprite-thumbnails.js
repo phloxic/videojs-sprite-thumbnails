@@ -23,8 +23,6 @@ const spriteThumbs = (player, plugin, options) => {
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 
   const sprites = {};
-  const log = plugin.log;
-  const spriteEvents = ['mousemove', 'touchmove'];
 
   const dom = videojs.dom || videojs;
   const controls = player.controlBar;
@@ -93,6 +91,8 @@ const spriteThumbs = (player, plugin, options) => {
 
   plugin.on('statechanged', () => {
     const pstate = plugin.state;
+    const spriteEvents = ['mousemove', 'touchmove'];
+    const log = plugin.log;
 
     if (pstate.ready) {
       let msg = 'loading ' + url;
