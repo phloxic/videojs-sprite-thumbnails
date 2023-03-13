@@ -92,12 +92,13 @@ const spriteThumbs = (player, plugin, options) => {
   plugin.on('statechanged', () => {
     const pstate = plugin.state;
     const spriteEvents = ['mousemove', 'touchmove'];
-    const log = plugin.log;
+    const log = plugin.log || videojs.log;
+    const debug = log.debug || log;
 
     if (pstate.ready) {
       let msg = 'loading ' + url;
 
-      log.debug('ready to show thumbnails');
+      debug('ready to show thumbnails');
       if (!cached) {
         sprites[url] = dom.createEl('img', {
           src: url
@@ -105,13 +106,13 @@ const spriteThumbs = (player, plugin, options) => {
       } else {
         msg = 're' + msg;
       }
-      log.debug(msg);
+      debug(msg);
       progress.on(spriteEvents, hijackMouseTooltip);
     } else {
       progress.off(spriteEvents, hijackMouseTooltip);
       resetMouseTooltip();
       if (pstate.diagnostics) {
-        log.debug('resetting');
+        debug('resetting');
         ['url', 'width', 'height'].forEach((key) => {
           if (!options[key]) {
             log('no thumbnails ' + key + ' given');
