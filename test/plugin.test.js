@@ -47,7 +47,7 @@ QUnit.test('registers itself with video.js', function(assert) {
   );
 
   this.player.spriteThumbnails({
-    url: 'https://raw.githubusercontent.com/phloxic/videojs-sprite-thumbnails/master/img/oceans-thumbs.jpg',
+    url: '../img/oceans-thumbs.jpg',
     width: 240,
     height: 100
   }).log.level('debug');

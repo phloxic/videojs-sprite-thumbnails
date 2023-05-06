@@ -38,10 +38,10 @@ QUnit.module('videojs-sprite-thumbnails', {
 });
 
 QUnit.test('changes ready state', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   this.player.spriteThumbnails({
-    url: 'https://raw.githubusercontent.com/phloxic/videojs-sprite-thumbnails/master/img/oceans-thumbs.jpg',
+    url: '../img/oceans-thumbs.jpg',
     width: 240,
     height: 100
   }).log.level('debug');
@@ -54,10 +54,21 @@ QUnit.test('changes ready state', function(assert) {
 
   // Tick the clock forward enough to trigger the player to be "ready".
   this.clock.tick(1);
+  this.player.trigger('ready');
 
   assert.strictEqual(
     this.player.spriteThumbnails().state.ready,
     true,
-    'the plugin is now able to show thumbnails'
+    'the plugin is now able to show thumbnails on ready'
+  );
+
+  this.player.spriteThumbnails().setState({ready: false});
+  this.player.src({src: 'dummy.mp4', spriteThumbnails: {url: '../img/oceans-thumb.jpg'}});
+  this.player.trigger('loadstart');
+
+  assert.strictEqual(
+    this.player.spriteThumbnails().state.ready,
+    true,
+    'the plugin is now able to show thumbnails on loadstart'
   );
 });
