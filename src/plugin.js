@@ -53,13 +53,14 @@ class SpriteThumbnails extends Plugin {
     this.options = videojs.mergeOptions(defaults, options);
 
     this.player.ready(() => {
+      this.setState(this.defaultState);
       spriteThumbs(this.player, this, this.options);
     });
   }
 }
 
 // Define default values for the plugin's `state` object here.
-SpriteThumbnails.defaultState = {};
+SpriteThumbnails.defaultState = {ready: false, diagnostics: false};
 
 // Include the version number.
 SpriteThumbnails.VERSION = VERSION;

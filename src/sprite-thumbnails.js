@@ -89,6 +89,16 @@ const spriteThumbs = (player, plugin, options) => {
     }
   };
 
+  const loadsprite = () => {
+    dl = !connection || connection.downlink >= options.downlink;
+    cached = sprites[url];
+
+    plugin.setState({
+      ready: mouseTimeTooltip && width && height && url && (dl || cached),
+      diagnostics: true
+    });
+  };
+
   plugin.on('statechanged', () => {
     const pstate = plugin.state;
     const spriteEvents = ['mousemove', 'touchmove'];
@@ -125,26 +135,20 @@ const spriteThumbs = (player, plugin, options) => {
     }
   });
 
+  player.on('ready', loadsprite);
   player.on('loadstart', () => {
-    plugin.setState({ready: false, diagnostics: false});
-
     player.currentSources().forEach((src) => {
       const spriteOpts = src.spriteThumbnails;
 
       if (spriteOpts) {
+        plugin.setState({ready: false, diagnostics: false});
         options = videojs.mergeOptions(options, spriteOpts);
-        url = options.url;
+        url = spriteOpts.url;
         height = options.height;
         width = options.width;
+
+        loadsprite();
       }
-    });
-
-    dl = !connection || connection.downlink >= options.downlink;
-    cached = sprites[url];
-
-    plugin.setState({
-      ready: mouseTimeTooltip && width && height && url && (dl || cached),
-      diagnostics: true
     });
   });
 
