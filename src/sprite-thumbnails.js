@@ -68,21 +68,21 @@ const spriteThumbs = (player, plugin, options) => {
       // top of seekBar is 0 position
       const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
       const tooltipStyle = {
-        'width': scaledWidth + 'px',
-        'height': scaledHeight + 'px',
-        'background-image': 'url("' + url + '")',
-        'background-repeat': 'no-repeat',
-        'background-position': cleft + 'px ' + ctop + 'px',
-        'background-size': bgSize,
-        'top': topOffset + 'px',
-        'color': '#fff',
-        'text-shadow': '1px 1px #000',
-        'border': '1px solid #000',
-        'margin': '0 1px'
+        width: scaledWidth + 'px',
+        height: scaledHeight + 'px',
+        backgroundImage: 'url("' + url + '")',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: cleft + 'px ' + ctop + 'px',
+        backgroundSize: bgSize,
+        top: topOffset + 'px',
+        color: '#fff',
+        textShadow: '1px 1px #000',
+        border: '1px solid #000',
+        margin: '0 1px'
       };
 
       Object.keys(tooltipStyle).forEach((key) => {
-        tooltipEl.style.setProperty(key, tooltipStyle[key]);
+        tooltipEl.style[key] = tooltipStyle[key];
       });
     } else {
       resetMouseTooltip();
