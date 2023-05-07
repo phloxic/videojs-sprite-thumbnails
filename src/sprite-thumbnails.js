@@ -70,7 +70,7 @@ const spriteThumbs = (player, plugin, options) => {
       const tooltipStyle = {
         'width': scaledWidth + 'px',
         'height': scaledHeight + 'px',
-        'background-image': 'url(' + url + ')',
+        'background-image': 'url("' + url + '")',
         'background-repeat': 'no-repeat',
         'background-position': cleft + 'px ' + ctop + 'px',
         'background-size': bgSize,
