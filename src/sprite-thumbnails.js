@@ -61,20 +61,19 @@ const spriteThumbs = (player, plugin, options) => {
       const scaledHeight = height * scaleFactor;
       const cleft = Math.floor(position % columns) * -scaledWidth;
       const ctop = Math.floor(position / columns) * -scaledHeight;
-      const bgSize = (imgWidth * scaleFactor) + 'px ' +
-                     (imgHeight * scaleFactor) + 'px';
+      const bgSize = `${imgWidth * scaleFactor}px ${imgHeight * scaleFactor}px`;
       const controlsTop = dom.findPosition(controls.el()).top;
       const seekBarTop = dom.findPosition(seekBarEl).top;
       // top of seekBar is 0 position
       const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
       const tooltipStyle = {
-        width: scaledWidth + 'px',
-        height: scaledHeight + 'px',
-        backgroundImage: 'url("' + url + '")',
+        width: `${scaledWidth}px`,
+        height: `${scaledHeight}px`,
+        backgroundImage: `url("${url}")`,
         backgroundRepeat: 'no-repeat',
-        backgroundPosition: cleft + 'px ' + ctop + 'px',
+        backgroundPosition: `${cleft}px ${ctop}px`,
         backgroundSize: bgSize,
-        top: topOffset + 'px',
+        top: `${topOffset}px`,
         color: '#fff',
         textShadow: '1px 1px #000',
         border: '1px solid #000',
@@ -106,7 +105,7 @@ const spriteThumbs = (player, plugin, options) => {
     const debug = log.debug || log;
 
     if (pstate.ready) {
-      let msg = 'loading ' + url;
+      let msg = `loading ${url}`;
 
       debug('ready to show thumbnails');
       if (!cached) {
@@ -114,7 +113,7 @@ const spriteThumbs = (player, plugin, options) => {
           src: url
         });
       } else {
-        msg = 're' + msg;
+        msg = `re${msg}`;
       }
       debug(msg);
       progress.on(spriteEvents, hijackMouseTooltip);
@@ -125,11 +124,11 @@ const spriteThumbs = (player, plugin, options) => {
         debug('resetting');
         ['url', 'width', 'height'].forEach((key) => {
           if (!options[key]) {
-            log('no thumbnails ' + key + ' given');
+            log(`no thumbnails ${key} given`);
           }
         });
         if (connection && !dl) {
-          log.warn('connection.downlink < ' + options.downlink);
+          log.warn(`connection.downlink < ${options.downlink}`);
         }
       }
     }
