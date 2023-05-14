@@ -145,10 +145,12 @@ const spriteThumbs = (player, plugin, options) => {
         url = spriteOpts.url;
         height = options.height;
         width = options.width;
-
         loadsprite();
       }
     });
+    if (!player.state.ready) {
+      loadsprite();
+    }
   });
 
   player.addClass('vjs-sprite-thumbnails');
