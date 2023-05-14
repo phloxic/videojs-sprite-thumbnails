@@ -67,8 +67,6 @@ const spriteThumbs = (player, plugin, options) => {
       // top of seekBar is 0 position
       const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
       const tooltipStyle = {
-        width: `${scaledWidth}px`,
-        height: `${scaledHeight}px`,
         backgroundImage: `url("${url}")`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: `${cleft}px ${ctop}px`,
@@ -76,8 +74,13 @@ const spriteThumbs = (player, plugin, options) => {
         top: `${topOffset}px`,
         color: '#fff',
         textShadow: '1px 1px #000',
+
+        // box-sizing: border-box inherited from .video-js
         border: '1px solid #000',
-        margin: '0 1px'
+
+        // border should not overlay thumbnail area
+        width: `${scaledWidth + 2}px`,
+        height: `${scaledHeight + 2}px`
       };
 
       Object.keys(tooltipStyle).forEach((key) => {
