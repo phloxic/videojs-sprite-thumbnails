@@ -1,8 +1,8 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [videojs-sprite-thumbnails](#videojs-sprite-thumbnails)
+  - [Compatiblity](#compatiblity)
   - [Features](#features)
   - [Installation](#installation)
   - [Usage](#usage)
@@ -22,6 +22,10 @@
 # videojs-sprite-thumbnails
 
 Plugin to display thumbnails from a sprite image when hovering over the progress bar.
+
+## Compatiblity
+
+This plugin version is compatible with Video.js v7.x and v6.x.
 
 ## Features
 
