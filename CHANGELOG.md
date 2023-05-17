@@ -1,3 +1,49 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v0.6.0...v1.0.0) (2023-05-17)
+
+### Features
+
+* set up in loadstart only, focus on plugin states ([4c7a616](https://github.com/phloxic/videojs-sprite-thumbnails/commit/4c7a616))
+* **tooltip:** draw border around thumbnail, not inset ([6fb8b07](https://github.com/phloxic/videojs-sprite-thumbnails/commit/6fb8b07))
+* truly reset tooltip style to its original state ([bbf7c05](https://github.com/phloxic/videojs-sprite-thumbnails/commit/bbf7c05))
+
+### Bug Fixes
+
+* double check plugin options on loadstart if state not ready ([2eb7b76](https://github.com/phloxic/videojs-sprite-thumbnails/commit/2eb7b76))
+* load sprite on player ready if configured at player level ([1c3e22c](https://github.com/phloxic/videojs-sprite-thumbnails/commit/1c3e22c))
+* make logging compatible with Video.js v6 and early v7 ([87e41c1](https://github.com/phloxic/videojs-sprite-thumbnails/commit/87e41c1))
+* make tests work on loadstart ([11599c2](https://github.com/phloxic/videojs-sprite-thumbnails/commit/11599c2))
+* quote url parameter when used with background-image css style ([976c751](https://github.com/phloxic/videojs-sprite-thumbnails/commit/976c751))
+
+### Chores
+
+* **deps-dev:** bump karma from 6.3.14 to 6.3.16 ([286834a](https://github.com/phloxic/videojs-sprite-thumbnails/commit/286834a))
+* **deps-dev:** bump karma from 6.3.4 to 6.3.14 ([eda20a3](https://github.com/phloxic/videojs-sprite-thumbnails/commit/eda20a3))
+* **deps:** bump [@xmldom](https://github.com/xmldom)/xmldom from 0.7.5 to 0.7.8 ([17dda7a](https://github.com/phloxic/videojs-sprite-thumbnails/commit/17dda7a))
+* **deps:** bump engine.io and socket.io ([4ad8038](https://github.com/phloxic/videojs-sprite-thumbnails/commit/4ad8038))
+* **deps:** bump engine.io and socket.io ([291c568](https://github.com/phloxic/videojs-sprite-thumbnails/commit/291c568))
+* **deps:** bump follow-redirects from 1.14.4 to 1.14.8 ([b5a7988](https://github.com/phloxic/videojs-sprite-thumbnails/commit/b5a7988))
+* **deps:** bump json5 from 2.2.0 to 2.2.3 ([2eecbd4](https://github.com/phloxic/videojs-sprite-thumbnails/commit/2eecbd4))
+* **deps:** bump minimatch from 3.0.4 to 3.1.2 ([7650aa5](https://github.com/phloxic/videojs-sprite-thumbnails/commit/7650aa5))
+* **deps:** bump minimist from 1.2.5 to 1.2.6 ([1e7c274](https://github.com/phloxic/videojs-sprite-thumbnails/commit/1e7c274))
+* **deps:** bump qs and body-parser ([29e4c2d](https://github.com/phloxic/videojs-sprite-thumbnails/commit/29e4c2d))
+* **deps:** bump shelljs from 0.8.4 to 0.8.5 ([6852333](https://github.com/phloxic/videojs-sprite-thumbnails/commit/6852333))
+* **deps:** bump socket.io-parser from 4.0.4 to 4.0.5 ([355686b](https://github.com/phloxic/videojs-sprite-thumbnails/commit/355686b))
+* **deps:** bump ua-parser-js from 0.7.31 to 0.7.33 ([f7a90dc](https://github.com/phloxic/videojs-sprite-thumbnails/commit/f7a90dc))
+* **docs:** use https URLs in example ([e835ec6](https://github.com/phloxic/videojs-sprite-thumbnails/commit/e835ec6))
+* **package:** bump generator-videojs-plugin to v9.0.0 ([1242dd9](https://github.com/phloxic/videojs-sprite-thumbnails/commit/1242dd9))
+
+### Code Refactoring
+
+* leave turning `this' into var to postprocessing ([055da3f](https://github.com/phloxic/videojs-sprite-thumbnails/commit/055da3f))
+* make spriteEvents and log vars local ([544ebe3](https://github.com/phloxic/videojs-sprite-thumbnails/commit/544ebe3))
+* use CSS style property names, not strings ([11f3be1](https://github.com/phloxic/videojs-sprite-thumbnails/commit/11f3be1))
+* use template literals instead of string concatenation ([fa4be5c](https://github.com/phloxic/videojs-sprite-thumbnails/commit/fa4be5c))
+
+### Tests
+
+* state change check in own file ([4483bac](https://github.com/phloxic/videojs-sprite-thumbnails/commit/4483bac))
+
 <a name="0.6.0"></a>
 # [0.6.0](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v0.5.3...v0.6.0) (2021-10-03)
 
