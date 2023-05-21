@@ -51,7 +51,7 @@ This is the simplest case. Get the script in whatever way you prefer and include
 <script src="//path/to/video.min.js"></script>
 <script src="//path/to/videojs-sprite-thumbnails.min.js"></script>
 <script>
-  var player = videojs('my-video');
+  const player = videojs('my-video');
 
   // setup 160x90 thumbnails in sprite.jpg, 1 per second
   player.spriteThumbnails({
@@ -67,14 +67,14 @@ This is the simplest case. Get the script in whatever way you prefer and include
 When using with Browserify, install videojs-sprite-thumbnails via npm and `require` the plugin as you would any other module.
 
 ```js
-var videojs = require('video.js');
+const videojs = require('video.js');
 
 // The actual plugin function is exported by this module, but it is also
 // attached to the `Player.prototype`; so, there is no need to assign it
 // to a variable.
 require('videojs-sprite-thumbnails');
 
-var player = videojs('my-other-video');
+const player = videojs('my-other-video');
 
 player.spriteThumbnails({
   interval: 3,
@@ -90,7 +90,7 @@ When using with RequireJS (or another AMD library), get the script in whatever w
 
 ```js
 require(['video.js', 'videojs-sprite-thumbnails'], function(videojs) {
-  var player = videojs('my-video');
+  const player = videojs('my-video');
 
   player.spriteThumbnails({
     url: 'https://example.com/sprite.jpg',
@@ -125,7 +125,7 @@ The plugin also monitors all video sources on
 ### Playlist example
 
 ```js
-var playlist = [
+const playlist = [
   [{
     type: 'video/webm',
     src: 'https://example.com/video1.webm',
@@ -146,7 +146,7 @@ var playlist = [
   }]
 ];
 
-var player = videojs('myplayer', {
+const player = videojs('myplayer', {
   // player configuration
   // [...]
   // load first video in playlist
@@ -162,7 +162,7 @@ var player = videojs('myplayer', {
 });
 
 // play 2nd video by clicking on button with id="secondvideo"
-videojs.on(videojs.dom.$('button#secondvideo'), 'click', function () {
+videojs.on(videojs.dom.$('button#secondvideo'), 'click', () => {
   player.src(playlist[1]);
   player.play();
 });
@@ -179,7 +179,7 @@ player.spriteThumbnails().log.level('debug');
 The call can also be chained directly to the [manual plugin setup](https://docs.videojs.com/tutorial-plugins.html#setting-up-a-plugin):
 
 ```js
-var player = videojs('example-player');
+const player = videojs('example-player');
 player.spriteThumbnails({
   url: 'https://example.com/thumbnails.jpg',
   width: 240,
