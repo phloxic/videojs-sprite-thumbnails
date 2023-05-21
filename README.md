@@ -25,7 +25,7 @@ Plugin to display thumbnails from a sprite image when hovering over the progress
 
 ## Compatibility
 
-This plugin version is compatible with Video.js v7.x and v6.x.
+This plugin version is compatible with Video.js v7.x and v6.x. Compatible [releases](https://github.com/phloxic/videojs-sprite-thumbnails/releases) and [tags](https://github.com/phloxic/videojs-sprite-thumbnails/tags) are numbered v1.x and lower.
 
 ## Features
 
@@ -102,7 +102,13 @@ require(['video.js', 'videojs-sprite-thumbnails'], function(videojs) {
 
 ### CDN
 
-Select a version of videojs-sprite-thumbnails from the [CDN](https://unpkg.com/videojs-sprite-thumbnails/dist/).
+Select a 1.x version of videojs-sprite-thumbnails from the [CDN](https://unpkg.com/videojs-sprite-thumbnails@1/dist/).
+
+Or load the latest Video.js v7.x/v6.x compatible release of the plugin via [script tag](#script-tag):
+
+```html
+<script src="https://unpkg.com/videojs-sprite-thumbnails@1/dist/videojs-sprite-thumbnails.min.js"></script>
+```
 
 ### Configuration
 
