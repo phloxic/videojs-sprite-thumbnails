@@ -63,7 +63,7 @@ QUnit.test('changes ready state', function(assert) {
   );
 
   this.player.spriteThumbnails().setState({ready: false});
-  this.player.src({src: 'dummy.mp4', spriteThumbnails: {url: '../img/oceans-thumb.jpg'}});
+  this.player.src({src: 'dummy.mp4', spriteThumbnails: {url: '../img/oceans-thumbs.jpg'}});
   this.player.trigger('loadstart');
 
   assert.strictEqual(
