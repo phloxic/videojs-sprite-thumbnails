@@ -1,3 +1,22 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.0.0...v1.0.1) (2023-05-22)
+
+### Bug Fixes
+
+* unconditionally try loading sprite on loadstart ([929d9a8](https://github.com/phloxic/videojs-sprite-thumbnails/commit/929d9a8))
+
+### Code Refactoring
+
+* no parentheses needed around single argument to arrow ([cc4f685](https://github.com/phloxic/videojs-sprite-thumbnails/commit/cc4f685))
+
+### Documentation
+
+* **README:** explain Video.js v6/v7 compatible versioning ([da0e136](https://github.com/phloxic/videojs-sprite-thumbnails/commit/da0e136))
+
+### Tests
+
+* correct typo in sprite filename ([4fba454](https://github.com/phloxic/videojs-sprite-thumbnails/commit/4fba454))
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v0.6.0...v1.0.0) (2023-05-17)
 
