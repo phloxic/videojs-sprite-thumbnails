@@ -41,7 +41,7 @@ const spriteThumbs = (player, plugin, options) => {
     }
   };
 
-  const hijackMouseTooltip = (evt) => {
+  const hijackMouseTooltip = evt => {
     const sprite = sprites[url];
     const imgWidth = sprite.naturalWidth;
     const imgHeight = sprite.naturalHeight;
@@ -83,7 +83,7 @@ const spriteThumbs = (player, plugin, options) => {
         height: `${scaledHeight + 2}px`
       };
 
-      Object.keys(tooltipStyle).forEach((key) => {
+      Object.keys(tooltipStyle).forEach(key => {
         tooltipEl.style[key] = tooltipStyle[key];
       });
     } else {
@@ -115,7 +115,7 @@ const spriteThumbs = (player, plugin, options) => {
       resetMouseTooltip();
       if (pstate.diagnostics) {
         debug('resetting');
-        ['url', 'width', 'height'].forEach((key) => {
+        ['url', 'width', 'height'].forEach(key => {
           if (!options[key]) {
             log(`no thumbnails ${key} given`);
           }
