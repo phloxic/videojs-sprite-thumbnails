@@ -1,3 +1,34 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.0.0...v2.0.0) (2023-05-22)
+
+### Features
+
+* **loadstart:** pick options from one source only ([f01b382](https://github.com/phloxic/videojs-sprite-thumbnails/commit/f01b382))
+* make plugin compatible with Video.js 8.x ([75a4e5c](https://github.com/phloxic/videojs-sprite-thumbnails/commit/75a4e5c))
+
+### Bug Fixes
+
+* unconditionally try loading sprite on loadstart ([ddc250e](https://github.com/phloxic/videojs-sprite-thumbnails/commit/ddc250e))
+
+### Code Refactoring
+
+* no parentheses needed around single argument to arrow ([2e5cd7d](https://github.com/phloxic/videojs-sprite-thumbnails/commit/2e5cd7d))
+
+### Documentation
+
+* **README:** explain Video.js 8.x compatible versioning ([dba689a](https://github.com/phloxic/videojs-sprite-thumbnails/commit/dba689a))
+* **README:** use ES6 syntax in code examples ([e4a2073](https://github.com/phloxic/videojs-sprite-thumbnails/commit/e4a2073))
+
+### Tests
+
+* correct typo in sprite filename ([00a1a27](https://github.com/phloxic/videojs-sprite-thumbnails/commit/00a1a27))
+
+
+### BREAKING CHANGES
+
+- Only Video.js v8.x.x is supported
+- Only browsers supported by Video.js v8.x.x are supported
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v0.6.0...v1.0.0) (2023-05-17)
 
