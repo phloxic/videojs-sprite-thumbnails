@@ -22,9 +22,12 @@ const spriteThumbs = (player, plugin, options) => {
   const navigator = window.navigator;
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 
-  const sprites = {};
-
   const dom = videojs.dom;
+  const merge = videojs.obj.merge;
+
+  const sprites = {};
+  const defaultState = merge({}, plugin.state);
+
   const controls = player.controlBar;
 
   // default control bar component tree is expected
@@ -136,8 +139,8 @@ const spriteThumbs = (player, plugin, options) => {
       const spriteOpts = spriteSource && spriteSource[plugName];
 
       if (spriteOpts) {
-        plugin.setState({ready: false, diagnostics: false});
-        options = videojs.obj.merge(options, spriteOpts);
+        plugin.setState(defaultState);
+        options = merge(options, spriteOpts);
         url = spriteOpts.url;
         height = options.height;
         width = options.width;
