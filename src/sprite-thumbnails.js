@@ -132,17 +132,19 @@ const spriteThumbs = (player, plugin, options) => {
 
   player.on(['ready', 'loadstart'], evt => {
     if (evt !== 'ready') {
-      player.currentSources().forEach(src => {
-        const spriteOpts = src.spriteThumbnails;
+      const plugName = plugin.name;
+      const spriteSource = player.currentSources().filter(source => {
+        return source.hasOwnProperty(plugName);
+      })[0];
+      const spriteOpts = spriteSource && spriteSource[plugName];
 
-        if (spriteOpts) {
-          plugin.setState(defaultState);
-          options = merge(options, spriteOpts);
-          url = spriteOpts.url;
-          height = options.height;
-          width = options.width;
-        }
-      });
+      if (spriteOpts) {
+        plugin.setState(defaultState);
+        options = merge(options, spriteOpts);
+        url = spriteOpts.url;
+        height = options.height;
+        width = options.width;
+      }
     }
 
     dl = !connection || connection.downlink >= options.downlink;
