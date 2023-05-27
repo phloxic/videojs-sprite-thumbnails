@@ -38,7 +38,7 @@ QUnit.module('videojs-sprite-thumbnails', {
 });
 
 QUnit.test('changes ready state', function(assert) {
-  assert.expect(3);
+  assert.expect(4);
 
   this.player.spriteThumbnails({
     url: '../img/oceans-thumbs.jpg',
@@ -62,13 +62,26 @@ QUnit.test('changes ready state', function(assert) {
     'the plugin is now able to show thumbnails on ready'
   );
 
-  this.player.spriteThumbnails().setState({ready: false});
+  this.clock.tick(1);
+
+  this.player.src({src: 'dummy.mp4', spriteThumbnails: {}});
+  this.player.trigger('loadstart');
+
+  assert.strictEqual(
+    this.player.spriteThumbnails().state.ready,
+    false,
+    'empty configuration on loadstart: the plugin will not show thumbnails'
+  );
+
+  this.player.reset();
+  this.clock.tick(1);
+
   this.player.src({src: 'dummy.mp4', spriteThumbnails: {url: '../img/oceans-thumbs.jpg'}});
   this.player.trigger('loadstart');
 
   assert.strictEqual(
     this.player.spriteThumbnails().state.ready,
     true,
-    'the plugin is now able to show thumbnails on loadstart'
+    'url given on loadstart, width and height inherited: the plugin will show thumbnails'
   );
 });

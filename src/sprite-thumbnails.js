@@ -151,7 +151,7 @@ const spriteThumbs = (player, plugin, options) => {
     cached = !!sprites[url];
 
     plugin.setState({
-      ready: mouseTimeTooltip && width && height && url && (dl || cached),
+      ready: !!(mouseTimeTooltip && width && height && url && (cached || dl)),
       diagnostics: true
     });
   });
