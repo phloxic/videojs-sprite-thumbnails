@@ -13,9 +13,10 @@ import window from 'global/window';
  *        Plugin configuration options.
  */
 const spriteThumbs = (player, plugin, options) => {
-  let url = options.url;
-  let height = options.height;
-  let width = options.width;
+  let url;
+  let height;
+  let width;
+  let downlink;
   let cached;
   let dl;
 
@@ -48,9 +49,9 @@ const spriteThumbs = (player, plugin, options) => {
     const sprite = sprites[url];
     const imgWidth = sprite.naturalWidth;
     const imgHeight = sprite.naturalHeight;
-    const seekBarEl = seekBar.el();
 
     if (sprite.complete && imgWidth && imgHeight) {
+      const seekBarEl = seekBar.el();
       let position = dom.getPointerPosition(seekBarEl, evt).x * player.duration();
 
       position = position / options.interval;
@@ -94,6 +95,36 @@ const spriteThumbs = (player, plugin, options) => {
     }
   };
 
+  const init = () => {
+    // if present, merge source config with current config
+    const plugName = plugin.name;
+    const spriteSource = player.currentSources().find(source => {
+      return source.hasOwnProperty(plugName);
+    });
+    const spriteOpts = spriteSource && spriteSource[plugName];
+
+    if (spriteOpts) {
+      plugin.setState(defaultState);
+      options = merge(options, spriteOpts);
+
+      // url from source always takes precedence, even if empty
+      options.url = spriteOpts.url;
+    }
+
+    // update script variables
+    url = options.url;
+    height = options.height;
+    width = options.width;
+    downlink = options.downlink;
+    dl = !connection || connection.downlink >= downlink;
+    cached = !!sprites[url];
+
+    plugin.setState({
+      ready: !!(mouseTimeTooltip && width && height && url && (cached || dl)),
+      diagnostics: true
+    });
+  };
+
   plugin.on('statechanged', () => {
     const pstate = plugin.state;
     const spriteEvents = ['mousemove', 'touchmove'];
@@ -124,38 +155,17 @@ const spriteThumbs = (player, plugin, options) => {
           }
         });
         if (connection && !dl) {
-          log.warn(`connection.downlink < ${options.downlink}`);
+          log.warn(`connection.downlink < ${downlink}`);
         }
       }
     }
   });
 
-  player.on(['ready', 'loadstart'], evt => {
-    if (evt !== 'ready') {
-      const plugName = plugin.name;
-      const spriteSource = player.currentSources().find(source => {
-        return source.hasOwnProperty(plugName);
-      });
-      const spriteOpts = spriteSource && spriteSource[plugName];
+  // load configuration from a source
+  player.on('loadstart', init);
 
-      if (spriteOpts) {
-        plugin.setState(defaultState);
-        options = merge(options, spriteOpts);
-        url = spriteOpts.url;
-        height = options.height;
-        width = options.width;
-      }
-    }
-
-    dl = !connection || connection.downlink >= options.downlink;
-    cached = !!sprites[url];
-
-    plugin.setState({
-      ready: !!(mouseTimeTooltip && width && height && url && (cached || dl)),
-      diagnostics: true
-    });
-  });
-
+  // load plugin configuration
+  init();
   player.addClass('vjs-sprite-thumbnails');
 };
 
