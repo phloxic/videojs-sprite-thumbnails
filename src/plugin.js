@@ -18,7 +18,7 @@ const Plugin = videojs.getPlugin('plugin');
  * @param {Integer} responsive
  *        Width of player below which thumbnails are reponsive. Default: 600.
  * @param {Number} downlink
- *        Minimum of NetworkInformation downlink where supported. Default: 2.
+ *        Minimum of NetworkInformation downlink where supported. Default: 1.5.
  *        https://developer.mozilla.org/docs/Web/API/NetworkInformation/downlink
  */
 const defaults = {
@@ -27,7 +27,7 @@ const defaults = {
   height: 0,
   interval: 1,
   responsive: 600,
-  downlink: 2
+  downlink: 1.5
 };
 
 /**
