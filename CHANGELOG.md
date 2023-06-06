@@ -1,3 +1,26 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.0.1...v1.1.0) (2023-06-06)
+
+### Features
+
+* **config:** lower connection downlink default to 1.5 ([c0954e5](https://github.com/phloxic/videojs-sprite-thumbnails/commit/c0954e5))
+* **loadstart:** pick options from one source only ([ca9d774](https://github.com/phloxic/videojs-sprite-thumbnails/commit/ca9d774))
+* make ready state proper boolean ([41081f4](https://github.com/phloxic/videojs-sprite-thumbnails/commit/41081f4))
+
+### Chores
+
+* **deps:** bump socket.io-parser from 4.2.2 to 4.2.3 ([1538602](https://github.com/phloxic/videojs-sprite-thumbnails/commit/1538602))
+
+### Code Refactoring
+
+* improve plugin defaultState handling ([311073b](https://github.com/phloxic/videojs-sprite-thumbnails/commit/311073b))
+* slim down handling of configuration updates ([eb5a37b](https://github.com/phloxic/videojs-sprite-thumbnails/commit/eb5a37b))
+
+
+### BREAKING CHANGES
+
+* **config:** There is a subjective factor to the downlink option. As its default has been changed to 1.5 it may be worth testing and/or setting it explicitly before updating the plugin in production.
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.0.0...v1.0.1) (2023-05-22)
 
