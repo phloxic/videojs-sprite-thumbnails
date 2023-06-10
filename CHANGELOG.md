@@ -1,3 +1,14 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.1.0...v1.1.1) (2023-06-10)
+
+### Bug Fixes
+
+* do not reset mouse time tooltip css when sprite cannot be loaded ([aa22870](https://github.com/phloxic/videojs-sprite-thumbnails/commit/aa22870))
+
+### Documentation
+
+* CDN link to exact latest 1.x.x release w/ higher maxage ([8adfab2](https://github.com/phloxic/videojs-sprite-thumbnails/commit/8adfab2))
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.0.1...v1.1.0) (2023-06-06)
 
