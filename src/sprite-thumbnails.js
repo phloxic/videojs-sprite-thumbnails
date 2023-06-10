@@ -90,8 +90,6 @@ const spriteThumbs = (player, plugin, options) => {
       Object.keys(tooltipStyle).forEach(key => {
         tooltipEl.style[key] = tooltipStyle[key];
       });
-    } else {
-      resetMouseTooltip();
     }
   };
 
