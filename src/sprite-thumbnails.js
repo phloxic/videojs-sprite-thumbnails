@@ -19,6 +19,9 @@ const spriteThumbs = (player, plugin, options) => {
   let downlink;
   let cached;
   let dl;
+  let urls;
+  let framesInEachUrl;
+  let secondsForEachUrl;
 
   const navigator = window.navigator;
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
@@ -39,21 +42,61 @@ const spriteThumbs = (player, plugin, options) => {
   const tooltipEl = mouseTimeTooltip && mouseTimeTooltip.el();
   const tooltipStyleOrig = tooltipEl && tooltipEl.style;
 
+  const hasMultipleSprites = () => urls && urls.length > 0;
   const resetMouseTooltip = () => {
     if (tooltipEl && tooltipStyleOrig) {
       tooltipEl.style = tooltipStyleOrig;
     }
   };
 
+  const computeFramesInEachUrl = () => {
+    const sprite = sprites[urls[0]];
+    const imgWidth = sprite.naturalWidth;
+    const imgHeight = sprite.naturalHeight;
+
+    if (!(sprite && sprite.complete)) {
+      return;
+    }
+    framesInEachUrl = Math.ceil(imgWidth / width) * Math.ceil(imgHeight / height);
+    secondsForEachUrl = framesInEachUrl * options.interval;
+  };
+
+  const getUrl = (position) => {
+    if (!hasMultipleSprites()) {
+      return url;
+    }
+    // +1 to take out last second of first frame
+    const currentFrameNumber = Math.ceil((position + 1) / options.interval);
+
+    if (isNaN(framesInEachUrl)) {
+      computeFramesInEachUrl();
+    }
+    const spriteNumber = Math.ceil(currentFrameNumber / framesInEachUrl);
+
+    return urls[spriteNumber - 1];
+  };
+
+  const spritesNotLoaded = () => Object.keys(sprites).length === 0;
+
   const hijackMouseTooltip = evt => {
-    const sprite = sprites[url];
+    if (spritesNotLoaded()) {
+      return;
+    }
+    const seekBarEl = seekBar.el();
+    let position = Math.floor(dom.getPointerPosition(seekBarEl, evt).x * player.duration());
+    const currentUrl = getUrl(position);
+    const sprite = sprites[currentUrl];
+
+    if (!sprite) {
+      return;
+    }
     const imgWidth = sprite.naturalWidth;
     const imgHeight = sprite.naturalHeight;
 
     if (sprite.complete && imgWidth && imgHeight) {
-      const seekBarEl = seekBar.el();
-      let position = dom.getPointerPosition(seekBarEl, evt).x * player.duration();
-
+      if (hasMultipleSprites()) {
+        position = position % (secondsForEachUrl);
+      }
       position = position / options.interval;
 
       const responsive = options.responsive;
@@ -71,7 +114,7 @@ const spriteThumbs = (player, plugin, options) => {
       // top of seekBar is 0 position
       const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
       const tooltipStyle = {
-        backgroundImage: `url("${url}")`,
+        backgroundImage: `url("${currentUrl}")`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: `${cleft}px ${ctop}px`,
         backgroundSize: bgSize,
@@ -116,11 +159,25 @@ const spriteThumbs = (player, plugin, options) => {
     downlink = options.downlink;
     dl = !connection || connection.downlink >= downlink;
     cached = !!sprites[url];
+    urls = options.urls;
 
     plugin.setState({
       ready: !!(mouseTimeTooltip && width && height && url && (cached || dl)),
       diagnostics: true
     });
+  };
+
+  const loadImage = imgUrl => {
+    let msg = `loading ${imgUrl}`;
+
+    if (!sprites[imgUrl]) {
+      sprites[imgUrl] = dom.createEl('img', {
+        src: imgUrl
+      });
+    } else {
+      msg = `re${msg}`;
+    }
+    plugin.log.debug(msg);
   };
 
   plugin.on('statechanged', () => {
@@ -130,17 +187,13 @@ const spriteThumbs = (player, plugin, options) => {
     const debug = log.debug;
 
     if (pstate.ready) {
-      let msg = `loading ${url}`;
-
-      debug('ready to show thumbnails');
-      if (!cached) {
-        sprites[url] = dom.createEl('img', {
-          src: url
-        });
+      if (hasMultipleSprites()) {
+        urls.forEach(loadImage);
+        computeFramesInEachUrl();
       } else {
-        msg = `re${msg}`;
+        loadImage(url);
       }
-      debug(msg);
+      debug('ready to show thumbnails');
       progress.on(spriteEvents, hijackMouseTooltip);
     } else {
       progress.off(spriteEvents, hijackMouseTooltip);

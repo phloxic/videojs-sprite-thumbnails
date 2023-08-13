@@ -27,7 +27,8 @@ const defaults = {
   height: 0,
   interval: 1,
   responsive: 600,
-  downlink: 1.5
+  downlink: 1.5,
+  urls: []
 };
 
 /**
