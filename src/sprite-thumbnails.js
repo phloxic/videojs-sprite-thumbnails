@@ -13,21 +13,14 @@ import window from 'global/window';
  *        Plugin configuration options.
  */
 const spriteThumbs = (player, plugin, options) => {
-  let url;
-  let height;
-  let width;
-  let downlink;
-  let cached;
-  let dl;
-
   const navigator = window.navigator;
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 
   const dom = videojs.dom;
   const obj = videojs.obj;
   const merge = obj.merge;
+  const log = plugin.log;
 
-  const sprites = {};
   const defaultState = merge({}, plugin.state);
 
   const controls = player.controlBar;
@@ -47,51 +40,55 @@ const spriteThumbs = (player, plugin, options) => {
   };
 
   const hijackMouseTooltip = evt => {
-    const sprite = sprites[url];
-    const imgWidth = sprite.naturalWidth;
-    const imgHeight = sprite.naturalHeight;
+    const seekBarEl = seekBar.el();
+    const playerWidth = player.currentWidth();
+    const duration = player.duration();
+    const interval = options.interval;
+    const columns = options.columns;
+    const responsive = options.responsive;
 
-    if (sprite.complete && imgWidth && imgHeight) {
-      const seekBarEl = seekBar.el();
-      let position = dom.getPointerPosition(seekBarEl, evt).x * player.duration();
+    const rows = Math.ceil(duration / interval * columns);
+    const position = dom.getPointerPosition(seekBarEl, evt).x * duration / interval;
 
-      position = position / options.interval;
+    const scaleFactor = responsive && playerWidth < responsive ?
+      playerWidth / responsive : 1;
+    const scaledWidth = options.width * scaleFactor;
+    const scaledHeight = options.height * scaleFactor;
+    const cleft = Math.floor(position % columns) * -scaledWidth;
+    const ctop = Math.floor(position / columns) * -scaledHeight;
+    const controlsTop = dom.findPosition(controls.el()).top;
+    const seekBarTop = dom.findPosition(seekBarEl).top;
+    // top of seekBar is 0 position
+    const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
 
-      const responsive = options.responsive;
-      const playerWidth = player.currentWidth();
-      const scaleFactor = responsive && playerWidth < responsive ?
-        playerWidth / responsive : 1;
-      const columns = imgWidth / width;
-      const scaledWidth = width * scaleFactor;
-      const scaledHeight = height * scaleFactor;
-      const cleft = Math.floor(position % columns) * -scaledWidth;
-      const ctop = Math.floor(position / columns) * -scaledHeight;
-      const bgSize = `${imgWidth * scaleFactor}px ${imgHeight * scaleFactor}px`;
-      const controlsTop = dom.findPosition(controls.el()).top;
-      const seekBarTop = dom.findPosition(seekBarEl).top;
-      // top of seekBar is 0 position
-      const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
-      const tooltipStyle = {
-        backgroundImage: `url("${url}")`,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: `${cleft}px ${ctop}px`,
-        backgroundSize: bgSize,
-        top: `${topOffset}px`,
-        color: '#fff',
-        textShadow: '1px 1px #000',
+    const tooltipStyle = {
+      backgroundImage: `url("${options.url}")`,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: `${cleft}px ${ctop}px`,
+      backgroundSize: `${scaledWidth * columns}px ${scaledHeight * rows}px`,
+      top: `${topOffset}px`,
+      color: '#fff',
+      textShadow: '1px 1px #000',
+      // box-sizing: border-box inherited from .video-js
+      border: '1px solid #000',
+      // border should not overlay thumbnail area
+      width: `${scaledWidth + 2}px`,
+      height: `${scaledHeight + 2}px`
+    };
 
-        // box-sizing: border-box inherited from .video-js
-        border: '1px solid #000',
+    obj.each(tooltipStyle, (value, key) => {
+      tooltipEl.style[key] = value;
+    });
+  };
 
-        // border should not overlay thumbnail area
-        width: `${scaledWidth + 2}px`,
-        height: `${scaledHeight + 2}px`
-      };
+  const intCheck = (opt) => {
+    const val = options[opt];
 
-      obj.each(tooltipStyle, (value, key) => {
-        tooltipEl.style[key] = value;
-      });
+    if (parseInt(val, 10) !== val || val < 1) {
+      log(`${opt} must be an integer greater than 0`);
+      return false;
     }
+    return true;
   };
 
   const init = () => {
@@ -110,16 +107,11 @@ const spriteThumbs = (player, plugin, options) => {
       options.url = spriteOpts.url;
     }
 
-    // update script variables
-    url = options.url;
-    height = options.height;
-    width = options.width;
-    downlink = options.downlink;
-    dl = !connection || connection.downlink >= downlink;
-    cached = !!sprites[url];
+    const dl = !connection || connection.downlink >= options.downlink;
 
     plugin.setState({
-      ready: !!(mouseTimeTooltip && width && height && url && (cached || dl)),
+      ready: !!(mouseTimeTooltip && options.url &&
+        intCheck('width') && intCheck('height') && intCheck('columns') && dl),
       diagnostics: true
     });
   };
@@ -127,36 +119,23 @@ const spriteThumbs = (player, plugin, options) => {
   plugin.on('statechanged', () => {
     const pstate = plugin.state;
     const spriteEvents = ['mousemove', 'touchmove'];
-    const log = plugin.log;
-    const debug = log.debug;
+    const debug = log.debug || log;
 
     if (pstate.ready) {
-      let msg = `loading ${url}`;
-
       debug('ready to show thumbnails');
-      if (!cached) {
-        sprites[url] = dom.createEl('img', {
-          src: url
-        });
-      } else {
-        msg = `re${msg}`;
-      }
-      debug(msg);
       progress.on(spriteEvents, hijackMouseTooltip);
     } else {
+      if (pstate.diagnostics) {
+        if (!options.url) {
+          log('no url given');
+        }
+        if (connection && connection.downlink < options.downlink) {
+          log.warn(`connection.downlink < ${options.downlink}`);
+        }
+        debug('resetting');
+      }
       progress.off(spriteEvents, hijackMouseTooltip);
       resetMouseTooltip();
-      if (pstate.diagnostics) {
-        debug('resetting');
-        ['url', 'width', 'height'].forEach(key => {
-          if (!options[key]) {
-            log(`no thumbnails ${key} given`);
-          }
-        });
-        if (connection && !dl) {
-          log.warn(`connection.downlink < ${downlink}`);
-        }
-      }
     }
   });
 

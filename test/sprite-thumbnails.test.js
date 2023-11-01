@@ -43,7 +43,8 @@ QUnit.test('changes ready state', function(assert) {
   this.player.spriteThumbnails({
     url: '../img/oceans-thumbs.jpg',
     width: 240,
-    height: 100
+    height: 100,
+    columns: 10
   }).log.level('debug');
 
   assert.strictEqual(
