@@ -24,7 +24,8 @@ const spriteThumbs = (player, plugin, options) => {
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 
   const dom = videojs.dom;
-  const merge = videojs.obj.merge;
+  const obj = videojs.obj;
+  const merge = obj.merge;
 
   const sprites = {};
   const defaultState = merge({}, plugin.state);
@@ -87,8 +88,8 @@ const spriteThumbs = (player, plugin, options) => {
         height: `${scaledHeight + 2}px`
       };
 
-      Object.keys(tooltipStyle).forEach(key => {
-        tooltipEl.style[key] = tooltipStyle[key];
+      obj.each(tooltipStyle, (value, key) => {
+        tooltipEl.style[key] = value;
       });
     }
   };
