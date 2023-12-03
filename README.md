@@ -53,11 +53,12 @@ This is the simplest case. Get the script in whatever way you prefer and include
 <script>
   var player = videojs('my-video');
 
-  // setup 160x90 thumbnails in sprite.jpg, 1 per second
+  // set up 160x90 thumbnails in sprite.jpg, 1 per second
   player.spriteThumbnails({
     url: 'https://example.com/sprite.jpg',
     width: 160,
-    height: 90
+    height: 90,
+    columns: 10
   });
 </script>
 ```
@@ -79,6 +80,7 @@ var player = videojs('my-other-video');
 player.spriteThumbnails({
   interval: 3,
   url: 'https://example.com/another-sprite.jpg',
+  columns: 10,
   width: 120,
   height: 90
 });
@@ -95,7 +97,8 @@ require(['video.js', 'videojs-sprite-thumbnails'], function(videojs) {
   player.spriteThumbnails({
     url: 'https://example.com/sprite.jpg',
     width: 160,
-    height: 90
+    height: 90,
+    columns: 10
   });
 });
 ```
@@ -114,19 +117,21 @@ Or load the latest Video.js v7.x/v6.x compatible release of the plugin via [scri
 
 option | type | mandatory | default | description
 ------ | ---- | --------- | ------- | -----------
-`url`  | String | &#10004; |   | Sprite image location.
+`url`  | String | &#10004; |   | Location of sprite image.
 `width` | Integer | &#10004; |  | Width of a thumbnail in pixels.
 `height` | Integer | &#10004; |   | Height of a thumbnail in pixels.
+`columns` | Integer | &#10004; |   | Number of columns in sprite image.
 `interval` | Number |  | `1` | Interval between thumbnail frames in seconds.
 `responsive` | Integer |  | `600` | Width of player in pixels below which thumbnails are responsive. Set to `0` to disable.
 `downlink` | Number |  | `1.5` | Minimum of required [NetworkInformation downlink][downlink] where supported. Set to `0` to disable.
 
 ### Initialization
 
-The plugin is initialized at player setup. This is sufficient when the player will play only one video and use its thumbnails. The single sprite image will be preloaded at player setup, usually on page load.
+The plugin is initialized at player setup. This is sufficient when the player will play only one video and use its thumbnails.
 
-The plugin also monitors all video sources on
-[loadstart](https://docs.videojs.com/player#event:loadstart) for a `spriteThumbnails` property which configures the plugin for this specific video. A typical use case are [playlists](#playlist-example). Each sprite image is loaded before playback of the video to which it pertains.
+The plugin also monitors all video sources on [loadstart](https://docs.videojs.com/player#event:loadstart) for a `spriteThumbnails` property which configures the plugin for this specific video. A typical use case are [playlists](#playlist-example).
+
+The sprite image is then loaded on demand, if and when the user moves the pointer on the seekbar.
 
 ### Playlist example
 
@@ -162,7 +167,8 @@ var player = videojs('myplayer', {
     // default thumbnail settings for this player
     spriteThumbnails: {
       width: 160,
-      height: 90
+      height: 90,
+      columns: 5
     }
   }
 });
@@ -190,6 +196,7 @@ player.spriteThumbnails({
   url: 'https://example.com/thumbnails.jpg',
   width: 240,
   height: 100
+  columns: 7
 }).log.level('debug');
 ```
 

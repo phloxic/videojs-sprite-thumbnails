@@ -49,7 +49,8 @@ QUnit.test('registers itself with video.js', function(assert) {
   this.player.spriteThumbnails({
     url: '../img/oceans-thumbs.jpg',
     width: 240,
-    height: 100
+    height: 100,
+    columns: 10
   }).log.level('debug');
 
   // Tick the clock forward enough to trigger the player to be "ready".
