@@ -8,13 +8,18 @@ const Plugin = videojs.getPlugin('plugin');
  * Default plugin options
  *
  * @param {String} url
- *        Location of sprite image(s). Must be set by user. Default: ''.
+ *        Location of image(s). Must be set by user. For multiple images the
+ *        filename must contain the template {index} which is replaced by the
+ *        zero based index number of the image in the sequence. Default: ''.
  * @param {Integer} width
  *        Width of a thumbnail in pixels. Must be set by user. Default: 0.
  * @param {Integer} height
  *        Height of a thumbnail in pixels. Must be set by user. Default: 0.
  * @param {Integer} columns
- *        Number of columns per sprite. Must be set by user.
+ *        Number of thumbnail columns per image. Must be set by user.
+ * @param {Integer} rows
+ *        Number of thumbnail rows per image. If set to greater than 0, the
+ *        plugin will expect a sequence of images. Default: 0.
  * @param {Number} interval
  *        Interval between thumbnail frames in seconds. Default: 1.
  * @param {Integer} responsive
@@ -28,6 +33,7 @@ const defaults = {
   width: 0,
   height: 0,
   columns: 0,
+  rows: 0,
   interval: 1,
   responsive: 600,
   downlink: 1.5

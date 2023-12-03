@@ -1,7 +1,7 @@
 {
   "name": "videojs-sprite-thumbnails",
   "version": "2.2.0-dev",
-  "description": "Plugin to display thumbnails from a sprite image when hovering over the progress bar.",
+  "description": "Plugin to display thumbnails when hovering over the progress bar.",
   "repository": {
     "type": "git",
     "url": "git@github.com:phloxic/videojs-sprite-thumbnails.git"
