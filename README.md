@@ -21,7 +21,7 @@
 
 # videojs-sprite-thumbnails
 
-Plugin to display thumbnails from a sprite image when hovering over the progress bar.
+Plugin to display thumbnails when hovering over the progress bar.
 
 ## Compatibility
 
@@ -29,9 +29,9 @@ This plugin version is compatible with Video.js v7.x and v6.x. Compatible [relea
 
 ## Features
 
+- works with single or multiple sprites containing thumbnails and individual thumbnail images
 - easy to [configure](#configuration)
 - uses [existing mouse time tooltip](#constraints)
-- focuses on use case of thumbnails combined in a sprite image only
 
 ## Installation
 
@@ -53,7 +53,7 @@ This is the simplest case. Get the script in whatever way you prefer and include
 <script>
   var player = videojs('my-video');
 
-  // set up 160x90 thumbnails in sprite.jpg, 1 per second
+  // set up 160x90 thumbnails in single sprite.jpg, 1 per second
   player.spriteThumbnails({
     url: 'https://example.com/sprite.jpg',
     width: 160,
@@ -77,10 +77,13 @@ require('videojs-sprite-thumbnails');
 
 var player = videojs('my-other-video');
 
+// More than 0 rows in combination with inserting {index) in the url
+// signals a sprite sequence.
 player.spriteThumbnails({
   interval: 3,
-  url: 'https://example.com/another-sprite.jpg',
-  columns: 10,
+  url: 'https://example.com/sprite_sequence-{index}.jpg',
+  columns: 5,
+  rows: 5,
   width: 120,
   height: 90
 });
@@ -117,11 +120,12 @@ Or load the latest Video.js v7.x/v6.x compatible release of the plugin via [scri
 
 option | type | mandatory | default | description
 ------ | ---- | --------- | ------- | -----------
-`url`  | String | &#10004; |   | Location of sprite image.
+`url`  | String | &#10004; |   | Location of image(s). Must be set by user. For multiple images the filename must contain the template `{index}` which is replaced by the zero based index number of the image in the sequence.
 `width` | Integer | &#10004; |  | Width of a thumbnail in pixels.
 `height` | Integer | &#10004; |   | Height of a thumbnail in pixels.
-`columns` | Integer | &#10004; |   | Number of columns in sprite image.
-`interval` | Number |  | `1` | Interval between thumbnail frames in seconds.
+`columns` | Integer | &#10004; |   | Number of thumbnail columns per image. Set both `columns` and `rows` to `1` for individual thumbnails.
+`rows` | Integer |  | `0` | Number of thumbnail rows per image. If set to greater than `0`, the plugin will expect a sequence of images. Set both `rows` and `columns` to `1` for individual thumbnails.
+`interval` | Number |  | `1` | Interval between thumbnails in seconds.
 `responsive` | Integer |  | `600` | Width of player in pixels below which thumbnails are responsive. Set to `0` to disable.
 `downlink` | Number |  | `1.5` | Minimum of required [NetworkInformation downlink][downlink] where supported. Set to `0` to disable.
 
@@ -131,7 +135,7 @@ The plugin is initialized at player setup. This is sufficient when the player wi
 
 The plugin also monitors all video sources on [loadstart](https://docs.videojs.com/player#event:loadstart) for a `spriteThumbnails` property which configures the plugin for this specific video. A typical use case are [playlists](#playlist-example).
 
-The sprite image is then loaded on demand, if and when the user moves the pointer on the seekbar.
+The image(s) are then loaded on demand, when the cursor hovers or moves over the progress bar.
 
 ### Playlist example
 
@@ -143,7 +147,7 @@ var playlist = [
 
     // only needed once, even if alternaive source is picked
     spriteThumbnails: {
-      url: 'https://example.com/thumbnails1.jpg'
+      url: 'https://example.com/thumbnails1-{index}.jpg'
     }
   }, {
     type: 'video/mp4',
@@ -152,7 +156,7 @@ var playlist = [
     type: 'application/x-mpegurl',
     src: 'https://example.com/video2.m3u8',
     spriteThumbnails: {
-      url: 'https://example.com/thumbnails2.jpg'
+      url: 'https://example.com/thumbnails2-{index}.jpg'
     }
   }]
 ];
@@ -168,7 +172,8 @@ var player = videojs('myplayer', {
     spriteThumbnails: {
       width: 160,
       height: 90,
-      columns: 5
+      columns: 5,
+      rows: 5
     }
   }
 });
@@ -193,10 +198,11 @@ The call can also be chained directly to the [manual plugin setup](https://docs.
 ```js
 var player = videojs('example-player');
 player.spriteThumbnails({
-  url: 'https://example.com/thumbnails.jpg',
+  url: 'https://example.com/thumbnails-{index}.jpg',
   width: 240,
   height: 100
-  columns: 7
+  columns: 7,
+  rows: 6
 }).log.level('debug');
 ```
 

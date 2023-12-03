@@ -46,8 +46,21 @@ const spriteThumbs = (player, plugin, options) => {
     const columns = options.columns;
     const responsive = options.responsive;
 
-    const rows = Math.ceil(duration / interval * columns);
-    const position = dom.getPointerPosition(seekBarEl, evt).x * duration / interval;
+    const rowDuration = interval * columns;
+    let rows = options.rows || Math.ceil(duration / rowDuration);
+    // spriteDuration is needed to calculate idx and rows of last sprite
+    const spriteDuration = rowDuration * rows;
+
+    let position = dom.getPointerPosition(seekBarEl, evt).x * duration;
+    // for single sprites idx is always 0
+    const idx = Math.floor(position / spriteDuration);
+
+    // if (idx == 0) position /= interval
+    position = (position - spriteDuration * idx) / interval;
+    // Last (or only) sprite may have less rows, calculate required rows for it
+    if (idx === Math.floor(duration / spriteDuration)) {
+      rows -= Math.floor((spriteDuration * (idx + 1) - duration) / rowDuration);
+    }
 
     const scaleFactor = responsive && playerWidth < responsive ?
       playerWidth / responsive : 1;
@@ -61,7 +74,7 @@ const spriteThumbs = (player, plugin, options) => {
     const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
 
     const tooltipStyle = {
-      backgroundImage: `url("${options.url}")`,
+      backgroundImage: `url("${options.url.replace('{index}', idx)}")`,
       backgroundRepeat: 'no-repeat',
       backgroundPosition: `${cleft}px ${ctop}px`,
       backgroundSize: `${scaledWidth * columns}px ${scaledHeight * rows}px`,
@@ -82,9 +95,10 @@ const spriteThumbs = (player, plugin, options) => {
 
   const intCheck = (opt) => {
     const val = options[opt];
+    const min = opt !== 'rows' ? 1 : 0;
 
-    if (parseInt(val, 10) !== val || val < 1) {
-      log(`${opt} must be an integer greater than 0`);
+    if (parseInt(val, 10) !== val || val < min) {
+      log(`${opt} must be an integer greater than ${min - 1}`);
       return false;
     }
     return true;
@@ -110,7 +124,8 @@ const spriteThumbs = (player, plugin, options) => {
 
     plugin.setState({
       ready: !!(mouseTimeTooltip && options.url &&
-        intCheck('width') && intCheck('height') && intCheck('columns') && dl),
+        intCheck('width') && intCheck('height') && intCheck('columns') &&
+        intCheck('rows') && dl),
       diagnostics: true
     });
   };
