@@ -48,9 +48,9 @@ const spriteThumbs = (player, plugin, options) => {
     const responsive = options.responsive;
 
     const rowDuration = interval * columns;
-    let rows = options.rows || Math.ceil(duration / rowDuration);
-    // spriteDuration is needed to calculate idx and rows of last sprite
-    const spriteDuration = rowDuration * rows;
+    // spriteDuration is needed to calculate idx
+    const spriteDuration = rowDuration *
+          (options.rows || Math.ceil(duration / rowDuration));
 
     let position = dom.getPointerPosition(seekBarEl, evt).x * duration;
     // for single sprites idx is always 0
@@ -58,10 +58,6 @@ const spriteThumbs = (player, plugin, options) => {
 
     // if (idx == 0) position /= interval
     position = (position - spriteDuration * idx) / interval;
-    // Last (or only) sprite may have less rows, calculate required rows for it
-    if (idx === Math.floor(duration / spriteDuration)) {
-      rows -= Math.floor((spriteDuration * (idx + 1) - duration) / rowDuration);
-    }
 
     const scaleFactor = responsive && playerWidth < responsive ?
       playerWidth / responsive : 1;
@@ -78,7 +74,7 @@ const spriteThumbs = (player, plugin, options) => {
       backgroundImage: `url("${options.url.replace('{index}', idx)}")`,
       backgroundRepeat: 'no-repeat',
       backgroundPosition: `${cleft}px ${ctop}px`,
-      backgroundSize: `${scaledWidth * columns}px ${scaledHeight * rows}px`,
+      backgroundSize: `${scaledWidth * columns}px auto`,
       top: `${topOffset}px`,
       color: '#fff',
       textShadow: '1px 1px #000',
