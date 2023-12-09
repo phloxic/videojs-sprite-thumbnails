@@ -202,7 +202,7 @@ const player = videojs('example-player');
 player.spriteThumbnails({
   url: 'https://example.com/thumbnails-{index}.jpg',
   width: 240,
-  height: 100
+  height: 100,
   columns: 7,
   rows: 6
 }).log.level('debug');
