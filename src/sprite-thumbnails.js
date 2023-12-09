@@ -33,12 +33,6 @@ const spriteThumbs = (player, plugin, options) => {
   const tooltipEl = mouseTimeTooltip && mouseTimeTooltip.el();
   const tooltipStyleOrig = tooltipEl && tooltipEl.style;
 
-  const resetMouseTooltip = () => {
-    if (tooltipEl && tooltipStyleOrig) {
-      tooltipEl.style = tooltipStyleOrig;
-    }
-  };
-
   const hijackMouseTooltip = evt => {
     const seekBarEl = seekBar.el();
     const playerWidth = player.currentWidth();
@@ -146,7 +140,7 @@ const spriteThumbs = (player, plugin, options) => {
         debug('resetting');
       }
       progress.off(spriteEvents, hijackMouseTooltip);
-      resetMouseTooltip();
+      tooltipEl.style = tooltipStyleOrig;
     }
   });
 
