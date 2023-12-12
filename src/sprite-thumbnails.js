@@ -84,7 +84,7 @@ const spriteThumbs = (player, plugin, options) => {
     });
   };
 
-  const intCheck = (opt) => {
+  const intCheck = opt => {
     const val = options[opt];
     const min = opt !== 'rows' ? 1 : 0;
 
