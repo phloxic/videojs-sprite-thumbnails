@@ -83,7 +83,7 @@ const spriteThumbs = (player, plugin, options) => {
     });
   };
 
-  const intCheck = (opt) => {
+  const intCheck = opt => {
     const val = options[opt];
     const min = opt !== 'rows' ? 1 : 0;
 
@@ -106,8 +106,11 @@ const spriteThumbs = (player, plugin, options) => {
       plugin.setState(defaultState);
       options = merge(options, spriteOpts);
 
-      // url from source always takes precedence, even if empty
-      options.url = spriteOpts.url;
+      // url from source always takes precedence, even if undefined
+      options.url = spriteOpts.url || '';
+
+      // upgrade plugin options property
+      plugin.options = options;
     }
 
     const dl = !connection || connection.downlink >= options.downlink;
