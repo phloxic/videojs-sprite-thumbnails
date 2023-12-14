@@ -38,7 +38,7 @@ QUnit.module('videojs-sprite-thumbnails', {
 });
 
 QUnit.test('changes ready state', function(assert) {
-  assert.expect(4);
+  assert.expect(5);
 
   this.player.spriteThumbnails({
     url: '../img/oceans-thumbs.jpg',
@@ -55,7 +55,7 @@ QUnit.test('changes ready state', function(assert) {
 
   // Tick the clock forward enough to trigger the player to be "ready".
   this.clock.tick(1);
-  this.player.trigger('ready');
+  this.player.trigger('loadstart');
 
   assert.strictEqual(
     this.player.spriteThumbnails().state.ready,
@@ -64,6 +64,7 @@ QUnit.test('changes ready state', function(assert) {
   );
 
   this.clock.tick(1);
+  const currentConfig = this.player.spriteThumbnails().options;
 
   this.player.src({src: 'dummy.mp4', spriteThumbnails: {}});
   this.player.trigger('loadstart');
@@ -71,7 +72,16 @@ QUnit.test('changes ready state', function(assert) {
   assert.strictEqual(
     this.player.spriteThumbnails().state.ready,
     false,
-    'empty configuration on loadstart: the plugin will not show thumbnails'
+    'options empty: plugin disabled and not ready'
+  );
+  const overridingConfig = this.player.spriteThumbnails().options;
+
+  assert.strictEqual(
+    overridingConfig.url === '' &&
+    overridingConfig.url !== currentConfig.url &&
+    overridingConfig.width === currentConfig.width,
+    true,
+    'options empty: disabled plugin inherits options, except for url'
   );
 
   this.player.reset();

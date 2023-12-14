@@ -95,35 +95,6 @@ const spriteThumbs = (player, plugin, options) => {
     return true;
   };
 
-  const init = () => {
-    // if present, merge source config with current config
-    const plugName = plugin.name;
-    const spriteSource = player.currentSources().find(source => {
-      return source.hasOwnProperty(plugName);
-    });
-    const spriteOpts = spriteSource && spriteSource[plugName];
-
-    if (spriteOpts) {
-      plugin.setState(defaultState);
-      options = merge(options, spriteOpts);
-
-      // url from source always takes precedence, even if undefined
-      options.url = spriteOpts.url || '';
-
-      // upgrade plugin options property
-      plugin.options = options;
-    }
-
-    const dl = !connection || connection.downlink >= options.downlink;
-
-    plugin.setState({
-      ready: !!(mouseTimeTooltip && options.url &&
-        intCheck('width') && intCheck('height') && intCheck('columns') &&
-        intCheck('rows') && dl),
-      diagnostics: true
-    });
-  };
-
   plugin.on('statechanged', () => {
     const pstate = plugin.state;
     const spriteEvents = ['mousemove', 'touchmove'];
@@ -147,11 +118,33 @@ const spriteThumbs = (player, plugin, options) => {
     }
   });
 
-  // load configuration from a source
-  player.on('loadstart', init);
+  player.on('loadstart', () => {
+    // if present, merge source config with current config
+    const plugName = plugin.name;
+    const spriteSource = player.currentSources().find(source => {
+      return source.hasOwnProperty(plugName);
+    });
+    let spriteOpts = spriteSource && spriteSource[plugName];
 
-  // load plugin configuration
-  init();
+    if (spriteOpts) {
+      if (!Object.keys(spriteOpts).length) {
+        spriteOpts = {url: ''};
+        log('disabling plugin');
+      }
+      plugin.setState(defaultState);
+      plugin.options = options = merge(options, spriteOpts);
+    }
+
+    const dl = !connection || connection.downlink >= options.downlink;
+
+    plugin.setState({
+      ready: !!(mouseTimeTooltip && options.url &&
+        intCheck('width') && intCheck('height') && intCheck('columns') &&
+        intCheck('rows') && dl),
+      diagnostics: true
+    });
+  });
+
   player.addClass('vjs-sprite-thumbnails');
 };
 
