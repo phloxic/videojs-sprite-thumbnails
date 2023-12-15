@@ -14,7 +14,6 @@ import window from 'global/window';
  */
 const spriteThumbs = (player, plugin, options) => {
   const navigator = window.navigator;
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 
   const dom = videojs.dom;
   const obj = videojs.obj;
@@ -95,6 +94,17 @@ const spriteThumbs = (player, plugin, options) => {
     return true;
   };
 
+  const downlinkCheck = () => {
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const downlink = options.downlink;
+
+    if (connection && connection.downlink < downlink) {
+      log.warn(`connection.downlink < ${downlink}`);
+      return false;
+    }
+    return true;
+  };
+
   plugin.on('statechanged', () => {
     const pstate = plugin.state;
     const spriteEvents = ['mousemove', 'touchmove'];
@@ -107,9 +117,6 @@ const spriteThumbs = (player, plugin, options) => {
       if (pstate.diagnostics) {
         if (!options.url) {
           log('no url given');
-        }
-        if (connection && connection.downlink < options.downlink) {
-          log.warn(`connection.downlink < ${options.downlink}`);
         }
         debug('resetting');
       }
@@ -135,12 +142,10 @@ const spriteThumbs = (player, plugin, options) => {
       plugin.options = options = merge(options, spriteOpts);
     }
 
-    const dl = !connection || connection.downlink >= options.downlink;
-
     plugin.setState({
       ready: !!(mouseTimeTooltip && options.url &&
         intCheck('width') && intCheck('height') && intCheck('columns') &&
-        intCheck('rows') && dl),
+        intCheck('rows') && downlinkCheck()),
       diagnostics: true
     });
   });
