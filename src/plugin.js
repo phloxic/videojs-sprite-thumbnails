@@ -14,6 +14,8 @@ const Plugin = videojs.getPlugin('plugin');
  * @param {Function} idxTag
  *        Function determining the substitiuton of the {index} template in the
  *        current url. Default: returns index as is.
+ * @param {Array} urlArray
+ *        Array of image locations. Default: [].
  * @param {Integer} width
  *        Width of a thumbnail in pixels. Must be set by user. Default: 0.
  * @param {Integer} height
@@ -36,6 +38,7 @@ const defaults = {
   idxTag(i) {
     return i;
   },
+  urlArray: [],
   width: 0,
   height: 0,
   columns: 0,

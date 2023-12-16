@@ -33,7 +33,10 @@ const spriteThumbs = (player, plugin, options) => {
   const tooltipStyleOrig = tooltipEl && tooltipEl.style;
 
   const getUrl = idx => {
-    return options.url.replace('{index}', options.idxTag(idx));
+    const urlArray = options.urlArray;
+
+    return urlArray.length ?
+      urlArray[idx] : options.url.replace('{index}', options.idxTag(idx));
   };
 
   const hijackMouseTooltip = evt => {
@@ -119,7 +122,7 @@ const spriteThumbs = (player, plugin, options) => {
       progress.on(spriteEvents, hijackMouseTooltip);
     } else {
       if (pstate.diagnostics) {
-        if (!options.url) {
+        if (!options.url && !options.urlArray.length) {
           log('no urls given');
         }
         debug('resetting');
@@ -139,7 +142,7 @@ const spriteThumbs = (player, plugin, options) => {
 
     if (spriteOpts) {
       if (!Object.keys(spriteOpts).length) {
-        spriteOpts = {url: ''};
+        spriteOpts = {url: '', urlArray: []};
         log('disabling plugin');
       }
       plugin.setState(defaultState);
@@ -147,7 +150,7 @@ const spriteThumbs = (player, plugin, options) => {
     }
 
     plugin.setState({
-      ready: !!(mouseTimeTooltip && options.url &&
+      ready: !!(mouseTimeTooltip && (options.urlArray.length || options.url) &&
         intCheck('width') && intCheck('height') && intCheck('columns') &&
         intCheck('rows') && downlinkCheck()),
       diagnostics: true
