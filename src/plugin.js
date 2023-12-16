@@ -11,6 +11,9 @@ const Plugin = videojs.getPlugin('plugin');
  *        Location of image(s). Must be set by user. For multiple images the
  *        filename must contain the template {index} which is replaced by the
  *        zero based index number of the image in the sequence. Default: ''.
+ * @param {Function} idxTag
+ *        Function determining the substitiuton of the {index} template in the
+ *        current url. Default: returns index as is.
  * @param {Integer} width
  *        Width of a thumbnail in pixels. Must be set by user. Default: 0.
  * @param {Integer} height
@@ -30,6 +33,9 @@ const Plugin = videojs.getPlugin('plugin');
  */
 const defaults = {
   url: '',
+  idxTag(i) {
+    return i;
+  },
   width: 0,
   height: 0,
   columns: 0,
