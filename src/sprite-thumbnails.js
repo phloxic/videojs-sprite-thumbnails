@@ -31,6 +31,13 @@ const spriteThumbs = (player, plugin, options) => {
   const tooltipEl = mouseTimeTooltip && mouseTimeTooltip.el();
   const tooltipStyleOrig = tooltipEl && tooltipEl.style;
 
+  const getUrl = idx => {
+    const urlArray = options.urlArray;
+
+    return urlArray.length ?
+      urlArray[idx] : options.url.replace('{index}', options.idxTag(idx));
+  };
+
   const hijackMouseTooltip = evt => {
     const seekBarEl = seekBar.el();
     const playerWidth = player.currentWidth();
@@ -63,7 +70,7 @@ const spriteThumbs = (player, plugin, options) => {
     const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
 
     const tooltipStyle = {
-      backgroundImage: `url("${options.url.replace('{index}', idx)}")`,
+      backgroundImage: `url("${getUrl(idx)}")`,
       backgroundRepeat: 'no-repeat',
       backgroundPosition: `${cleft}px ${ctop}px`,
       backgroundSize: `${scaledWidth * columns}px auto`,
@@ -114,8 +121,8 @@ const spriteThumbs = (player, plugin, options) => {
       progress.on(spriteEvents, hijackMouseTooltip);
     } else {
       if (pstate.diagnostics) {
-        if (!options.url) {
-          log('no url given');
+        if (!options.url && !options.urlArray.length) {
+          log('no urls given');
         }
         debug('resetting');
       }
@@ -134,7 +141,7 @@ const spriteThumbs = (player, plugin, options) => {
 
     if (spriteOpts) {
       if (!Object.keys(spriteOpts).length) {
-        spriteOpts = {url: ''};
+        spriteOpts = {url: '', urlArray: []};
         log('disabling plugin');
       }
       plugin.setState(defaultState);
@@ -142,7 +149,7 @@ const spriteThumbs = (player, plugin, options) => {
     }
 
     plugin.setState({
-      ready: !!(mouseTimeTooltip && options.url &&
+      ready: !!(mouseTimeTooltip && (options.urlArray.length || options.url) &&
         intCheck('width') && intCheck('height') && intCheck('columns') &&
         intCheck('rows') && downlinkCheck()),
       diagnostics: true
