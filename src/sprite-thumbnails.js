@@ -14,7 +14,6 @@ import window from 'global/window';
  */
 const spriteThumbs = (player, plugin, options) => {
   const navigator = window.navigator;
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 
   const dom = videojs.dom || videojs;
   const log = plugin.log || videojs.log;
@@ -94,33 +93,15 @@ const spriteThumbs = (player, plugin, options) => {
     return true;
   };
 
-  const init = () => {
-    // if present, merge source config with current config
-    const plugName = plugin.name;
-    const spriteSource = player.currentSources().filter(source => {
-      return source.hasOwnProperty(plugName);
-    })[0];
-    const spriteOpts = spriteSource && spriteSource[plugName];
+  const downlinkCheck = () => {
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const downlink = options.downlink;
 
-    if (spriteOpts) {
-      plugin.setState(defaultState);
-      options = merge(options, spriteOpts);
-
-      // url from source always takes precedence, even if undefined
-      options.url = spriteOpts.url || '';
-
-      // upgrade plugin options property
-      plugin.options = options;
+    if (connection && connection.downlink < downlink) {
+      log.warn(`connection.downlink < ${downlink}`);
+      return false;
     }
-
-    const dl = !connection || connection.downlink >= options.downlink;
-
-    plugin.setState({
-      ready: !!(mouseTimeTooltip && options.url &&
-        intCheck('width') && intCheck('height') && intCheck('columns') &&
-        intCheck('rows') && dl),
-      diagnostics: true
-    });
+    return true;
   };
 
   plugin.on('statechanged', () => {
@@ -136,9 +117,6 @@ const spriteThumbs = (player, plugin, options) => {
         if (!options.url) {
           log('no url given');
         }
-        if (connection && connection.downlink < options.downlink) {
-          log.warn(`connection.downlink < ${options.downlink}`);
-        }
         debug('resetting');
       }
       progress.off(spriteEvents, hijackMouseTooltip);
@@ -146,11 +124,31 @@ const spriteThumbs = (player, plugin, options) => {
     }
   });
 
-  // load configuration from a source
-  player.on('loadstart', init);
+  player.on('loadstart', () => {
+    // if present, merge source config with current config
+    const plugName = plugin.name;
+    const spriteSource = player.currentSources().filter(source => {
+      return source.hasOwnProperty(plugName);
+    })[0];
+    let spriteOpts = spriteSource && spriteSource[plugName];
 
-  // load plugin configuration
-  init();
+    if (spriteOpts) {
+      if (!Object.keys(spriteOpts).length) {
+        spriteOpts = {url: ''};
+        log('disabling plugin');
+      }
+      plugin.setState(defaultState);
+      plugin.options = options = merge(options, spriteOpts);
+    }
+
+    plugin.setState({
+      ready: !!(mouseTimeTooltip && options.url &&
+        intCheck('width') && intCheck('height') && intCheck('columns') &&
+        intCheck('rows') && downlinkCheck()),
+      diagnostics: true
+    });
+  });
+
   player.addClass('vjs-sprite-thumbnails');
 };
 

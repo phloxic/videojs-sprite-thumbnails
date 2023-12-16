@@ -12,6 +12,7 @@
     - [CDN](#cdn)
     - [Configuration](#configuration)
     - [Initialization](#initialization)
+    - [Disabling and enabling the plugin](#disabling-and-enabling-the-plugin)
     - [Playlist example](#playlist-example)
     - [Debugging](#debugging)
   - [Constraints](#constraints)
@@ -131,11 +132,31 @@ option | type | mandatory | default | description
 
 ### Initialization
 
-The plugin is initialized at player setup. This is sufficient when the player will play only one video and use its thumbnails.
-
-The plugin also monitors all video sources on [loadstart](https://docs.videojs.com/player#event:loadstart) for a `spriteThumbnails` property which configures the plugin for this specific video. A typical use case are [playlists](#playlist-example).
+The plugin is initialized every time the player [starts to load](https://docs.videojs.com/player#event:loadstart) a video. It monitors all video sources for an optional `spriteThumbnails` property. Any existing plugin configuration is updated by merging this `spriteThumbnails` object into the current configuration. Typical use cases are [playlists](#playlist-example).
 
 The image(s) are then loaded on demand, when the cursor hovers or moves over the progress bar.
+
+### Disabling and enabling the plugin
+
+The plugin can temporarily be disabled or enabled by toggling its `ready` state:
+
+```js
+// do not show thumbnails
+videojs.getPlayer('#myplayer').spriteThumbnails().setState({ready: false});
+```
+
+Disable the plugin for a specific video about to be loaded:
+
+```js
+videojs.getPlayer('myplayer').src([{
+  type: 'video/mp4',
+  src: 'https://example.com/nothumbs.mp4',
+  // disable plugin with empty options object
+  spriteThumbnails: {}
+}]);
+```
+
+Note that the empty `spriteThumbnails: {}` configuration in this context internally does the same as `spriteThumbnails: {url: ''}`, that is, all other options are still inherited and can be merged with the options for a following video.
 
 ### Playlist example
 
