@@ -135,18 +135,18 @@ const spriteThumbs = (player, plugin, options) => {
   player.on('loadstart', () => {
     // if present, merge source config with current config
     const plugName = plugin.name;
-    const spriteSource = player.currentSources().find(source => {
+    const thumbSource = player.currentSources().find(source => {
       return source.hasOwnProperty(plugName);
     });
-    let spriteOpts = spriteSource && spriteSource[plugName];
+    let srcOpts = thumbSource && thumbSource[plugName];
 
-    if (spriteOpts) {
-      if (!Object.keys(spriteOpts).length) {
-        spriteOpts = {url: '', urlArray: []};
+    if (srcOpts) {
+      if (!Object.keys(srcOpts).length) {
+        srcOpts = {url: '', urlArray: []};
         log('disabling plugin');
       }
       plugin.setState(defaultState);
-      plugin.options = options = merge(options, spriteOpts);
+      plugin.options = options = merge(options, srcOpts);
     }
 
     plugin.setState({
