@@ -19,8 +19,6 @@ const spriteThumbs = (player, plugin, options) => {
   const log = plugin.log || videojs.log;
   const merge = videojs.mergeOptions;
 
-  const defaultState = merge({}, plugin.state);
-
   const controls = player.controlBar;
 
   // default control bar component tree is expected
@@ -120,12 +118,10 @@ const spriteThumbs = (player, plugin, options) => {
       debug('ready to show thumbnails');
       progress.on(spriteEvents, hijackMouseTooltip);
     } else {
-      if (pstate.diagnostics) {
-        if (!options.url && !options.urlArray.length) {
-          log('no urls given');
-        }
-        debug('resetting');
+      if (!options.url && !options.urlArray.length) {
+        log('no urls given');
       }
+      debug('resetting');
       progress.off(spriteEvents, hijackMouseTooltip);
       tooltipEl.style = tooltipStyleOrig;
     }
@@ -134,25 +130,31 @@ const spriteThumbs = (player, plugin, options) => {
   player.on('loadstart', () => {
     // if present, merge source config with current config
     const plugName = plugin.name;
-    const spriteSource = player.currentSources().filter(source => {
+    const thumbSource = player.currentSources().filter(source => {
       return source.hasOwnProperty(plugName);
     })[0];
-    let spriteOpts = spriteSource && spriteSource[plugName];
+    let srcOpts = thumbSource && thumbSource[plugName];
 
-    if (spriteOpts) {
-      if (!Object.keys(spriteOpts).length) {
-        spriteOpts = {url: '', urlArray: []};
+    if (srcOpts) {
+      // empty config unsets url and urlArray
+      // force urlArray or url according to precedence
+      const urlArray = srcOpts.urlArray;
+
+      if (!Object.keys(srcOpts).length) {
+        srcOpts = {url: '', urlArray: []};
         log('disabling plugin');
+      } else if (urlArray && urlArray.length) {
+        srcOpts.url = '';
+      } else if (srcOpts.url) {
+        srcOpts.urlArray = [];
       }
-      plugin.setState(defaultState);
-      plugin.options = options = merge(options, spriteOpts);
+      plugin.options = options = merge(options, srcOpts);
     }
 
     plugin.setState({
       ready: !!(mouseTimeTooltip && (options.urlArray.length || options.url) &&
         intCheck('width') && intCheck('height') && intCheck('columns') &&
-        intCheck('rows') && downlinkCheck()),
-      diagnostics: true
+        intCheck('rows') && downlinkCheck())
     });
   });
 
