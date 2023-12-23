@@ -20,8 +20,6 @@ const spriteThumbs = (player, plugin, options) => {
   const merge = obj.merge;
   const log = plugin.log;
 
-  const defaultState = merge({}, plugin.state);
-
   const controls = player.controlBar;
 
   // default control bar component tree is expected
@@ -121,12 +119,10 @@ const spriteThumbs = (player, plugin, options) => {
       debug('ready to show thumbnails');
       progress.on(spriteEvents, hijackMouseTooltip);
     } else {
-      if (pstate.diagnostics) {
-        if (!options.url && !options.urlArray.length) {
-          log('no urls given');
-        }
-        debug('resetting');
+      if (!options.url && !options.urlArray.length) {
+        log('no urls given');
       }
+      debug('resetting');
       progress.off(spriteEvents, hijackMouseTooltip);
       tooltipEl.style = tooltipStyleOrig;
     }
@@ -153,15 +149,13 @@ const spriteThumbs = (player, plugin, options) => {
       } else if (srcOpts.url) {
         srcOpts.urlArray = [];
       }
-      plugin.setState(defaultState);
       plugin.options = options = merge(options, srcOpts);
     }
 
     plugin.setState({
       ready: !!(mouseTimeTooltip && (options.urlArray.length || options.url) &&
         intCheck('width') && intCheck('height') && intCheck('columns') &&
-        intCheck('rows') && downlinkCheck()),
-      diagnostics: true
+        intCheck('rows') && downlinkCheck())
     });
   });
 

@@ -77,7 +77,7 @@ class SpriteThumbnails extends Plugin {
 }
 
 // Define default values for the plugin's `state` object here.
-SpriteThumbnails.defaultState = {ready: false, diagnostics: false};
+SpriteThumbnails.defaultState = {ready: false};
 
 // Include the version number.
 SpriteThumbnails.VERSION = VERSION;
