@@ -141,9 +141,17 @@ const spriteThumbs = (player, plugin, options) => {
     let srcOpts = thumbSource && thumbSource[plugName];
 
     if (srcOpts) {
+      // empty config unsets url and urlArray
+      // force urlArray or url according to precedence
+      const urlArray = srcOpts.urlArray;
+
       if (!Object.keys(srcOpts).length) {
         srcOpts = {url: '', urlArray: []};
         log('disabling plugin');
+      } else if (urlArray && urlArray.length) {
+        srcOpts.url = '';
+      } else if (srcOpts.url) {
+        srcOpts.urlArray = [];
       }
       plugin.setState(defaultState);
       plugin.options = options = merge(options, srcOpts);
