@@ -11,9 +11,6 @@ const Plugin = videojs.getPlugin('plugin');
  *        Location of image(s). Must be set by user. For multiple images the
  *        filename must contain the template {index} which is replaced by the
  *        zero based index number of the image in the sequence. Default: ''.
- * @param {Function} idxTag
- *        Function determining the substitiuton of the {index} template in the
- *        current url. Default: returns index as is.
  * @param {Array} urlArray
  *        Array of image locations. Default: [].
  * @param {Integer} width
@@ -27,6 +24,9 @@ const Plugin = videojs.getPlugin('plugin');
  *        plugin will expect a sequence of images. Default: 0.
  * @param {Number} interval
  *        Interval between thumbnail frames in seconds. Default: 1.
+ * @param {Function} idxTag
+ *        Function determining the substitiuton of the {index} template in the
+ *        current url. Default: returns index as is.
  * @param {Integer} responsive
  *        Width of player below which thumbnails are reponsive. Default: 600.
  * @param {Number} downlink
