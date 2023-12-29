@@ -38,7 +38,7 @@ QUnit.module('videojs-sprite-thumbnails', {
 });
 
 QUnit.test('changes ready state', function(assert) {
-  assert.expect(5);
+  assert.expect(7);
 
   this.player.spriteThumbnails({
     url: '../img/oceans-thumbs.jpg',
@@ -62,6 +62,11 @@ QUnit.test('changes ready state', function(assert) {
     true,
     'the plugin is now able to show thumbnails on ready'
   );
+  assert.strictEqual(
+    this.player.hasClass('vjs-thumbnails-ready'),
+    true,
+    'player has class vjs-thumbnails-ready'
+  );
 
   this.clock.tick(1);
   const currentConfig = this.player.spriteThumbnails().options;
@@ -74,6 +79,12 @@ QUnit.test('changes ready state', function(assert) {
     false,
     'options empty: plugin disabled and not ready'
   );
+  assert.strictEqual(
+    this.player.hasClass('vjs-thumbnails-ready'),
+    false,
+    'player does not have class vjs-thumbnails-ready'
+  );
+
   const overridingConfig = this.player.spriteThumbnails().options;
 
   assert.strictEqual(
