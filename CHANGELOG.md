@@ -1,3 +1,116 @@
+<a name="1.1.2"></a>
+## [1.1.2](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.1.1...v1.1.2) (2023-12-29)
+
+### Features
+
+* add function to customize the replacement of the {index} template ([1f451c9](https://github.com/phloxic/videojs-sprite-thumbnails/commit/1f451c9))
+* avoid inheritance of urlArray and url options ([f4a43ea](https://github.com/phloxic/videojs-sprite-thumbnails/commit/f4a43ea))
+* **downlink:** check on statechanged, report w/o duplicating code ([bdfb4af](https://github.com/phloxic/videojs-sprite-thumbnails/commit/bdfb4af))
+* load sprite images on demand ([e22b512](https://github.com/phloxic/videojs-sprite-thumbnails/commit/e22b512)), closes [#56](https://github.com/phloxic/videojs-sprite-thumbnails/issues/56)
+* optionally configure image sequence with new option urlArray ([89ec8d5](https://github.com/phloxic/videojs-sprite-thumbnails/commit/89ec8d5))
+* support multiple sprites and individual thumbnails ([20770f3](https://github.com/phloxic/videojs-sprite-thumbnails/commit/20770f3)), closes [#57](https://github.com/phloxic/videojs-sprite-thumbnails/issues/57)
+* toggle player class vjs-thumbnails-ready according to plugin state ([2f183d6](https://github.com/phloxic/videojs-sprite-thumbnails/commit/2f183d6))
+* upgrade plugin options on loadstart, ensure that url is a string ([1444bb1](https://github.com/phloxic/videojs-sprite-thumbnails/commit/1444bb1))
+
+### Chores
+
+* **deps-dev:** bump [@babel](https://github.com/babel)/traverse from 7.21.5 to 7.23.2 ([71dd523](https://github.com/phloxic/videojs-sprite-thumbnails/commit/71dd523))
+* **deps-dev:** bump [@babel](https://github.com/babel)/traverse from 7.21.5 to 7.23.2 ([38cda59](https://github.com/phloxic/videojs-sprite-thumbnails/commit/38cda59))
+* **deps-dev:** bump word-wrap from 1.2.3 to 1.2.4 ([e8c7f76](https://github.com/phloxic/videojs-sprite-thumbnails/commit/e8c7f76))
+* **deps-dev:** bump word-wrap from 1.2.3 to 1.2.4 ([54521ea](https://github.com/phloxic/videojs-sprite-thumbnails/commit/54521ea))
+* **package:** appease dependabot complaining about underscore ([2fb1739](https://github.com/phloxic/videojs-sprite-thumbnails/commit/2fb1739))
+
+### Code Refactoring
+
+* cycle through tooltipStyle with videojs.obj.each ([0c6e453](https://github.com/phloxic/videojs-sprite-thumbnails/commit/0c6e453))
+* evaluate config only on loadstart, 1 special case for url ([328d82b](https://github.com/phloxic/videojs-sprite-thumbnails/commit/328d82b))
+* remove 'diagnostic' property of plugin state ([1988633](https://github.com/phloxic/videojs-sprite-thumbnails/commit/1988633))
+* scale height of background image with CSS auto value ([4d01861](https://github.com/phloxic/videojs-sprite-thumbnails/commit/4d01861))
+* scale height of background image with CSS auto value ([62ef0e4](https://github.com/phloxic/videojs-sprite-thumbnails/commit/62ef0e4))
+
+### Documentation
+
+* add forgotten comma ([b501f8b](https://github.com/phloxic/videojs-sprite-thumbnails/commit/b501f8b))
+* mention option merge on loadstart in Initialization section ([8e9b0f0](https://github.com/phloxic/videojs-sprite-thumbnails/commit/8e9b0f0))
+* section on how to disable the plugin ([c20ec56](https://github.com/phloxic/videojs-sprite-thumbnails/commit/c20ec56))
+
+### Styles
+
+* remove spurious parentheses around single argument ([7a8b188](https://github.com/phloxic/videojs-sprite-thumbnails/commit/7a8b188))
+* tweak variable names in loadstart callback ([a2c2907](https://github.com/phloxic/videojs-sprite-thumbnails/commit/a2c2907))
+
+
+### BREAKING CHANGES
+
+* Setting the new `columns` option is mandatory.
+* Setting the new `columns` option is mandatory.
+
+<a name="2.1.1"></a>
+## [2.1.1](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v2.1.0...v2.1.1) (2023-06-10)
+
+### Bug Fixes
+
+* do not reset mouse time tooltip css when sprite cannot be loaded ([49b079d](https://github.com/phloxic/videojs-sprite-thumbnails/commit/49b079d))
+
+### Documentation
+
+* CDN link to exact latest 2.x.x release w/ higher maxage ([6bf2b73](https://github.com/phloxic/videojs-sprite-thumbnails/commit/6bf2b73))
+
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.1.0...v2.1.0) (2023-06-06)
+
+### Features
+
+* **config:** lower connection downlink default to 1.5 ([875f742](https://github.com/phloxic/videojs-sprite-thumbnails/commit/875f742))
+* make ready state proper boolean ([020ca39](https://github.com/phloxic/videojs-sprite-thumbnails/commit/020ca39))
+
+### Chores
+
+* **deps:** bump socket.io-parser from 4.2.2 to 4.2.3 ([570fd61](https://github.com/phloxic/videojs-sprite-thumbnails/commit/570fd61))
+
+### Code Refactoring
+
+* improve plugin defaultState handling ([239f04f](https://github.com/phloxic/videojs-sprite-thumbnails/commit/239f04f))
+* slim down handling of configuration updates ([0915d10](https://github.com/phloxic/videojs-sprite-thumbnails/commit/0915d10))
+
+
+### BREAKING CHANGES
+
+* **config:** There is a highly subjective factor to this option. In critical
+production scenarios it may be worth setting it explicitly before
+updating the plugin.
+
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.0.0...v2.0.0) (2023-05-22)
+
+### Features
+
+* **loadstart:** pick options from one source only ([f01b382](https://github.com/phloxic/videojs-sprite-thumbnails/commit/f01b382))
+* make plugin compatible with Video.js 8.x ([75a4e5c](https://github.com/phloxic/videojs-sprite-thumbnails/commit/75a4e5c))
+
+### Bug Fixes
+
+* unconditionally try loading sprit on loadstart ([ddc250e](https://github.com/phloxic/videojs-sprite-thumbnails/commit/ddc250e))
+
+### Code Refactoring
+
+* no parentheses needed around single argument to arrow ([2e5cd7d](https://github.com/phloxic/videojs-sprite-thumbnails/commit/2e5cd7d))
+
+### Documentation
+
+* **README:** explain Video.js 8.x compatible versioning ([dba689a](https://github.com/phloxic/videojs-sprite-thumbnails/commit/dba689a))
+* **README:** use ES6 syntax in code examples ([e4a2073](https://github.com/phloxic/videojs-sprite-thumbnails/commit/e4a2073))
+
+### Tests
+
+* correct typo in sprite filename ([00a1a27](https://github.com/phloxic/videojs-sprite-thumbnails/commit/00a1a27))
+
+
+### BREAKING CHANGES
+
+* - Only Video.js v8.x.x is supported
+- Only browsers supported by Video.js v8.x.x are supported
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.1.0...v1.1.1) (2023-06-10)
 
