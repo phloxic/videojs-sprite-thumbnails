@@ -17,6 +17,7 @@
     - [Initialization](#initialization)
     - [Disabling and enabling the plugin](#disabling-and-enabling-the-plugin)
     - [Playlist example](#playlist-example)
+    - [CSS state classes](#css-state-classes)
     - [Debugging](#debugging)
   - [Migrating from v1.1.x](#migrating-from-v11x)
   - [Constraints](#constraints)
@@ -293,6 +294,23 @@ videojs.on(videojs.dom.$('button#secondvideo'), 'click', function () {
   player.src(playlist[1]);
   player.play();
 });
+```
+
+### CSS state classes
+
+The plugin uses two CSS classes on the player element to signal the current state of plugin:
+
+class name | plugin state
+---------- | ------------
+`vjs-sprite-thumbnails` | plugin is/not loaded
+`vjs-thumbnails-ready` | plugin is/not ready to show thumbnails
+
+This allows for CSS directives which apply to player elements depending on plugin state:
+
+```css
+.video-js.vjs-thumbnails-ready .vjs-progress-holder {
+  background-color: green;
+}
 ```
 
 ### Debugging
