@@ -1,5 +1,5 @@
-<a name="1.1.2"></a>
-## [1.1.2](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.1.1...v1.1.2) (2023-12-29)
+<a name="1.2.0"></a>
+## [1.2.0](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.1.1...v1.2.0) (2023-12-29)
 
 ### Features
 
