@@ -125,6 +125,7 @@ const spriteThumbs = (player, plugin, options) => {
       progress.off(spriteEvents, hijackMouseTooltip);
       tooltipEl.style = tooltipStyleOrig;
     }
+    player.toggleClass('vjs-thumbnails-ready', pstate.ready);
   });
 
   player.on('loadstart', () => {
