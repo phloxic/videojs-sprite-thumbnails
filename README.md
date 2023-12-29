@@ -11,10 +11,14 @@
     - [RequireJS/AMD](#requirejsamd)
     - [CDN](#cdn)
     - [Configuration](#configuration)
+      - [Three ways to configure the location of image assets](#three-ways-to-configure-the-location-of-image-assets)
+      - [The idxTag function](#the-idxtag-function)
+      - [Individual thumbnails](#individual-thumbnails)
     - [Initialization](#initialization)
     - [Disabling and enabling the plugin](#disabling-and-enabling-the-plugin)
     - [Playlist example](#playlist-example)
     - [Debugging](#debugging)
+  - [Migrating from v1.1.x](#migrating-from-v11x)
   - [Constraints](#constraints)
   - [License](#license)
 
@@ -32,6 +36,8 @@ This plugin version is compatible with Video.js v7.x and v6.x. Compatible [relea
 
 - works with single or multiple sprites containing thumbnails and individual thumbnail images
 - easy to [configure](#configuration)
+- 3 convenient ways to [retrieve image assets](#three-ways-to-configure-the-location-of-image-assets)
+- optional [function](#the-idxtag-function) to customize access to numbered lists of sequential image assets
 - uses [existing mouse time tooltip](#constraints)
 
 ## Installation
@@ -121,14 +127,98 @@ Or load the latest Video.js v7.x/v6.x compatible release of the plugin via [scri
 
 option | type | mandatory | default | description
 ------ | ---- | --------- | ------- | -----------
-`url`  | String | &#10004; |   | Location of image(s). Must be set by user. For multiple images the filename must contain the template `{index}` which is replaced by the zero based index number of the image in the sequence.
-`width` | Integer | &#10004; |  | Width of a thumbnail in pixels.
-`height` | Integer | &#10004; |   | Height of a thumbnail in pixels.
-`columns` | Integer | &#10004; |   | Number of thumbnail columns per image. Set both `columns` and `rows` to `1` for individual thumbnails.
-`rows` | Integer |  | `0` | Number of thumbnail rows per image. If set to greater than `0`, the plugin will expect a sequence of images. Set both `rows` and `columns` to `1` for individual thumbnails.
+`url` | String | [single sprite](#url-as-is){#url} | `""` | Location of sprite image. Must be set by user.
+`urlArray` | Array | [multiple images](#urls-in-array){#urlarray} | `[]` | Locations of images. Must be set by user.
+`url` | String | [multiple images](#url-by-string-expansion){#taggedurl} | `""` | Locations of multiple images via template expansion. Must be set by user.
+`width` | Integer | &#10004; | `0` | Width of a thumbnail in pixels.
+`height` | Integer | &#10004; | `0` | Height of a thumbnail in pixels.
+`columns` | Integer | [&#10004;](#migrating-from-v11x){#columns} | `0` | Number of thumbnail columns per image. Set both `columns` and `rows` to `1` for [individual thumbnails](#individual-thumbnails).
+`rows` | Integer | multiple images | `0` | Number of thumbnail rows per image. If set, the plugin will expect a sequence of images. The last image may have fewer rows.
 `interval` | Number |  | `1` | Interval between thumbnails in seconds.
+`idxTag` | [Function](#the-idxtag-function){#idxtag} |  |  | Function determining how the `{index}` [template](#url-by-string-expansion) in the [`url`](#taggedurl) is expanded. Returns index as is by default.
 `responsive` | Integer |  | `600` | Width of player in pixels below which thumbnails are responsive. Set to `0` to disable.
 `downlink` | Number |  | `1.5` | Minimum of required [NetworkInformation downlink][downlink] where supported. Set to `0` to disable.
+
+#### Three ways to configure the location of image assets
+
+1. [url](#url){#url-as-is} as String pointing to a single sprite image:
+```js
+{
+  url: 'https://example.com/single-sprite.jpg',
+  // [... more options]
+}
+```
+
+2. [urlArray](#urlarray){#urls-in-array} containing multiple (sprite) images:
+```js
+{
+  urlArray: [
+    'https://example.com/first.jpg',
+    'https://example.com/second.jpg',
+    'https://example.com/third.jpg'
+  ],
+  rows: 7,                   // must be greater than 0
+  // [... more options]
+}
+```
+3. [url](#taggedurl){#url-by-string-expansion} as String expanded by the `idxTag` [function](#the-idxtag-function):
+```js
+{
+  url: 'https://example.com/thumbs-{index}.jpg,
+  rows: 7,                   // must be greater than 0
+  idxTag: function(index) {  // optional
+    return index;            // this is the default
+  },
+  // [... more options]
+}
+```
+
+#### The idxTag function
+
+The function provided by this option can be used to generate various file naming schemes of sequential sprite images.
+
+Example for thumbnail images are numbered starting from 1, 4 digits long, and padded with leading zeroes:
+
+```js
+myplayer.spriteThumbnails({
+  // [ more options ... ]
+  url: 'https://example.com/{index}.jpg',
+  idxTag: function(index) {
+    return ("000" + index).slice(-4);
+  },
+  colums: 5,
+  rows: 5
+});
+```
+
+Of course the same can be achieved by setting [`urlArray`](#urlarray) to the full list of images:
+
+```js
+myplayer.spriteThumbnails({
+  // [ more options ... ]
+  urlArray: [
+    'https://example.com/0001.jpg',
+    'https://example.com/0002.jpg',
+    'https://example.com/0003.jpg',
+    'https://example.com/0004.jpg'
+  ],
+  colums: 5,
+  rows: 5
+});
+```
+
+#### Individual thumbnails
+
+Set both `rows` and `columns` to `1`:
+
+```js
+myplayer.spriteThumbnails({
+  // [ other options ]
+  url: 'https://example.com/individual-thumb-{index}.avif',
+  columns: 1,
+  rows: 1
+});
+```
 
 ### Initialization
 
@@ -138,11 +228,10 @@ The image(s) are then loaded on demand, when the cursor hovers or moves over the
 
 ### Disabling and enabling the plugin
 
-The plugin can temporarily be disabled or enabled by toggling its `ready` state:
+The plugin can temporarily be disabled or enabled by toggling its boolean `ready` state:
 
 ```js
-// do not show thumbnails
-videojs.getPlayer('#myplayer').spriteThumbnails().setState({ready: false});
+videojs.getPlayer('myplayer').spriteThumbnails().setState({ready: false});
 ```
 
 Disable the plugin for a specific video about to be loaded:
@@ -156,7 +245,7 @@ videojs.getPlayer('myplayer').src([{
 }]);
 ```
 
-Note that the empty `spriteThumbnails: {}` configuration in this context internally does the same as `spriteThumbnails: {url: ''}`, that is, all other options are still inherited and can be merged with the options for a following video.
+Note that the empty `spriteThumbnails: {}` configuration in this context internally uses `spriteThumbnails: {url: '', urlArray: []}` to preserve inheritance of all other options.
 
 ### Playlist example
 
@@ -226,6 +315,10 @@ player.spriteThumbnails({
   rows: 6
 }).log.level('debug');
 ```
+
+<h2 id="migrating-from-v11x">Migrating from v1.1.x</h2>
+
+Plugin version 1.2.0 introduces the *mandatory* option [`columns`](#columns). Thumbnail images are now [loaded on demand](https://github.com/phloxic/videojs-sprite-thumbnails/issues/56)  which interferes less with video playback. Please apply the option to your existing setups.
 
 ## Constraints
 
