@@ -127,21 +127,21 @@ Or load the latest Video.js v7.x/v6.x compatible release of the plugin via [scri
 
 option | type | mandatory | default | description
 ------ | ---- | --------- | ------- | -----------
-`url` | String | [single sprite](#url-as-is){#url} | `""` | Location of sprite image. Must be set by user.
-`urlArray` | Array | [multiple images](#urls-in-array){#urlarray} | `[]` | Locations of images. Must be set by user.
-`url` | String | [multiple images](#url-by-string-expansion){#taggedurl} | `""` | Locations of multiple images via template expansion. Must be set by user.
+`url` | String | <a id="url" href="#url-as-is">single sprite</a> | `""` | Location of sprite image. Must be set by user.
+`urlArray` | Array | <a id="urlarray" href="urls-in-array">multiple images</a> | `[]` | Locations of images. Must be set by user.
+`url` | String | <a id="taggedurl" href="#url-by-string-expansion">multiple images</a> | `""` | Locations of multiple images via template expansion. Must be set by user.
 `width` | Integer | &#10004; | `0` | Width of a thumbnail in pixels.
 `height` | Integer | &#10004; | `0` | Height of a thumbnail in pixels.
-`columns` | Integer | [&#10004;](#migrating-from-v11x){#columns} | `0` | Number of thumbnail columns per image. Set both `columns` and `rows` to `1` for [individual thumbnails](#individual-thumbnails).
+`columns` | Integer | <a id="columns" href="#migrating-from-v21x">&#10004;</a> | `0` | Number of thumbnail columns per image. Set both `columns` and `rows` to `1` for [individual thumbnails](#individual-thumbnails).
 `rows` | Integer | multiple images | `0` | Number of thumbnail rows per image. If set, the plugin will expect a sequence of images. The last image may have fewer rows.
 `interval` | Number |  | `1` | Interval between thumbnails in seconds.
-`idxTag` | [Function](#the-idxtag-function){#idxtag} |  |  | Function determining how the `{index}` [template](#url-by-string-expansion) in the [`url`](#taggedurl) is expanded. Returns index as is by default.
+`idxTag` | <a id="idxtag" href="#the-idxtag-function">Function</a> |  |  | Function determining how the `{index}` [template](#url-by-string-expansion) in the [`url`](#taggedurl) is expanded. Returns index as is by default.
 `responsive` | Integer |  | `600` | Width of player in pixels below which thumbnails are responsive. Set to `0` to disable.
 `downlink` | Number |  | `1.5` | Minimum of required [NetworkInformation downlink][downlink] where supported. Set to `0` to disable.
 
 #### Three ways to configure the location of image assets
 
-1. [url](#url){#url-as-is} as String pointing to a single sprite image:
+1. <a id="url-as-is" href="#url"><code>url</code></a> as String pointing to a single sprite image:
 ```js
 {
   url: 'https://example.com/single-sprite.jpg',
@@ -149,7 +149,7 @@ option | type | mandatory | default | description
 }
 ```
 
-2. [urlArray](#urlarray){#urls-in-array} containing multiple (sprite) images:
+2. <a id="urls-in-array" href="#urlarray"><code>urlArray</code></a> containing multiple (sprite) images:
 ```js
 {
   urlArray: [
@@ -161,7 +161,7 @@ option | type | mandatory | default | description
   // [... more options]
 }
 ```
-3. [url](#taggedurl){#url-by-string-expansion} as String expanded by the `idxTag` [function](#the-idxtag-function):
+3. <a id="url-by-string-expansion" href="#taggedurl"><code>url</code></a> as String expanded by the `idxTag` [function](#the-idxtag-function):
 ```js
 {
   url: 'https://example.com/thumbs-{index}.jpg,
