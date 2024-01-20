@@ -113,7 +113,7 @@ const spriteThumbs = (player, plugin, options) => {
   plugin.on('statechanged', () => {
     const pstate = plugin.state;
     const spriteEvents = ['mousemove', 'touchmove'];
-    const debug = log.debug || log;
+    const debug = log.debug;
 
     if (pstate.ready) {
       debug('ready to show thumbnails');
