@@ -225,7 +225,7 @@ myplayer.spriteThumbnails({
 
 ### Initialization
 
-The plugin is initialized every time the player [starts to load](https://docs.videojs.com/player#event:loadstart) a video. It monitors all video sources for an optional `spriteThumbnails` property. Any existing plugin configuration is updated by merging this `spriteThumbnails` object into the current configuration. Typical use cases are [playlists](#playlist-example).
+The plugin is initialized on plugin setup and every time the player [starts to load](https://docs.videojs.com/player#event:loadstart) a video. It monitors all video sources for an optional `spriteThumbnails` property. Any existing plugin configuration is updated by merging this `spriteThumbnails` object into the current configuration. Typical use cases are [playlists](#playlist-example).
 
 The image(s) are then loaded on demand, when the cursor hovers or moves over the progress bar.
 
