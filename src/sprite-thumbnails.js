@@ -128,7 +128,7 @@ const spriteThumbs = (player, plugin, options) => {
     player.toggleClass('vjs-thumbnails-ready', pstate.ready);
   });
 
-  player.on('loadstart', () => {
+  const init = () => {
     // if present, merge source config with current config
     const plugName = plugin.name;
     const thumbSource = player.currentSources().filter(source => {
@@ -157,8 +157,10 @@ const spriteThumbs = (player, plugin, options) => {
         intCheck('width') && intCheck('height') && intCheck('columns') &&
         intCheck('rows') && downlinkCheck())
     });
-  });
+  };
 
+  player.on('loadstart', init);
+  init();
   player.addClass('vjs-sprite-thumbnails');
 };
 
