@@ -1,6 +1,6 @@
 {
   "name": "videojs-sprite-thumbnails",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Plugin to display thumbnails when hovering over the progress bar.",
   "repository": {
     "type": "git",

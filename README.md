@@ -121,7 +121,7 @@ Select a 1.x version of videojs-sprite-thumbnails from the [CDN](https://unpkg.c
 Or load the latest Video.js v7.x/v6.x compatible release of the plugin via [script tag](#script-tag):
 
 ```html
-<script src="https://unpkg.com/videojs-sprite-thumbnails@1.2.0/dist/videojs-sprite-thumbnails.min.js"></script>
+<script src="https://unpkg.com/videojs-sprite-thumbnails@1.2.1/dist/videojs-sprite-thumbnails.min.js"></script>
 ```
 
 ### Configuration
@@ -336,7 +336,7 @@ player.spriteThumbnails({
 
 <h2 id="migrating-from-v11x">Migrating from v1.1.x</h2>
 
-Plugin version 1.2.0 introduces the *mandatory* option [`columns`](#columns). Thumbnail images are now [loaded on demand](https://github.com/phloxic/videojs-sprite-thumbnails/issues/56)  which interferes less with video playback. Please apply the option to your existing setups.
+Plugin version 1.2.0 introduced the *mandatory* option [`columns`](#columns). Thumbnail images are now [loaded on demand](https://github.com/phloxic/videojs-sprite-thumbnails/issues/56)  which interferes less with video playback. Please apply the option to your existing setups.
 
 ## Constraints
 

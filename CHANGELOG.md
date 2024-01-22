@@ -1,3 +1,21 @@
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.2.0...v1.2.1) (2024-01-22)
+
+### Bug Fixes
+
+* reinstate initialization on plugin setup ([ae74e97](https://github.com/phloxic/videojs-sprite-thumbnails/commit/ae74e97)), closes [#61](https://github.com/phloxic/videojs-sprite-thumbnails/issues/61)
+
+### Chores
+
+* **changelog:** fix 1.2.0 release name ([1170e3e](https://github.com/phloxic/videojs-sprite-thumbnails/commit/1170e3e))
+* **deps-dev:** bump follow-redirects from 1.15.2 to 1.15.4 ([4099e7c](https://github.com/phloxic/videojs-sprite-thumbnails/commit/4099e7c))
+* **package:** update browserslist to 1.0.30001572 ([2b05611](https://github.com/phloxic/videojs-sprite-thumbnails/commit/2b05611))
+
+### Documentation
+
+* github markdown flavour needs fragment identifiers in HTML ([1dfc89f](https://github.com/phloxic/videojs-sprite-thumbnails/commit/1dfc89f))
+* **css:** explain state classes ([f25e768](https://github.com/phloxic/videojs-sprite-thumbnails/commit/f25e768))
+
 <a name="1.2.0"></a>
 ## [1.2.0](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v1.1.1...v1.2.0) (2023-12-29)
 
