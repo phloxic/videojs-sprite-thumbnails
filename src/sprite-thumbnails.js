@@ -17,7 +17,6 @@ const spriteThumbs = (player, plugin, options) => {
 
   const dom = videojs.dom;
   const obj = videojs.obj;
-  const merge = obj.merge;
   const log = plugin.log;
 
   const controls = player.controlBar;
@@ -150,7 +149,7 @@ const spriteThumbs = (player, plugin, options) => {
       } else if (srcOpts.url) {
         srcOpts.urlArray = [];
       }
-      plugin.options = options = merge(options, srcOpts);
+      plugin.options = options = obj.merge(options, srcOpts);
     }
 
     plugin.setState({
