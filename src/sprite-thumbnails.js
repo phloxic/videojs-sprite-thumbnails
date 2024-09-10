@@ -100,13 +100,13 @@ const spriteThumbs = (player, plugin, options) => {
 
   const downlinkCheck = () => {
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const downlink = options.downlink;
+    const dl = 'downlink';
+    const check = !connection || connection[dl] >= options[dl];
 
-    if (connection && connection.downlink < downlink) {
-      log.warn(`connection.downlink < ${downlink}`);
-      return false;
+    if (!check) {
+      log(`connection.${dl} < ${options[dl]}`);
     }
-    return true;
+    return check;
   };
 
   plugin.on('statechanged', () => {
