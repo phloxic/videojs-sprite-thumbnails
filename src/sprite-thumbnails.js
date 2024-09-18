@@ -128,7 +128,15 @@ const spriteThumbs = (player, plugin, options) => {
     player.toggleClass('vjs-thumbnails-ready', pstate.ready);
   });
 
-  const init = () => {
+  const init = evt => {
+    // `loadstart` callback is only needed when all of the following apply:
+    // - player is set up to load an initial video via `src` or `loadMedia`
+    //   specifying a `spriteThumbnails` config object
+    // - the player is told e.g. by user action to load a different video `src`
+    //   or `loadMedia` before metadata of the initial video is loaded and its
+    //   `spriteThumbnails` options cannot be merged
+    // Thereafter the `loadstart` callback is redundant.
+    player.off('loadstart', init);
     // if present, merge source config with current config
     const plugName = plugin.name;
     const thumbSource = player.currentSources().find(source => {
@@ -152,6 +160,10 @@ const spriteThumbs = (player, plugin, options) => {
       plugin.options = options = obj.merge(options, srcOpts);
     }
 
+    if (!mouseTimeTooltip || evt.type === 'loadstart') {
+      return;
+    }
+
     plugin.setState({
       ready: !!(mouseTimeTooltip && (options.urlArray.length || options.url) &&
         intCheck('width') && intCheck('height') && intCheck('columns') &&
@@ -159,8 +171,7 @@ const spriteThumbs = (player, plugin, options) => {
     });
   };
 
-  player.on('loadstart', init);
-  init();
+  player.on(['loadstart', 'loadedmetadata'], init);
   player.addClass('vjs-sprite-thumbnails');
 };
 

@@ -45,7 +45,7 @@ QUnit.test('changes ready state', function(assert) {
     width: 240,
     height: 100,
     columns: 10
-  }).log.level('debug');
+  }).log.level('all');
 
   assert.strictEqual(
     this.player.spriteThumbnails().state.ready,
@@ -53,9 +53,8 @@ QUnit.test('changes ready state', function(assert) {
     'the plugin is not ready to show thumbnails'
   );
 
-  // Tick the clock forward enough to trigger the player to be "ready".
   this.clock.tick(1);
-  this.player.trigger('loadstart');
+  this.player.trigger('loadedmetadata');
 
   assert.strictEqual(
     this.player.spriteThumbnails().state.ready,
@@ -68,11 +67,10 @@ QUnit.test('changes ready state', function(assert) {
     'player has class vjs-thumbnails-ready'
   );
 
-  this.clock.tick(1);
   const currentConfig = this.player.spriteThumbnails().options;
 
   this.player.src({src: 'dummy.mp4', spriteThumbnails: {}});
-  this.player.trigger('loadstart');
+  this.player.trigger('loadedmetadata');
 
   assert.strictEqual(
     this.player.spriteThumbnails().state.ready,
@@ -95,15 +93,13 @@ QUnit.test('changes ready state', function(assert) {
     'options empty: disabled plugin inherits options, except for url'
   );
 
-  this.player.reset();
   this.clock.tick(1);
-
   this.player.src({src: 'dummy.mp4', spriteThumbnails: {url: '../img/oceans-thumbs.jpg'}});
-  this.player.trigger('loadstart');
+  this.player.trigger('loadedmetadata');
 
   assert.strictEqual(
     this.player.spriteThumbnails().state.ready,
     true,
-    'url given on loadstart, width and height inherited: the plugin will show thumbnails'
+    'url given on loadedmetadata, width and height inherited: the plugin will show thumbnails'
   );
 });
