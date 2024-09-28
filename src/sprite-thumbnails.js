@@ -90,12 +90,12 @@ const spriteThumbs = (player, plugin, options) => {
   const intCheck = opt => {
     const val = options[opt];
     const min = opt !== 'rows' ? 1 : 0;
+    const check = parseInt(val, 10) === val && val >= min;
 
-    if (parseInt(val, 10) !== val || val < min) {
-      log(`${opt} must be an integer greater than ${min - 1}`);
-      return false;
+    if (!check) {
+      log.warn(`${opt} must be an integer greater than ${min - 1}`);
     }
-    return true;
+    return check;
   };
 
   const downlinkCheck = () => {
