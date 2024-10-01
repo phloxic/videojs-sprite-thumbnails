@@ -37,8 +37,17 @@ QUnit.module('videojs-sprite-thumbnails', {
   }
 });
 
-QUnit.test('changes ready state', function(assert) {
-  assert.expect(7);
+QUnit.test('checking controls default tree', function(assert) {
+  assert.expect(2);
+
+  const mouseTimeDisplay = this.player.controlBar.progressControl.seekBar.mouseTimeDisplay;
+
+  mouseTimeDisplay.removeChild('TimeTooltip');
+  assert.strictEqual(
+    mouseTimeDisplay.getChild('TimeTooltip'),
+    null,
+    'removed mouse display time tooltip: no default controls tree'
+  );
 
   this.player.spriteThumbnails({
     url: '../img/oceans-thumbs.jpg',
@@ -47,11 +56,37 @@ QUnit.test('changes ready state', function(assert) {
     columns: 10
   }).log.level('all');
 
+  this.clock.tick(1);
+  this.player.trigger('loadedmetadata');
+
   assert.strictEqual(
     this.player.spriteThumbnails().state.ready,
     false,
-    'the plugin is not ready to show thumbnails'
+    'no default controls tree: plugin not ready'
   );
+});
+
+QUnit.test('changes ready state', function(assert) {
+  assert.expect(7);
+
+  this.player.spriteThumbnails({
+    url: '../img/oceans-thumbs.jpg',
+    width: 240,
+    height: 100
+  }).log.level('all');
+
+  this.player.trigger('loadedmetadata');
+
+  assert.strictEqual(
+    this.player.spriteThumbnails().state.ready,
+    false,
+    'no columns given, plugin not ready to show thumbnails'
+  );
+
+  this.player.src({src: 'dummy.mp4', spriteThumbnails: {
+    url: '../img/oceans-thumbs.jpg',
+    columns: 10
+  }});
 
   this.clock.tick(1);
   this.player.trigger('loadedmetadata');
@@ -59,7 +94,7 @@ QUnit.test('changes ready state', function(assert) {
   assert.strictEqual(
     this.player.spriteThumbnails().state.ready,
     true,
-    'the plugin is now able to show thumbnails on ready'
+    'the plugin is now able to show thumbnails'
   );
   assert.strictEqual(
     this.player.hasClass('vjs-thumbnails-ready'),
@@ -93,7 +128,6 @@ QUnit.test('changes ready state', function(assert) {
     'options empty: disabled plugin inherits options, except for url'
   );
 
-  this.clock.tick(1);
   this.player.src({src: 'dummy.mp4', spriteThumbnails: {url: '../img/oceans-thumbs.jpg'}});
   this.player.trigger('loadedmetadata');
 

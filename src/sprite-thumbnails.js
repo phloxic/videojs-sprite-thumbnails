@@ -18,16 +18,39 @@ const spriteThumbs = (player, plugin, options) => {
   const dom = videojs.dom;
   const obj = videojs.obj;
   const log = plugin.log;
+  const debug = log.debug;
 
-  const controls = player.controlBar;
+  const defaultState = { ...plugin.state };
+  const setDefaultState = () => {
+    plugin.setState(defaultState);
+  };
 
   // default control bar component tree is expected
   // https://docs.videojs.com/tutorial-components.html#default-component-tree
-  const progress = controls && controls.progressControl;
-  const seekBar = progress && progress.seekBar;
-  const mouseTimeTooltip = seekBar && seekBar.mouseTimeDisplay && seekBar.mouseTimeDisplay.timeTooltip;
-  const tooltipEl = mouseTimeTooltip && mouseTimeTooltip.el();
-  const tooltipStyleOrig = tooltipEl && tooltipEl.style;
+  const _controlBar = 'ControlBar';
+  const _progressControl = 'ProgressControl';
+  const _seekBar = 'SeekBar';
+  const _timeTooltip = 'TimeTooltip';
+  const playerDescendant = (componentName) => {
+    const descendants = [
+      _controlBar,
+      _progressControl,
+      _seekBar,
+      'MouseTimeDisplay',
+      _timeTooltip
+    ];
+    const idx = descendants.indexOf(componentName);
+    const component = player.getDescendant(descendants.slice(0, idx + 1));
+
+    if (!component) {
+      setDefaultState();
+      debug(`component tree ${descendants.join(' > ')} required`);
+    }
+    return component;
+  };
+
+  let tooltipEl;
+  let tooltipStyleOrig;
 
   const getUrl = idx => {
     const urlArray = options.urlArray;
@@ -37,7 +60,12 @@ const spriteThumbs = (player, plugin, options) => {
   };
 
   const hijackMouseTooltip = evt => {
-    const seekBarEl = seekBar.el();
+    if (!playerDescendant(_timeTooltip)) {
+      return;
+    }
+    const seekBarEl = playerDescendant(_seekBar).el();
+    const controlsTop = dom
+      .findPosition(playerDescendant(_controlBar).el()).top;
     const playerWidth = player.currentWidth();
     const duration = player.duration();
     const interval = options.interval;
@@ -62,7 +90,6 @@ const spriteThumbs = (player, plugin, options) => {
     const scaledHeight = options.height * scaleFactor;
     const cleft = Math.floor(position % columns) * -scaledWidth;
     const ctop = Math.floor(position / columns) * -scaledHeight;
-    const controlsTop = dom.findPosition(controls.el()).top;
     const seekBarTop = dom.findPosition(seekBarEl).top;
     // top of seekBar is 0 position
     const topOffset = -scaledHeight - Math.max(0, seekBarTop - controlsTop);
@@ -112,18 +139,19 @@ const spriteThumbs = (player, plugin, options) => {
   plugin.on('statechanged', () => {
     const pstate = plugin.state;
     const spriteEvents = ['mousemove', 'touchmove'];
-    const debug = log.debug;
+    const progress = playerDescendant(_progressControl);
 
     if (pstate.ready) {
       debug('ready to show thumbnails');
       progress.on(spriteEvents, hijackMouseTooltip);
     } else {
       if (!options.url && !options.urlArray.length) {
-        log('no urls given');
+        debug('no urls given, resetting');
       }
-      debug('resetting');
-      progress.off(spriteEvents, hijackMouseTooltip);
-      tooltipEl.style = tooltipStyleOrig;
+      if (progress) {
+        progress.off(spriteEvents, hijackMouseTooltip);
+        tooltipEl.style = tooltipStyleOrig;
+      }
     }
     player.toggleClass('vjs-thumbnails-ready', pstate.ready);
   });
@@ -137,6 +165,10 @@ const spriteThumbs = (player, plugin, options) => {
     //   `spriteThumbnails` options cannot be merged
     // Thereafter the `loadstart` callback is redundant.
     player.off('loadstart', init);
+
+    // clean slate
+    setDefaultState();
+
     // if present, merge source config with current config
     const plugName = plugin.name;
     const thumbSource = player.currentSources().find(source => {
@@ -151,7 +183,6 @@ const spriteThumbs = (player, plugin, options) => {
 
       if (!Object.keys(srcOpts).length) {
         srcOpts = {url: '', urlArray: []};
-        log('disabling plugin');
       } else if (urlArray && urlArray.length) {
         srcOpts.url = '';
       } else if (srcOpts.url) {
@@ -160,12 +191,16 @@ const spriteThumbs = (player, plugin, options) => {
       plugin.options = options = obj.merge(options, srcOpts);
     }
 
+    const mouseTimeTooltip = playerDescendant(_timeTooltip);
+
     if (!mouseTimeTooltip || evt.type === 'loadstart') {
       return;
     }
+    tooltipEl = mouseTimeTooltip.el();
+    tooltipStyleOrig = tooltipEl.style;
 
     plugin.setState({
-      ready: !!(mouseTimeTooltip && (options.urlArray.length || options.url) &&
+      ready: !!((options.urlArray.length || options.url) &&
         intCheck('width') && intCheck('height') && intCheck('columns') &&
         intCheck('rows') && downlinkCheck())
     });
