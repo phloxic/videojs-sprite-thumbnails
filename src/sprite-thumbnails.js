@@ -136,7 +136,7 @@ const spriteThumbs = (player, plugin, options) => {
     return check;
   };
 
-  plugin.on('statechanged', () => {
+  const handleStateChanged = evt => {
     const pstate = plugin.state;
     const spriteEvents = ['mousemove', 'touchmove'];
     const progress = playerDescendant(_progressControl);
@@ -154,7 +154,7 @@ const spriteThumbs = (player, plugin, options) => {
       }
     }
     player.toggleClass('vjs-thumbnails-ready', pstate.ready);
-  });
+  };
 
   const init = evt => {
     // `loadstart` callback is only needed when all of the following apply:
@@ -206,6 +206,7 @@ const spriteThumbs = (player, plugin, options) => {
     });
   };
 
+  plugin.on('statechanged', handleStateChanged);
   player.on(['loadstart', 'loadedmetadata'], init);
   player.addClass('vjs-sprite-thumbnails');
 };
