@@ -27,18 +27,22 @@ const spriteThumbs = (player, plugin, options) => {
 
   // default control bar component tree is expected
   // https://docs.videojs.com/tutorial-components.html#default-component-tree
-  const _controlBar = 'ControlBar';
-  const _progressControl = 'ProgressControl';
-  const _seekBar = 'SeekBar';
-  const _timeTooltip = 'TimeTooltip';
-  const playerDescendant = (componentName) => {
-    const descendants = [
-      _controlBar,
-      _progressControl,
-      _seekBar,
-      'MouseTimeDisplay',
-      _timeTooltip
-    ];
+  const descendants = [
+    'ControlBar',
+    'ProgressControl',
+    'SeekBar',
+    'MouseTimeDisplay',
+    'TimeTooltip'
+  ];
+  const [
+    _controlBar,
+    _progressControl,
+    _seekBar,
+    // MouseTimeDisplay unused
+    _timeTooltip
+  ] = descendants.toSpliced(3, 1);
+
+  const playerDescendant = componentName => {
     const idx = descendants.indexOf(componentName);
     const component = player.getDescendant(descendants.slice(0, idx + 1));
 
