@@ -1,3 +1,73 @@
+<a name="2.2.2"></a>
+## [2.2.2](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v2.2.1...v2.2.2) (2024-10-09)
+
+### Features
+
+* **debug:** check for presence of default controls component tree ([206da48](https://github.com/phloxic/videojs-sprite-thumbnails/commit/206da48)), closes [#58](https://github.com/phloxic/videojs-sprite-thumbnails/issues/58)
+
+### Bug Fixes
+
+* do not try to show thumbnails before video metadata is loaded ([078dc5b](https://github.com/phloxic/videojs-sprite-thumbnails/commit/078dc5b)), closes [#67](https://github.com/phloxic/videojs-sprite-thumbnails/issues/67)
+* **example:** add `columns` option, mandatory since v2.2.0 ([1995d18](https://github.com/phloxic/videojs-sprite-thumbnails/commit/1995d18))
+
+### Chores
+
+* bump version from 2.2.1 to 2.3.2-dev ([ce385cc](https://github.com/phloxic/videojs-sprite-thumbnails/commit/ce385cc))
+* **deps-dev:** alternatively allow rollup 2.50.3 ([efb35d8](https://github.com/phloxic/videojs-sprite-thumbnails/commit/efb35d8))
+* **deps-dev:** bump braces from 3.0.2 to 3.0.3 ([bcca124](https://github.com/phloxic/videojs-sprite-thumbnails/commit/bcca124))
+* **deps-dev:** bump follow-redirects from 1.15.4 to 1.15.6 ([ad9735d](https://github.com/phloxic/videojs-sprite-thumbnails/commit/ad9735d))
+* **deps-dev:** bump rollup from 2.79.1 to 3.29.5 ([73b6c2e](https://github.com/phloxic/videojs-sprite-thumbnails/commit/73b6c2e))
+* **deps-dev:** bump serve-static from 1.15.0 to 1.16.2 ([32f65d8](https://github.com/phloxic/videojs-sprite-thumbnails/commit/32f65d8))
+* **deps:** bump body-parser from 1.20.2 to 1.20.3 ([c4c6c08](https://github.com/phloxic/videojs-sprite-thumbnails/commit/c4c6c08))
+* update karma dependencies ([adef294](https://github.com/phloxic/videojs-sprite-thumbnails/commit/adef294))
+* **yo:** update plugin description ([9d8bd0e](https://github.com/phloxic/videojs-sprite-thumbnails/commit/9d8bd0e))
+
+### Code Refactoring
+
+* assign component name vars by splicing descendants array ([c6b3e70](https://github.com/phloxic/videojs-sprite-thumbnails/commit/c6b3e70))
+* improve connection speed check ([9a758c3](https://github.com/phloxic/videojs-sprite-thumbnails/commit/9a758c3))
+* improve integer check ([4e65019](https://github.com/phloxic/videojs-sprite-thumbnails/commit/4e65019))
+* no need to store obj.merge in a top level variable ([8979d15](https://github.com/phloxic/videojs-sprite-thumbnails/commit/8979d15))
+
+### Styles
+
+* always call event handlers by name ([234c4e3](https://github.com/phloxic/videojs-sprite-thumbnails/commit/234c4e3))
+
+<a name="2.2.2"></a>
+## [2.2.2](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v2.2.1...v2.2.2) (2024-10-08)
+
+### Features
+
+* **debug:** check for presence of default controls component tree ([206da48](https://github.com/phloxic/videojs-sprite-thumbnails/commit/206da48)), closes [#58](https://github.com/phloxic/videojs-sprite-thumbnails/issues/58)
+
+### Bug Fixes
+
+* do not try to show thumbnails before video metadata is loaded ([078dc5b](https://github.com/phloxic/videojs-sprite-thumbnails/commit/078dc5b)), closes [#67](https://github.com/phloxic/videojs-sprite-thumbnails/issues/67)
+* **example:** add `columns` option, mandatory since v2.2.0 ([1995d18](https://github.com/phloxic/videojs-sprite-thumbnails/commit/1995d18))
+
+### Chores
+
+* bump version from 2.2.1 to 2.3.2-dev ([ce385cc](https://github.com/phloxic/videojs-sprite-thumbnails/commit/ce385cc))
+* **deps-dev:** alternatively allow rollup 2.50.3 ([efb35d8](https://github.com/phloxic/videojs-sprite-thumbnails/commit/efb35d8))
+* **deps-dev:** bump braces from 3.0.2 to 3.0.3 ([bcca124](https://github.com/phloxic/videojs-sprite-thumbnails/commit/bcca124))
+* **deps-dev:** bump follow-redirects from 1.15.4 to 1.15.6 ([ad9735d](https://github.com/phloxic/videojs-sprite-thumbnails/commit/ad9735d))
+* **deps-dev:** bump rollup from 2.79.1 to 3.29.5 ([73b6c2e](https://github.com/phloxic/videojs-sprite-thumbnails/commit/73b6c2e))
+* **deps-dev:** bump serve-static from 1.15.0 to 1.16.2 ([32f65d8](https://github.com/phloxic/videojs-sprite-thumbnails/commit/32f65d8))
+* **deps:** bump body-parser from 1.20.2 to 1.20.3 ([c4c6c08](https://github.com/phloxic/videojs-sprite-thumbnails/commit/c4c6c08))
+* update karma dependencies ([adef294](https://github.com/phloxic/videojs-sprite-thumbnails/commit/adef294))
+* **yo:** update plugin description ([9d8bd0e](https://github.com/phloxic/videojs-sprite-thumbnails/commit/9d8bd0e))
+
+### Code Refactoring
+
+* assign component name vars by splicing descendants array ([c6b3e70](https://github.com/phloxic/videojs-sprite-thumbnails/commit/c6b3e70))
+* improve connection speed check ([9a758c3](https://github.com/phloxic/videojs-sprite-thumbnails/commit/9a758c3))
+* improve integer check ([4e65019](https://github.com/phloxic/videojs-sprite-thumbnails/commit/4e65019))
+* no need to store obj.merge in a top level variable ([8979d15](https://github.com/phloxic/videojs-sprite-thumbnails/commit/8979d15))
+
+### Styles
+
+* always call event handlers by name ([234c4e3](https://github.com/phloxic/videojs-sprite-thumbnails/commit/234c4e3))
+
 <a name="2.2.1"></a>
 ## [2.2.1](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v2.2.0...v2.2.1) (2024-01-22)
 
