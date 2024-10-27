@@ -1,3 +1,15 @@
+<a name="2.2.3"></a>
+## [2.2.3](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v2.2.2...v2.2.3) (2024-10-27)
+
+### Bug Fixes
+
+* assign component variables in a sparse array ([fd445a5](https://github.com/phloxic/videojs-sprite-thumbnails/commit/fd445a5)), closes [#68](https://github.com/phloxic/videojs-sprite-thumbnails/issues/68)
+
+### Chores
+
+* **deps-dev:** require cookie v0.7.0 ([be00e49](https://github.com/phloxic/videojs-sprite-thumbnails/commit/be00e49))
+* update version in package-lock.json ([dab760b](https://github.com/phloxic/videojs-sprite-thumbnails/commit/dab760b))
+
 <a name="2.2.2"></a>
 ## [2.2.2](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v2.2.1...v2.2.2) (2024-10-09)
 
