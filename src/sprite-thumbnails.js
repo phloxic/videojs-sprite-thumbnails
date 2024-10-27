@@ -38,9 +38,10 @@ const spriteThumbs = (player, plugin, options) => {
     _controlBar,
     _progressControl,
     _seekBar,
-    // MouseTimeDisplay unused
+    // no need to assign MouseTimeDisplay
+    ,
     _timeTooltip
-  ] = descendants.toSpliced(3, 1);
+  ] = descendants;
 
   const playerDescendant = componentName => {
     const idx = descendants.indexOf(componentName);
