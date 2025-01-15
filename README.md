@@ -19,6 +19,7 @@
     - [Playlist example](#playlist-example)
     - [CSS state classes](#css-state-classes)
     - [Debugging](#debugging)
+    - [Mobile devices](#mobile-devices)
   - [Migrating from v2.1.x](#migrating-from-v21x)
   - [Constraints](#constraints)
   - [License](#license)
@@ -41,7 +42,7 @@ For Video.js v6.x, v7.x compatibility switch to the [vjs6-7-compat branch](https
 - easy to [configure](#configuration)
 - 3 convenient ways to [retrieve image assets](#three-ways-to-configure-the-location-of-image-assets)
 - optional [function](#the-idxtag-function) to customize access to numbered lists of sequential image assets
-- uses [existing mouse time tooltip](#constraints)
+- uses existing controlbar components: the [mouse time display](https://docs.videojs.com/mousetimedisplay) and its [time tooltip](https://docs.videojs.com/timetooltip)
 
 ## Installation
 
@@ -336,6 +337,22 @@ player.spriteThumbnails({
 }).log.level('debug');
 ```
 
+### Mobile devices
+
+Since version [8.21.0](https://github.com/videojs/video.js/commit/ca6f8235453d0d45ae4d05c8b056e2a8c206bc26) Video.js supports display of [time tooltips on mobile devices](https://github.com/videojs/video.js/commit/57d6ab65ea8dbbb7718c90754f4421918c3b2c28) by setting the player option `disableSeekWhileScrubbingOnMobile: true`. By consequence this configuration allows the plugin to show thumbnails on mobile devices.
+
+**Caveat:** Currently there is still a [timing glitch](https://github.com/phloxic/videojs-sprite-thumbnails/issues/69) with hiding the tooltips. Until it is fixed in Video.js this can be avoided by adding the following CSS rule:
+
+```css
+.video-js.vjs-touch-enabled:not(.vjs-scrubbing) .vjs-progress-control .vjs-mouse-display {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 1s, opacity 1s;
+}
+```
+
+Or apply [this patch](https://github.com/videojs/video.js/pull/8945/commits/79a0fc9379eef8c8ee36ff68ba73d9bae4bd01e2) to Video.js.
+
 <h2 id="migrating-from-v21x">Migrating from v2.1.x</h2>
 
 Plugin version 2.2.0 introduced the *mandatory* option [`columns`](#columns). Thumbnail images are now [loaded on demand](https://github.com/phloxic/videojs-sprite-thumbnails/issues/56)  which interferes less with video playback. Please apply the option to your existing setups.
@@ -343,7 +360,6 @@ Plugin version 2.2.0 introduced the *mandatory* option [`columns`](#columns). Th
 ## Constraints
 
 - To display thumbnails the plugin expects the control bar in its [default tree structure](https://docs.videojs.com/tutorial-components.html#default-component-tree) to be present.
-- On some devices the [mouse time display](https://docs.videojs.com/mousetimedisplay) and its [time tooltip](https://docs.videojs.com/timetooltip) are disabled by default, and consequently thumbnails will not be shown.
 - Live streams are not supported.
 
 ## License
