@@ -19,7 +19,7 @@
     - [Playlist example](#playlist-example)
     - [CSS state classes](#css-state-classes)
     - [Debugging](#debugging)
-    - [Mobile devices](#mobile-devices)
+  - [Mobile devices](#mobile-devices)
   - [Migrating from v2.1.x](#migrating-from-v21x)
   - [Constraints](#constraints)
   - [License](#license)
@@ -337,21 +337,11 @@ player.spriteThumbnails({
 }).log.level('debug');
 ```
 
-### Mobile devices
+## Mobile devices
 
-Since version [8.21.0](https://github.com/videojs/video.js/commit/ca6f8235453d0d45ae4d05c8b056e2a8c206bc26) Video.js supports display of [time tooltips on mobile devices](https://github.com/videojs/video.js/commit/57d6ab65ea8dbbb7718c90754f4421918c3b2c28) by setting the player option `disableSeekWhileScrubbingOnMobile: true`. By consequence this configuration allows the plugin to show thumbnails on mobile devices.
+Since version [8.22.0](https://github.com/videojs/video.js/releases/tag/v8.22.0)[^1] Video.js supports display of [time tooltips on mobile devices](https://github.com/videojs/video.js/commit/57d6ab65ea8dbbb7718c90754f4421918c3b2c28) by setting the player option `disableSeekWhileScrubbingOnMobile: true`. By consequence this configuration allows the plugin to show thumbnails on mobile devices.
 
-**Caveat:** Currently there is still a [timing glitch](https://github.com/phloxic/videojs-sprite-thumbnails/issues/69) with hiding the tooltips. Until it is fixed in Video.js this can be avoided by adding the following CSS rule:
-
-```css
-.video-js.vjs-touch-enabled:not(.vjs-scrubbing) .vjs-progress-control .vjs-mouse-display {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 1s, opacity 1s;
-}
-```
-
-Or apply [this patch](https://github.com/videojs/video.js/pull/8945/commits/79a0fc9379eef8c8ee36ff68ba73d9bae4bd01e2) to Video.js.
+[^1]: `disableSeekWhileScrubbingOnMobile` was actually introduced in Video.js v8.21.0. However, there was a minor bug with hiding the tooltips. This was [solved](https://github.com/videojs/video.js/pull/8945/commits/79a0fc9379eef8c8ee36ff68ba73d9bae4bd01e2) in v8.22.0.
 
 <h2 id="migrating-from-v21x">Migrating from v2.1.x</h2>
 
