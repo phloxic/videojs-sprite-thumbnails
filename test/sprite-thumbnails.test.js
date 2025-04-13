@@ -67,7 +67,7 @@ QUnit.test('checking controls default tree', function(assert) {
 });
 
 QUnit.test('changes ready state', function(assert) {
-  assert.expect(7);
+  assert.expect(8);
 
   this.player.spriteThumbnails({
     url: '../img/oceans-thumbs.jpg',
@@ -81,6 +81,20 @@ QUnit.test('changes ready state', function(assert) {
     this.player.spriteThumbnails().state.ready,
     false,
     'no columns given, plugin not ready to show thumbnails'
+  );
+
+  this.player.src({src: 'dummy.mp4', spriteThumbnails: {
+    url: '../img/oceans-thumbs.jpg',
+    columns: 0
+  }});
+
+  this.clock.tick(1);
+  this.player.trigger('loadedmetadata');
+
+  assert.strictEqual(
+    this.player.spriteThumbnails().state.ready,
+    false,
+    'columns must be integer > 0, plugin not ready to show thumbnails'
   );
 
   this.player.src({src: 'dummy.mp4', spriteThumbnails: {
