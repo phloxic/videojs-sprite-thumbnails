@@ -4,7 +4,7 @@
   "description": "Plugin to display thumbnails when hovering over the progress bar.",
   "repository": {
     "type": "git",
-    "url": "git@github.com:phloxic/videojs-sprite-thumbnails.git"
+    "url": "git+ssh://git@github.com/phloxic/videojs-sprite-thumbnails.git"
   },
   "main": "dist/videojs-sprite-thumbnails.cjs.js",
   "module": "dist/videojs-sprite-thumbnails.es.js",
