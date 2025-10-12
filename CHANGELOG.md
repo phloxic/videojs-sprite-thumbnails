@@ -1,3 +1,17 @@
+<a name="2.2.4"></a>
+## [2.2.4](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v2.2.3...v2.2.4) (2025-10-12)
+
+### Chores
+
+* **browserslist:** use video.js conf in .browserslistrc ([dbd5ad7](https://github.com/phloxic/videojs-sprite-thumbnails/commit/dbd5ad7))
+* **deps-dev:** bump [@babel](https://github.com/babel)/runtime from 7.25.6 to 7.28.2 ([523f2d1](https://github.com/phloxic/videojs-sprite-thumbnails/commit/523f2d1))
+* **deps:** bump tmp from 0.2.3 to 0.2.4 ([dcfae82](https://github.com/phloxic/videojs-sprite-thumbnails/commit/dcfae82))
+* update version in package-lock.json ([28d2d7e](https://github.com/phloxic/videojs-sprite-thumbnails/commit/28d2d7e))
+
+### Tests
+
+* cover intCheck ([1702e66](https://github.com/phloxic/videojs-sprite-thumbnails/commit/1702e66))
+
 <a name="2.2.3"></a>
 ## [2.2.3](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v2.2.2...v2.2.3) (2024-10-27)
 

@@ -124,7 +124,7 @@ Select a 2.x version of videojs-sprite-thumbnails from the [CDN](https://unpkg.c
 Or load the latest Video.js v8.x compatible release of the plugin via [script tag](#script-tag):
 
 ```html
-<script src="https://unpkg.com/videojs-sprite-thumbnails@2.2.3/dist/videojs-sprite-thumbnails.min.js"></script>
+<script src="https://unpkg.com/videojs-sprite-thumbnails@2.2.4/dist/videojs-sprite-thumbnails.min.js"></script>
 ```
 
 ### Configuration
