@@ -188,7 +188,7 @@ myplayer.spriteThumbnails({
   // [ more options ... ]
   url: 'https://example.com/{index}.jpg',
   idxTag(index) {
-    return `000${index + 1}`.slice(-4);
+    return `${index + 1}`.padStart(4, '0');
   },
   colums: 5,
   rows: 5
