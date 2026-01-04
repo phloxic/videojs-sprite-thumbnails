@@ -142,6 +142,7 @@ option | type | mandatory | default | description
 `idxTag` | <a id="idxtag" href="#the-idxtag-function">Function</a> |  |  | Function determining how the `{index}` [template](#url-by-string-expansion) in the [`url`](#taggedurl) is expanded. Returns index as is by default.
 `responsive` | Integer |  | `600` | Width of player in pixels below which thumbnails are responsive. Set to `0` to disable.
 `downlink` | Number |  | `1.5` | Minimum of required [NetworkInformation downlink][downlink] where supported. Set to `0` to disable.
+`initOnDemand` | Boolean |  | `false` | If set, the plugin can be initialized [`on demand`](#initialization) instead of automatically on `loadedmetadata` when video duration becomes available.
 
 #### Three ways to configure the location of image assets
 
@@ -226,7 +227,7 @@ myplayer.spriteThumbnails({
 
 ### Initialization
 
-The plugin is initialized [every time video metadata is loaded](https://docs.videojs.com/player#event:loadedmetadata). It monitors all video sources for an optional `spriteThumbnails` property. Any existing plugin configuration is updated by merging this `spriteThumbnails` object into the current configuration. Typical use cases are [playlists](#playlist-example).
+The plugin is initialized [every time video metadata is loaded](https://docs.videojs.com/player#event:loadedmetadata) (unless [`initOnDemand`](#configuration) is `true`). It monitors all video sources for an optional `spriteThumbnails` property. Any existing plugin configuration is updated by merging this `spriteThumbnails` object into the current configuration. Typical use cases are [playlists](#playlist-example).
 
 The image(s) are then loaded on demand, when the cursor hovers or moves over the progress bar.
 

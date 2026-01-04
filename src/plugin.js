@@ -32,6 +32,9 @@ const Plugin = videojs.getPlugin('plugin');
  * @param {Number} downlink
  *        Minimum of NetworkInformation downlink where supported. Default: 1.5.
  *        https://developer.mozilla.org/docs/Web/API/NetworkInformation/downlink
+ * @param {Boolean} initOnDemand
+ *        Whether plugin initialization on demand instead of automatically on
+ *        `loadedmetadata` is allowed. Default: false.
  */
 const defaults = {
   url: '',
@@ -45,7 +48,8 @@ const defaults = {
   rows: 0,
   interval: 1,
   responsive: 600,
-  downlink: 1.5
+  downlink: 1.5,
+  initOnDemand: false
 };
 
 /**
