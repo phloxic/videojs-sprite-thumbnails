@@ -19,6 +19,7 @@ const spriteThumbs = (player, plugin, options) => {
   const obj = videojs.obj;
   const log = plugin.log;
   const debug = log.debug;
+  const warn = log.warn;
 
   const defaultState = { ...plugin.state };
   const setDefaultState = () => {
@@ -125,7 +126,7 @@ const spriteThumbs = (player, plugin, options) => {
     const check = parseInt(val, 10) === val && val >= min;
 
     if (!check) {
-      log.warn(`${opt} must be an integer greater than ${min - 1}`);
+      warn(`${opt} must be an integer greater than ${min - 1}`);
     }
     return check;
   };
@@ -198,7 +199,7 @@ const spriteThumbs = (player, plugin, options) => {
 
     const mouseTimeTooltip = playerDescendant(_timeTooltip);
 
-    if (!mouseTimeTooltip || evt.type === 'loadstart') {
+    if (!mouseTimeTooltip || evt && evt.type === 'loadstart') {
       return;
     }
     tooltipEl = mouseTimeTooltip.el();
@@ -212,7 +213,12 @@ const spriteThumbs = (player, plugin, options) => {
   };
 
   plugin.on('statechanged', handleStateChanged);
-  player.on(['loadstart', 'loadedmetadata'], init);
+  if (player.duration()) {
+    warn('late plugin initialization on demand');
+    init();
+  } else {
+    player.on(['loadstart', 'loadedmetadata'], init);
+  }
   player.addClass('vjs-sprite-thumbnails');
 };
 
