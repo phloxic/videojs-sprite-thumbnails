@@ -198,7 +198,7 @@ const spriteThumbs = (player, plugin, options) => {
 
     const mouseTimeTooltip = playerDescendant(_timeTooltip);
 
-    if (!mouseTimeTooltip || evt.type === 'loadstart') {
+    if (!mouseTimeTooltip || evt && evt.type === 'loadstart') {
       return;
     }
     tooltipEl = mouseTimeTooltip.el();
@@ -212,7 +212,11 @@ const spriteThumbs = (player, plugin, options) => {
   };
 
   plugin.on('statechanged', handleStateChanged);
-  player.on(['loadstart', 'loadedmetadata'], init);
+  if (player.duration()) {
+    init();
+  } else {
+    player.on(['loadstart', 'loadedmetadata'], init);
+  }
   player.addClass('vjs-sprite-thumbnails');
 };
 
