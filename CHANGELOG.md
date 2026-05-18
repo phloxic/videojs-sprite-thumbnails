@@ -1,3 +1,35 @@
+<a name="2.2.5"></a>
+## [2.2.5](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v2.2.4...v2.2.5) (2026-05-18)
+
+### Features
+
+* add option to initialize plugin on demand ([903ccb8](https://github.com/phloxic/videojs-sprite-thumbnails/commit/903ccb8)), closes [#74](https://github.com/phloxic/videojs-sprite-thumbnails/issues/74) [#87](https://github.com/phloxic/videojs-sprite-thumbnails/issues/87)
+
+### Bug Fixes
+
+* **npm:** release corrections ([c898dd8](https://github.com/phloxic/videojs-sprite-thumbnails/commit/c898dd8))
+
+### Chores
+
+* **deps-dev:** bump fast-uri from 3.1.0 to 3.1.2 ([59b93d2](https://github.com/phloxic/videojs-sprite-thumbnails/commit/59b93d2))
+* **deps-dev:** bump handlebars from 4.7.8 to 4.7.9 ([abb7d52](https://github.com/phloxic/videojs-sprite-thumbnails/commit/abb7d52))
+* **deps-dev:** bump js-yaml from 3.14.1 to 3.14.2 ([d632d70](https://github.com/phloxic/videojs-sprite-thumbnails/commit/d632d70))
+* **deps-dev:** bump plugin-transform-modules-systemjs from 7.29.0 to 7.29.4 ([a778f78](https://github.com/phloxic/videojs-sprite-thumbnails/commit/a778f78))
+* **deps-dev:** bump rollup from 2.79.2 to 2.80.0 ([8489bcd](https://github.com/phloxic/videojs-sprite-thumbnails/commit/8489bcd))
+* **deps:** bump [@xmldom](https://github.com/xmldom)/xmldom from 0.8.10 to 0.8.12 ([8984310](https://github.com/phloxic/videojs-sprite-thumbnails/commit/8984310))
+* **deps:** bump [@xmldom](https://github.com/xmldom)/xmldom from 0.8.12 to 0.8.13 ([d19dd31](https://github.com/phloxic/videojs-sprite-thumbnails/commit/d19dd31))
+* **deps:** bump flatted from 3.3.1 to 3.4.2 ([3ee297a](https://github.com/phloxic/videojs-sprite-thumbnails/commit/3ee297a))
+* **deps:** bump follow-redirects from 1.15.11 to 1.16.0 ([24f3ea4](https://github.com/phloxic/videojs-sprite-thumbnails/commit/24f3ea4))
+* **deps:** bump lodash from 4.17.21 to 4.17.23 ([21cb7e0](https://github.com/phloxic/videojs-sprite-thumbnails/commit/21cb7e0))
+* **deps:** bump min-document from 2.19.0 to 2.19.2 ([f47d0f9](https://github.com/phloxic/videojs-sprite-thumbnails/commit/f47d0f9))
+* **deps:** bump minimatch from 3.1.2 to 3.1.5 ([5ae9c21](https://github.com/phloxic/videojs-sprite-thumbnails/commit/5ae9c21))
+* **deps:** bump picomatch from 2.3.1 to 2.3.2 ([205b7b1](https://github.com/phloxic/videojs-sprite-thumbnails/commit/205b7b1))
+* **deps:** bump qs and body-parser ([48ea542](https://github.com/phloxic/videojs-sprite-thumbnails/commit/48ea542))
+* **deps:** bump qs from 6.14.1 to 6.14.2 ([f1fdd8d](https://github.com/phloxic/videojs-sprite-thumbnails/commit/f1fdd8d))
+* **deps:** bump uuid to 14.0.0 ([103a19f](https://github.com/phloxic/videojs-sprite-thumbnails/commit/103a19f))
+* **deps:** upgrade serialize-javasript et. al. to fix security issues ([afb55fc](https://github.com/phloxic/videojs-sprite-thumbnails/commit/afb55fc))
+* **deps:** upgrade underscore where needed ([f785ef4](https://github.com/phloxic/videojs-sprite-thumbnails/commit/f785ef4))
+
 <a name="2.2.4"></a>
 ## [2.2.4](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v2.2.3...v2.2.4) (2025-10-12)
 
