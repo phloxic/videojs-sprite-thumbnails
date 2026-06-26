@@ -191,7 +191,7 @@ myplayer.spriteThumbnails({
   idxTag(index) {
     return `${index + 1}`.padStart(4, '0');
   },
-  colums: 5,
+  columns: 5,
   rows: 5
 });
 ```
@@ -207,7 +207,7 @@ myplayer.spriteThumbnails({
     'https://example.com/0003.jpg',
     'https://example.com/0004.jpg'
   ],
-  colums: 5,
+  columns: 5,
   rows: 5
 });
 ```
