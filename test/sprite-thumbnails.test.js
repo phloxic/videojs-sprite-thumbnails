@@ -1,4 +1,5 @@
 import document from 'global/document';
+import window from 'global/window';
 
 import QUnit from 'qunit';
 import sinon from 'sinon';
@@ -149,5 +150,64 @@ QUnit.test('changes ready state', function(assert) {
     this.player.spriteThumbnails().state.ready,
     true,
     'url given on loadedmetadata, width and height inherited: the plugin will show thumbnails'
+  );
+});
+
+QUnit.test('mousemove shows and mouseleave hides the tooltip', function(assert) {
+  assert.expect(4);
+
+  this.player.spriteThumbnails({
+    url: '../img/oceans-thumbs.jpg',
+    width: 240,
+    height: 100,
+    columns: 10,
+    // avoid environment-dependent NetworkInformation.downlink flakiness
+    downlink: 0
+  });
+
+  this.clock.tick(1);
+  this.player.trigger('loadedmetadata');
+
+  const progressControl = this.player.controlBar.progressControl;
+  const mouseTimeDisplay = progressControl.seekBar.mouseTimeDisplay;
+  const timeTooltip = mouseTimeDisplay.getChild('TimeTooltip');
+
+  // `video.js` hides `mouseTimeDisplay`/`timeTooltip` via `opacity`/
+  // `visibility` whenever the player carries the `vjs-touch-enabled` class,
+  // unless it is also `vjs-scrubbing` - regardless of whether `mousemove`
+  // is actually firing. Simulate that touch-capable-but-mouse-hovering
+  // state here to verify the plugin overrides it.
+  this.player.addClass('vjs-touch-enabled');
+
+  progressControl.el().dispatchEvent(new window.MouseEvent('mousemove', {
+    bubbles: true,
+    clientX: 110,
+    clientY: 410
+  }));
+
+  assert.strictEqual(
+    timeTooltip.el().style.visibility,
+    'visible',
+    'mousemove forces the time tooltip visible'
+  );
+  assert.strictEqual(
+    mouseTimeDisplay.el().style.visibility,
+    'visible',
+    'mousemove forces the mouse time display visible'
+  );
+
+  progressControl.el().dispatchEvent(new window.MouseEvent('mouseleave', {
+    bubbles: true
+  }));
+
+  assert.strictEqual(
+    timeTooltip.el().style.visibility,
+    '',
+    'mouseleave resets the time tooltip visibility override'
+  );
+  assert.strictEqual(
+    mouseTimeDisplay.el().style.visibility,
+    '',
+    'mouseleave resets the mouse time display visibility override'
   );
 });
