@@ -42,9 +42,14 @@ const spriteThumbs = (player, plugin, options) => {
     _timeTooltip
   ] = descendants;
 
-  const playerDescendant = componentName => {
+  const getAncestor = componentName => {
     const idx = descendants.indexOf(componentName);
-    const component = player.getDescendant(descendants.slice(0, idx + 1));
+
+    return player.getDescendant(descendants.slice(0, idx + 1));
+  };
+
+  const playerDescendant = componentName => {
+    const component = getAncestor(componentName);
 
     if (!component) {
       setDefaultState();
@@ -68,9 +73,9 @@ const spriteThumbs = (player, plugin, options) => {
     if (!playerDescendant(_timeTooltip)) {
       return;
     }
-    const seekBarEl = playerDescendant(_seekBar).el();
+    const seekBarEl = getAncestor(_seekBar).el();
     const controlsTop = dom
-      .findPosition(playerDescendant(_controlBar).el()).top;
+      .findPosition(getAncestor(_controlBar).el()).top;
     const playerWidth = player.currentWidth();
     const duration = player.duration();
     const interval = options.interval;
@@ -234,9 +239,7 @@ const spriteThumbs = (player, plugin, options) => {
     }
     tooltipEl = mouseTimeTooltip.el();
     tooltipStyleOrig = tooltipEl.style;
-    const mouseTimeDisplay = playerDescendant(_mouseTimeDisplay);
-
-    mouseTimeDisplayEl = mouseTimeDisplay && mouseTimeDisplay.el();
+    mouseTimeDisplayEl = getAncestor(_mouseTimeDisplay).el();
 
     plugin.setState({
       ready: !!((options.urlArray.length || options.url) &&
