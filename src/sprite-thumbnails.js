@@ -38,14 +38,18 @@ const spriteThumbs = (player, plugin, options) => {
     _controlBar,
     _progressControl,
     _seekBar,
-    // no need to assign MouseTimeDisplay
-    ,
+    _mouseTimeDisplay,
     _timeTooltip
   ] = descendants;
 
-  const playerDescendant = componentName => {
+  const getAncestor = componentName => {
     const idx = descendants.indexOf(componentName);
-    const component = player.getDescendant(descendants.slice(0, idx + 1));
+
+    return player.getDescendant(descendants.slice(0, idx + 1));
+  };
+
+  const playerDescendant = componentName => {
+    const component = getAncestor(componentName);
 
     if (!component) {
       setDefaultState();
@@ -56,6 +60,7 @@ const spriteThumbs = (player, plugin, options) => {
 
   let tooltipEl;
   let tooltipStyleOrig;
+  let mouseTimeDisplayEl;
 
   const getUrl = idx => {
     const urlArray = options.urlArray;
@@ -68,9 +73,9 @@ const spriteThumbs = (player, plugin, options) => {
     if (!playerDescendant(_timeTooltip)) {
       return;
     }
-    const seekBarEl = playerDescendant(_seekBar).el();
+    const seekBarEl = getAncestor(_seekBar).el();
     const controlsTop = dom
-      .findPosition(playerDescendant(_controlBar).el()).top;
+      .findPosition(getAncestor(_controlBar).el()).top;
     const playerWidth = player.currentWidth();
     const duration = player.duration();
     const interval = options.interval;
@@ -117,6 +122,34 @@ const spriteThumbs = (player, plugin, options) => {
     obj.each(tooltipStyle, (value, key) => {
       tooltipEl.style[key] = value;
     });
+
+    // `video.js` hides `mouseTimeDisplay` (and this sprite preview, nested
+    // inside it) via `opacity`/`visibility` whenever the player carries the
+    // `vjs-touch-enabled` class - a static, one-time hardware capability
+    // check (`navigator.maxTouchPoints`/`ontouchstart` support), not a
+    // reflection of the current interaction - unless the user is actively
+    // `vjs-scrubbing`. On touch-*capable* hardware (e.g. a touchscreen
+    // laptop) that means genuine mouse/trackpad hover never shows the
+    // preview at all, even though `mousemove` fires normally. Since this
+    // handler only ever runs for real `mousemove`/`touchmove`, forcing both
+    // properties visible here - and resetting them again in
+    // `unhijackMouseTooltip` - is safe and does not affect touch-only
+    // interactions, which never reach this handler in the first place.
+    tooltipEl.style.visibility = 'visible';
+    if (mouseTimeDisplayEl) {
+      mouseTimeDisplayEl.style.visibility = 'visible';
+      mouseTimeDisplayEl.style.opacity = '1';
+    }
+  };
+
+  const unhijackMouseTooltip = () => {
+    if (mouseTimeDisplayEl) {
+      mouseTimeDisplayEl.style.visibility = '';
+      mouseTimeDisplayEl.style.opacity = '';
+    }
+    if (tooltipEl) {
+      tooltipEl.style.visibility = '';
+    }
   };
 
   const intCheck = opt => {
@@ -144,17 +177,20 @@ const spriteThumbs = (player, plugin, options) => {
   const handleStateChanged = evt => {
     const pstate = plugin.state;
     const spriteEvents = ['mousemove', 'touchmove'];
+    const spriteLeaveEvents = ['mouseleave', 'touchend', 'touchcancel'];
     const progress = playerDescendant(_progressControl);
 
     if (pstate.ready) {
       debug('ready to show thumbnails');
       progress.on(spriteEvents, hijackMouseTooltip);
+      progress.on(spriteLeaveEvents, unhijackMouseTooltip);
     } else {
       if (!options.url && !options.urlArray.length) {
         debug('no urls given, resetting');
       }
       if (progress) {
         progress.off(spriteEvents, hijackMouseTooltip);
+        progress.off(spriteLeaveEvents, unhijackMouseTooltip);
         tooltipEl.style = tooltipStyleOrig;
       }
     }
@@ -203,6 +239,7 @@ const spriteThumbs = (player, plugin, options) => {
     }
     tooltipEl = mouseTimeTooltip.el();
     tooltipStyleOrig = tooltipEl.style;
+    mouseTimeDisplayEl = getAncestor(_mouseTimeDisplay).el();
 
     plugin.setState({
       ready: !!((options.urlArray.length || options.url) &&
