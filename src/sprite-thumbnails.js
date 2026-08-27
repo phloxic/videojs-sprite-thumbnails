@@ -42,14 +42,14 @@ const spriteThumbs = (player, plugin, options) => {
     _timeTooltip
   ] = descendants;
 
-  const getAncestor = componentName => {
+  const getMouseTimeTooltipAncestor = componentName => {
     const idx = descendants.indexOf(componentName);
 
     return player.getDescendant(descendants.slice(0, idx + 1));
   };
 
   const playerDescendant = componentName => {
-    const component = getAncestor(componentName);
+    const component = getMouseTimeTooltipAncestor(componentName);
 
     if (!component) {
       setDefaultState();
@@ -73,9 +73,9 @@ const spriteThumbs = (player, plugin, options) => {
     if (!playerDescendant(_timeTooltip)) {
       return;
     }
-    const seekBarEl = getAncestor(_seekBar).el();
+    const seekBarEl = getMouseTimeTooltipAncestor(_seekBar).el();
     const controlsTop = dom
-      .findPosition(getAncestor(_controlBar).el()).top;
+      .findPosition(getMouseTimeTooltipAncestor(_controlBar).el()).top;
     const playerWidth = player.currentWidth();
     const duration = player.duration();
     const interval = options.interval;
@@ -116,7 +116,10 @@ const spriteThumbs = (player, plugin, options) => {
       border: '1px solid #000',
       // border should not overlay thumbnail area
       width: `${scaledWidth + 2}px`,
-      height: `${scaledHeight + 2}px`
+      height: `${scaledHeight + 2}px`,
+      // touch capable hardware, see `mouseTimeDisplayEl` and
+      // `unhijackMouseTooltip` below
+      visibility: 'visible'
     };
 
     obj.each(tooltipStyle, (value, key) => {
@@ -135,11 +138,8 @@ const spriteThumbs = (player, plugin, options) => {
     // properties visible here - and resetting them again in
     // `unhijackMouseTooltip` - is safe and does not affect touch-only
     // interactions, which never reach this handler in the first place.
-    tooltipEl.style.visibility = 'visible';
-    if (mouseTimeDisplayEl) {
-      mouseTimeDisplayEl.style.visibility = 'visible';
-      mouseTimeDisplayEl.style.opacity = '1';
-    }
+    mouseTimeDisplayEl.style.visibility = 'visible';
+    mouseTimeDisplayEl.style.opacity = '1';
   };
 
   const unhijackMouseTooltip = () => {
@@ -239,7 +239,7 @@ const spriteThumbs = (player, plugin, options) => {
     }
     tooltipEl = mouseTimeTooltip.el();
     tooltipStyleOrig = tooltipEl.style;
-    mouseTimeDisplayEl = getAncestor(_mouseTimeDisplay).el();
+    mouseTimeDisplayEl = getMouseTimeTooltipAncestor(_mouseTimeDisplay).el();
 
     plugin.setState({
       ready: !!((options.urlArray.length || options.url) &&
