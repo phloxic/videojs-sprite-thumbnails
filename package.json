@@ -83,5 +83,11 @@
     "videojs-generate-rollup-config": "^7.0.2",
     "videojs-generator-verify": "^4.0.0",
     "videojs-standard": "^9.0.1"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true,
+    "husky@4.3.8": true,
+    "npm-merge-driver-install@2.0.2": true,
+    "videojs-standard@9.1.0": true
   }
 }
