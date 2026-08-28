@@ -1,3 +1,36 @@
+<a name="2.2.6"></a>
+## [2.2.6](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v2.2.5...v2.2.6) (2026-08-28)
+
+### Bug Fixes
+
+* show sprite thumbnails on touch-capable devices when hovering ([a8729e6](https://github.com/phloxic/videojs-sprite-thumbnails/commit/a8729e6))
+
+### Chores
+
+* **ci:** approve and allow existing scripts ([4c24dc3](https://github.com/phloxic/videojs-sprite-thumbnails/commit/4c24dc3))
+* **ci:** run karma on local headless browsers instead of BrowserStack ([bebbabb](https://github.com/phloxic/videojs-sprite-thumbnails/commit/bebbabb))
+* **deps-dev:** Bump body-parser from 1.20.5 to 1.20.6 ([c8fd16c](https://github.com/phloxic/videojs-sprite-thumbnails/commit/c8fd16c))
+* **deps-dev:** bump brace-expansion from 1.1.13 to 1.1.16 ([5dba309](https://github.com/phloxic/videojs-sprite-thumbnails/commit/5dba309))
+* **deps-dev:** bump brace-expansion from 1.1.16 to 1.1.18 ([8a7e01b](https://github.com/phloxic/videojs-sprite-thumbnails/commit/8a7e01b))
+* **deps-dev:** bump fast-uri from 3.1.2 to 3.1.4 ([b3cb116](https://github.com/phloxic/videojs-sprite-thumbnails/commit/b3cb116))
+* **deps-dev:** bump fast-uri from 3.1.4 to 3.1.5 ([808423e](https://github.com/phloxic/videojs-sprite-thumbnails/commit/808423e))
+* **deps-dev:** bump js-yaml uri from 3.15.0 to 3.15.1 ([83657f1](https://github.com/phloxic/videojs-sprite-thumbnails/commit/83657f1))
+* **deps-dev:** bump shell-quote from 1.8.3 to 1.8.4 ([4cb17eb](https://github.com/phloxic/videojs-sprite-thumbnails/commit/4cb17eb))
+* **deps-dev:** bump shell-quote from 1.8.4 to 1.10.0 ([e85949f](https://github.com/phloxic/videojs-sprite-thumbnails/commit/e85949f))
+* **deps:** bump qs and body-parser ([d5f9f61](https://github.com/phloxic/videojs-sprite-thumbnails/commit/d5f9f61))
+* **deps:** bump socket.io-parser from 4.2.6 to 4.2.7 ([566fd12](https://github.com/phloxic/videojs-sprite-thumbnails/commit/566fd12))
+* **deps:** bump tmp from 0.2.5 to 0.2.7 ([bb71b18](https://github.com/phloxic/videojs-sprite-thumbnails/commit/bb71b18))
+* **deps:** engine.io v6.6.8, socket.io-adapter v2.5.7, ws v8.20.1 ([354fd92](https://github.com/phloxic/videojs-sprite-thumbnails/commit/354fd92))
+* **deps:** update babel modules to 7.29.7 ([0a1b2ee](https://github.com/phloxic/videojs-sprite-thumbnails/commit/0a1b2ee))
+* **deps:** update engine.io to 6.6.9, socket.io-adapter to 2.5.8 ([c141f43](https://github.com/phloxic/videojs-sprite-thumbnails/commit/c141f43))
+* **deps:** update js-yaml to 3.15.0 ([5b96bc3](https://github.com/phloxic/videojs-sprite-thumbnails/commit/5b96bc3))
+* **deps:** update ws to 8.21.0 ([efbe76a](https://github.com/phloxic/videojs-sprite-thumbnails/commit/efbe76a))
+
+### Code Refactoring
+
+* finalize fix for Chromium on Windows 11 + Chromium ([27ec589](https://github.com/phloxic/videojs-sprite-thumbnails/commit/27ec589))
+* skip redundant ancestor existence checks ([2ee5d88](https://github.com/phloxic/videojs-sprite-thumbnails/commit/2ee5d88))
+
 <a name="2.2.5"></a>
 ## [2.2.5](https://github.com/phloxic/videojs-sprite-thumbnails/compare/v2.2.4...v2.2.5) (2026-05-18)
 
